@@ -1,3 +1,7 @@
-app_import:
+app:
     resource: "@AppBundle/Resources/config/routing.yaml"
+    prefix: /
+
+seating:
+    resource: "@SeatingBundle/Resources/config/routing.yaml"
     prefix: /

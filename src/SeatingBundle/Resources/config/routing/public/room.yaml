@@ -1,0 +1,4 @@
+public_seating_room_display:
+    path: /room/{id}
+    controller: SeatingBundle\Controller\RoomController::display
+    methods: GET

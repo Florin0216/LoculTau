@@ -1,0 +1,3 @@
+public_seating_room_import:
+    resource: "@SeatingBundle/Resources/config/routing/public/room.yaml"
+    prefix: /

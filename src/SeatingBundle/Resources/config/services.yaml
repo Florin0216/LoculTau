@@ -1,0 +1,13 @@
+services:
+    SeatingBundle\Controller\:
+        resource: "%kernel.project_dir%/src/SeatingBundle/Controller/*"
+        autowire: true
+        autoconfigure: true
+    SeatingBundle\Repository\:
+        resource: "%kernel.project_dir%/src/SeatingBundle/Repository/*"
+        autowire: true
+        autoconfigure: true
+    SeatingBundle\Command\:
+        resource: "%kernel.project_dir%/src/SeatingBundle/Command/*"
+        autowire: true
+        autoconfigure: true
