@@ -1,5 +1,5 @@
 public_seating_import:
     resource: "@SeatingBundle/Resources/config/routing/public/_entrypoint.yaml"
-    prefix: /public
+    prefix: /
     defaults:
         _format: 'html'
