@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "axios": "^1.12.2",
+    "core-js": "^3.45.1",
     "vue": "^3.5.22",
     "yarn": "^1.22.22"
   },
@@ -17,6 +19,7 @@
     "tailwindcss": "^4.1.13",
     "vue-loader": "^17.0.0",
     "webpack": "^5.101.3",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   }
 }

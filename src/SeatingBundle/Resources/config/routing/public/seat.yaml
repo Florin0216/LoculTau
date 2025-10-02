@@ -1,0 +1,4 @@
+public_seating_seat_fetch_seats:
+    path: /seats
+    controller: SeatingBundle\Controller\SeatController::fetchSeats
+    methods: GET

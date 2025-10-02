@@ -1,123 +1,37 @@
 {% extends 'main/1cols.html.twig' %}
 
 {% block content %}
-    <div class="w-full overflow-x-auto bg-gray-300 h-screen">
-        <div class="flex justify-around items-center w-2/3 md:w-1/2 mx-auto p-1 mb-3">
-            <div class="flex items-center gap-1">
-                <div
-                    class="rounded-full  h-3.5 w-3.5 md:w-6 md:h-6 flex text-xs md:text-sm justify-center items-center bg-black text-white text-center"></div>
-                <span class="text-xs md:text-sm">Loc liber</span>
-            </div>
-            <div class="flex items-center gap-1">
-                <div
-                    class="rounded-full  h-3.5 w-3.5 md:w-6 md:h-6  flex text-xs md:text-sm justify-center items-center bg-red-600 text-white text-center"></div>
-                <span class="text-xs md:text-sm">Loc ocupat</span>
-            </div>
-            <div class="flex items-center gap-1">
-                <div
-                    class="rounded-full  h-3.5 w-3.5 md:w-6 md:h-6 flex text-xs md:text-sm justify-center items-center bg-green-500 text-white text-center"></div>
-                <span class="text-xs md:text-sm">Loc selectat</span>
-            </div>
-        </div>
+    <div class="w-full bg-gray-900 h-screen">
         <div
-            class="bg-white w-48 md:w-80 text-center mx-auto rounded-2xl py-2 md:py-4 mb-3 md:mb-6 font-semibold text-lg md:text-2xl">
+            class="bg-white w-48 md:w-80 text-center mx-auto rounded-2xl py-2 md:py-4 mb-5 md:mb-8 font-semibold text-lg md:text-2xl">
             Scena
         </div>
-        <div class="grid grid-cols-2 mx-auto gap-3 md:gap-3.5 mb-5 scale-[0.97] w-1/2 p-2">
-            <div class="flex flex-col items-end">
-                {% for r in 1..10 %}
-                    <div class="flex gap-1 md:gap-1.5">
-                        <div class="font-bold flex flex-col justify-center items-center text-xs md:text-lg">
-                            R{{ r }}</div>
-                        <div class="flex gap-px">
-                            {% set maxCols = (r == 1) ? 10 : 11 %}
-                            {% for c in 1..maxCols %}
-                                {% if r == 1 and c == 1 %}
-                                    <div class="h-3.5 w-3.5 md:w-6 md:h-6"></div>
-                                {% endif %}
-                                <div data-id="{{ seatGrid[r][c].id }}" data-seat="{{ seatGrid[r][c].seatNo }}"
-                                     class="seat rounded-full h-3.5 w-3.5 md:w-6 md:h-6 flex text-[9px] md:text-sm justify-center items-center bg-black text-white text-center hover:cursor-pointer">
-                                    {{ seatGrid[r][c].seatNo }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
+
+        <seats-list></seats-list>
+
+        <div class="flex flex-col w-3/4 md:w-1/2 mx-auto p-5 rounded bg-gray-700">
+            <div class="flex justify-around items-center mb-3">
+                <div class="flex items-center gap-1">
+                    <div class="rounded-t-sm md:rounded-t-lg h-3 w-3 md:w-6 md:h-6 bg-gray-300"></div>
+                    <span class="text-sm md:text-lg text-white">Liber</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <div class="rounded-t-sm md:rounded-t-lg h-3 w-3 md:w-6 md:h-6 bg-red-600"></div>
+                    <span class="text-sm md:text-lg text-white">Ocupat</span>
+                </div>
+                <div class="flex items-center gap-1">
+                    <div class="rounded-t-sm md:rounded-t-lg h-3 w-3 md:w-6 md:h-6 bg-green-500"></div>
+                    <span class="text-sm md:text-lg text-white">Selectat</span>
+                </div>
             </div>
-            <div class="flex flex-col items-start">
-                {% for r in 1..10 %}
-                    <div class="flex gap-1 md:gap-1.5">
-                        <div class="flex gap-px">
-                            {% if r == 1 %}
-                                {% for c in 11..20 %}
-                                    <div data-id="{{ seatGrid[r][c].id }}" data-seat="{{ seatGrid[r][c].seatNo }}"
-                                         class="seat rounded-full h-3.5 w-3.5 md:w-6 md:h-6 flex text-[9px] md:text-sm justify-center items-center bg-black text-white text-center hover:cursor-pointer">
-                                        {{ seatGrid[r][c].seatNo }}
-                                    </div>
-                                {% endfor %}
-                                <div class="h-3.5 w-3.5 md:w-6 md:h-6"></div>
-                            {% else %}
-                                {% for c in 12..22 %}
-                                    <div data-id="{{ seatGrid[r][c].id }}" data-seat="{{ seatGrid[r][c].seatNo }}"
-                                         class="seat rounded-full h-3.5 w-3.5 md:w-6 md:h-6 flex text-[9px] md:text-sm justify-center items-center bg-black text-white text-center hover:cursor-pointer">
-                                        {{ seatGrid[r][c].seatNo }}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        <div class="font-bold flex flex-col justify-center items-center text-xs md:text-lg">
-                            R{{ r }}</div>
-                    </div>
-                {% endfor %}
+            <div class="text-center text-white text-sm md:text-lg mb-5">
+                Numar locuri selectate: 0
             </div>
-            <div class="flex flex-col items-end">
-                {% for r in 11..18 %}
-                    <div class="flex gap-1 md:gap-1.5">
-                        <div class="font-bold flex flex-col justify-center items-center text-xs md:text-lg">
-                            R{{ r }}</div>
-                        <div class="flex gap-px">
-                            {% set maxCols = (r == 18) ? 10 : 11 %}
-                            {% for c in 1..maxCols %}
-                                {% if r == 18 and c == 1 %}
-                                    <div class="h-3.5 w-3.5 md:w-6 md:h-6"></div>
-                                {% endif %}
-                                <div data-id="{{ seatGrid[r][c].id }}" data-seat="{{ seatGrid[r][c].seatNo }}"
-                                     class="seat rounded-full h-3.5 w-3.5 md:w-6 md:h-6 flex text-[9px] md:text-sm justify-center items-center bg-black text-white text-center hover:cursor-pointer">
-                                    {{ seatGrid[r][c].seatNo }}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="text-center">
+                <a href="#" class="text-white hover:bg-blue-500 py-1.5 px-3 rounded bg-blue-600 duration-300 text-sm md:text-lg">
+                    Confirma selectia
+                </a>
             </div>
-            <div class="flex flex-col items-start">
-                {% for r in 11..18 %}
-                    <div class="flex gap-1 md:gap-1.5">
-                        <div class="flex gap-px">
-                            {% if r == 18 %}
-                                {% for c in 11..20 %}
-                                    <div data-id="{{ seatGrid[r][c].id }}" data-seat="{{ seatGrid[r][c].seatNo }}"
-                                         class="seat rounded-full h-3.5 w-3.5 md:w-6 md:h-6 flex text-[9px] md:text-sm justify-center items-center bg-black text-white text-center hover:cursor-pointer">
-                                        {{ seatGrid[r][c].seatNo }}
-                                    </div>
-                                {% endfor %}
-                                <div class="h-3.5 w-3.5 md:w-6 md:h-6"></div>
-                            {% else %}
-                                {% for c in 12..22 %}
-                                    <div data-id="{{ seatGrid[r][c].id }}" data-seat="{{ seatGrid[r][c].seatNo }}"
-                                         class="seat rounded-full h-3.5 w-3.5 md:w-6 md:h-6 flex text-[9px] md:text-sm justify-center items-center bg-black text-white text-center hover:cursor-pointer">
-                                        {{ seatGrid[r][c].seatNo }}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        <div class="font-bold flex flex-col justify-center items-center text-xs md:text-lg">
-                            R{{ r }}</div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        <div id="selected-seats" class="text-center text-xs md:text-lg">
         </div>
     </div>
 {% endblock %}

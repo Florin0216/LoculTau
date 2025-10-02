@@ -17,18 +17,8 @@ class RoomController extends AbstractController
     {
         $room = $this->entityManager->getRepository(Room::class)->find($id);
 
-        $seats = $this->entityManager->getRepository(Seat::class)->findBy([
-            'room' => $room
-        ]);
-
-        $seatGrid = [];
-        foreach ($seats as $seat) {
-            $seatGrid[$seat->getRowNo()][$seat->getSeatNo()] = $seat;
-        }
-
         return $this->render('@Seating/Room/public/display.html.twig',[
             'room' => $room,
-            'seatGrid' => $seatGrid,
         ]);
     }
 

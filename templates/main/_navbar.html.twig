@@ -1,0 +1,48 @@
+<nav class="bg-black text-white sticky top-0 z-50 shadow-lg w-full">
+    <div class="flex justify-between items-center px-4 md:px-20 py-4">
+        <div class="flex items-center gap-4">
+            <a href="#" class="flex items-center gap-1 md:w-60 z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-yellow-300" fill="currentColor"
+                     viewBox="0 0 24 24">
+                    <path
+                        d="M12 2a7 7 0 0 0-7 7v3.586l-1.707 1.707A1 1 0 0 0 4 16h16a1 1 0 0 0 .707-1.707L19 12.586V9a7 7 0 0 0-7-7Zm0 20a3 3 0 0 0 2.995-2.824L15 19h-6a3 3 0 0 0 2.824 2.995L12 22Z"/>
+                </svg>
+                <div class="font-bold text-2xl md:text-3xl tracking-wide">Locul Tau</div>
+            </a>
+            <ul class="hidden md:flex gap-8 font-medium text-lg">
+                <li><a href="#" class="hover:text-yellow-300 duration-300">Concerte</a></li>
+                <li><a href="#" class="hover:text-yellow-300 duration-300">Despre</a></li>
+                <li><a href="#" class="hover:text-yellow-300 duration-300">Contact</a></li>
+            </ul>
+        </div>
+        <ul class="hidden md:flex items-center gap-4 font-medium text-lg">
+            <li><a href="#" class="hover:border-white border py-1 px-3 rounded-full border-gray-400 duration-300">Autentificare</a>
+            </li>
+            <li><a href="#"
+                   class="hover:bg-green-600 py-1.5 px-3 rounded-full bg-green-700 duration-300">Inregistare</a></li>
+        </ul>
+        <button id="hamburger-btn" class="md:hidden flex flex-col justify-center gap-1 items-center z-50">
+            <span class="h-1 w-6 rounded-full bg-white transition transform duration-300"></span>
+            <span class="h-1 w-6 rounded-full bg-white transition transform duration-300"></span>
+            <span class="h-1 w-6 rounded-full bg-white transition transform duration-300"></span>
+        </button>
+    </div>
+    <div id="mobile-menu" class="hidden absolute w-screen h-screen top-0 left-0 pt-24 bg-black transform ease-out duration-300">
+        <div class="flex flex-col h-full justify-between">
+            <ul class="flex flex-col py-4 px-4 gap-4 font-medium text-lg items-center">
+                <li><a href="#" class="block">Concerte</a></li>
+                <li><a href="#" class="block">Despre</a></li>
+                <li><a href="#" class="block">Contact</a></li>
+            </ul>
+            <ul class="flex flex-col w-full py-4 px-4 gap-4">
+                <li>
+                    <a href="#"
+                       class="block text-center border py-2 px-4 rounded-full border-gray-400">Autentificare</a>
+                </li>
+                <li>
+                    <a href="#" class="block text-center py-2 px-4 rounded-full bg-green-700 ">Inregistare</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
