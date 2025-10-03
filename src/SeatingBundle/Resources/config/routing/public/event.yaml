@@ -1,0 +1,8 @@
+public_seating_event_display:
+    path: /events
+    controller: SeatingBundle\Controller\EventController::displayEvents
+    methods: GET
+public_seating_event_fetch:
+    path: /fetchEvents
+    controller: SeatingBundle\Controller\EventController::fetchEvents
+    methods: GET

@@ -5,6 +5,7 @@ namespace SeatingBundle\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\EventRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -12,12 +13,15 @@ class Event
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
+    #[Groups('event')]
     private ?int $id;
 
     #[ORM\Column(type: Types::STRING, length: 100)]
+    #[Groups('event')]
     private string $title;
 
     #[ORM\ManyToOne(targetEntity: Room::class)]
+    #[Groups('event')]
     private ?Room $room = null;
 
     public function getId(): ?int

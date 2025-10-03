@@ -5,7 +5,7 @@ const props = defineProps({
     seat: {type: Object, required: true, default: () => ({}) }
 });
 
-const emits = defineEmits(['selectSeat']);
+const emits = defineEmits(['select']);
 
 const isPressed = ref(false);
 
@@ -16,7 +16,7 @@ const seatColor = computed(() => {
 
 function selectSeat() {
     isPressed.value = !isPressed.value
-    emits('selectSeat',{ seat: props.seat, selected: isPressed.value })
+    emits('select',{ seat: props.seat, selected: isPressed.value })
 }
 </script>
 

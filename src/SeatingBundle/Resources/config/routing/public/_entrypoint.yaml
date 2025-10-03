@@ -4,3 +4,6 @@ public_seating_room_import:
 public_seating_seat_import:
     resource: "@SeatingBundle/Resources/config/routing/public/seat.yaml"
     prefix: /
+public_seating_event_import:
+    resource: "@SeatingBundle/Resources/config/routing/public/event.yaml"
+    prefix: /
