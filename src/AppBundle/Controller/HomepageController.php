@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class HomepageController extends AbstractController
 {
@@ -19,5 +20,9 @@ class HomepageController extends AbstractController
         return $this->render('@App/Homepage/homepage.html.twig');
     }
 
-
+    #[IsGranted('ROLE_ADMIN')]
+    public function homepageAdminAction(Request $request): Response
+    {
+        return $this->render('@App/Homepage/admin/homepage.html.twig');
+    }
 }

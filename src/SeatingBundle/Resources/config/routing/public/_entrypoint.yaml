@@ -7,3 +7,6 @@ public_seating_seat_import:
 public_seating_event_import:
     resource: "@SeatingBundle/Resources/config/routing/public/event.yaml"
     prefix: /
+public_seating_reservation_import:
+    resource: "@SeatingBundle/Resources/config/routing/public/reservation.yaml"
+    prefix: /

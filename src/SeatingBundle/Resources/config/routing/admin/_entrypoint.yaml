@@ -1,0 +1,12 @@
+
+admin_seating_event_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/event.yaml"
+    prefix: /
+
+admin_seating_reservation_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/reservation.yaml"
+    prefix: /
+
+admin_seating_room_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/room.yaml"
+    prefix: /

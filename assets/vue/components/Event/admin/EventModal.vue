@@ -1,0 +1,110 @@
+<script setup>
+
+import {computed, onMounted, ref} from "vue";
+import {getClone} from "../../../helpers/getClone";
+import {isValue} from "../../../helpers/isValue";
+import EditingButtonGroup from "../../Common/EditingButtonGroup.vue";
+import RoomSelect from "../../Room/admin/RoomSelect.vue";
+import EventService from "../../../services/EventService";
+import EventCreateDto from "../../../dto/Event/EventCreateDto";
+import EventEditDto from "../../../dto/Event/EventEditDto";
+
+const props = defineProps({
+    instance: {
+        type: Object,
+        required: true,
+    },
+    event: {
+        type: Object,
+        required: true,
+    },
+    isEditing: {
+        type: Boolean,
+        required: false,
+        default: false,
+    }
+});
+
+const event = ref(getClone(props.event));
+
+let eventInitData = getClone(event.value);
+
+const isEditing = ref(props.isEditing);
+
+const isNewEvent = computed(() => {
+    return !isValue(event.value.id);
+});
+
+const onEditCancel = () => {
+    event.value = getClone(eventInitData);
+}
+
+const onEditConfirm = () => {
+    const promise = isNewEvent.value
+        ? EventService.newAdmin(new EventCreateDto(event.value))
+        : EventService.editAdmin(event.value.id, new EventEditDto(event.value));
+
+    promise
+        .then((response) => {
+            event.value = response.data.data;
+
+            isEditing.value = false;
+
+            eventInitData = getClone(event.value);
+        })
+        .catch(err => console.error(err));
+}
+
+const dismissModal = () => {
+    props.instance.value.close(undefined);
+}
+
+const formPs = 2.7;
+
+const iconClass = 'position-absolute top-50 start-0 translate-middle-y ms-3 fs-5';
+
+onMounted(() => {
+
+})
+
+</script>
+
+<template>
+    <div class="modal fade" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content pb-1">
+                <div class="modal-header">
+                    <h4 class="modal-title me-3">
+                        <template v-if="isNewEvent">Adaugă eveniment</template>
+                        <template v-else>Detalii eveniment</template>
+                    </h4>
+                    <editing-button-group
+                        v-model:is-editing="isEditing"
+                        :font-size="5"
+                        @confirm="onEditConfirm"
+                        @cancel="onEditCancel"
+                    > </editing-button-group>
+                    <button @click="dismissModal" type="button" class="btn-close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="position-relative mb-4">
+                        <input v-model="event.title" :disabled="!isEditing" type="text" class="form-control " id="loginEmailInput" placeholder="Nume" :style="`padding-left: ${formPs}rem`">
+
+                        <i class="bi bi-card-text" :class="iconClass"></i>
+                    </div>
+                    <div class="position-relative mb-4">
+                        <input v-model="event.date" :disabled="!isEditing" type="datetime-local" class="form-control " id="loginEmailInput" placeholder="Data" :style="`padding-left: ${formPs}rem`">
+
+                        <i class="bi bi-calendar-event" :class="iconClass"></i>
+                    </div>
+
+                    <room-select v-model:selected-room="event.room" :is-disabled="!isEditing"> </room-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style scoped>
+
+</style>

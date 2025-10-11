@@ -1,0 +1,5 @@
+
+admin_app_homepage:
+    path: /admin
+    controller: AppBundle\Controller\HomepageController::homepageAdminAction
+    methods: GET

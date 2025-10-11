@@ -1,0 +1,4 @@
+
+public_user_user_import:
+    resource: "@UserBundle/Resources/config/routing/public/user.yaml"
+    prefix: /

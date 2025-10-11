@@ -1,0 +1,14 @@
+seating_reservation_new:
+    path: /reservations/new
+    controller: SeatingBundle\Controller\ReservationController::newAction
+    methods: POST
+
+seating_reservation_show_reservation_success:
+    path: /reservation/success
+    controller: SeatingBundle\Controller\ReservationController::showReservationSuccess
+    methods: GET
+
+seating_reservation_qr_code_provide:
+    path: /reservations/{uuid}/qr-code
+    controller: SeatingBundle\Controller\ReservationController::provideQrCodeAction
+    methods: GET

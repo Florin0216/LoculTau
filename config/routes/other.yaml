@@ -5,3 +5,7 @@ app:
 seating:
     resource: "@SeatingBundle/Resources/config/routing.yaml"
     prefix: /
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yaml"
+    prefix: /

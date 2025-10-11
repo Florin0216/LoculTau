@@ -1,4 +1,5 @@
-public_seating_seat_fetch_seats:
-    path: /seats
-    controller: SeatingBundle\Controller\SeatController::fetchSeats
+seating_seat_list:
+    path: /event/{eventId}/room/{roomId}/seats
+    controller: SeatingBundle\Controller\SeatController::listAction
     methods: GET
+

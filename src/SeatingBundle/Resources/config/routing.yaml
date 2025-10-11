@@ -3,3 +3,9 @@ public_seating_import:
     prefix: /
     defaults:
         _format: 'html'
+
+admin_seating_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/_entrypoint.yaml"
+    prefix: /admin
+    defaults:
+        _format: 'html'

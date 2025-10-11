@@ -1,0 +1,15 @@
+
+admin_seating_room_list:
+    path: /rooms.{_format}
+    controller: SeatingBundle\Controller\RoomController::listAdminAction
+    methods: GET
+
+admin_seating_room_new:
+    path: /rooms/new
+    controller: SeatingBundle\Controller\RoomController::newAdminAction
+    methods: POST
+
+admin_seating_room_edit:
+    path: /rooms/{id}/edit
+    controller: SeatingBundle\Controller\RoomController::editAdminAction
+    methods: PUT

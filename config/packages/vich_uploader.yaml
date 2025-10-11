@@ -1,0 +1,31 @@
+
+vich_uploader:
+    db_driver: orm
+    storage: gaufrette
+
+    mappings:
+        app_images_public_storage:
+            uri_prefix: ''
+            upload_destination: app_images_public_storage_filesystem
+            namer: AppBundle\Vich\Uploader\Namer\CustomFileNamer
+            directory_namer:
+                service: AppBundle\Vich\Uploader\Namer\CustomDirectoryNamer
+                options:
+                    chars_per_dir: 2
+                    dirs: 3
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+
+        app_images_private_storage:
+            uri_prefix: ''
+            upload_destination: app_images_private_storage_filesystem
+            namer: AppBundle\Vich\Uploader\Namer\CustomFileNamer
+            directory_namer:
+                service: AppBundle\Vich\Uploader\Namer\CustomDirectoryNamer
+                options:
+                    chars_per_dir: 2
+                    dirs: 3
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

@@ -1,0 +1,5 @@
+
+api_user_profile_edit:
+    path: /profile/edit
+    controller: UserBundle\Controller\ProfileController::editAction
+    methods: POST

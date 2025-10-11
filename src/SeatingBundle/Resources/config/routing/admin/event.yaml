@@ -1,0 +1,15 @@
+
+admin_seating_event_list:
+    path: /events.{_format}
+    controller: SeatingBundle\Controller\EventController::listAdminAction
+    methods: GET
+
+admin_seating_event_new:
+    path: /events/new.{_format}
+    controller: SeatingBundle\Controller\EventController::newAdminAction
+    methods: POST
+
+admin_seating_event_edit:
+    path: /events/{id}/edit.{_format}
+    controller: SeatingBundle\Controller\EventController::editAdminAction
+    methods: PUT|PATCH

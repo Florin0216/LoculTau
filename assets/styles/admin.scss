@@ -1,0 +1,41 @@
+
+@import 'bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-gray-500 {
+    color: #adb5bd !important;
+}
+
+.border-gray-200 {
+    border-color: #e9ecef !important;
+}
+
+.min-width-column {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.d-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+    transition: all 0.07s ease-out;
+}
+
+.slide-up-enter-from {
+    opacity: 0;
+    transform: translateY(25px);
+}
+
+.slide-up-leave-to {
+    opacity: 0;
+    transform: translateY(-15px);
+}

@@ -1,0 +1,84 @@
+{% extends 'admin_base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div id="adminSidebar" class="col-12 col-lg-2 border border-top-0 border-secondary-subtle py-3">
+            <ul class="nav nav-pills flex-column fs-5">
+                <li class="nav-item">
+                    <a href="" class="nav-link cursor-pointer">
+                        <i class="bi bi-speedometer"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        href="{{ path('admin_seating_event_list') }}"
+                        class="nav-link cursor-pointer {% if app.current_route == 'admin_seating_event_list' %}active{% endif %}"
+                    >
+                        <i class="bi bi-calendar-event"></i>
+                        Evenimente
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        href="{{ path('admin_seating_reservation_list') }}"
+                        class="nav-link cursor-pointer {% if app.current_route == 'admin_seating_reservation_list' %}active{% endif %}"
+                    >
+                        <i class="bi bi-book"></i>
+                        Rezervări
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        href="{{ path('admin_seating_room_list') }}"
+                        class="nav-link cursor-pointer {% if app.current_route == 'admin_seating_room_list' %}active{% endif %}"
+                    >
+                        <i class="bi bi-door-open"></i>
+                        Săli
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
+                        href="{{ path('seating_event_list') }}"
+                        class="nav-link cursor-pointer"
+                    >
+                        <i class="bi bi-box-arrow-left"></i>
+                        Pagina principala
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-lg-10">
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function resizeSidebar() {
+            const sidebar = document.getElementById('adminSidebar');
+            if (!sidebar) return;
+
+            if (window.innerWidth >= 1024) {
+                sidebar.style.height = window.innerHeight + 'px';
+            } else {
+                sidebar.style.height = 'auto'; // reset for smaller screens
+            }
+        }
+
+        resizeSidebar();
+
+        let timeout = null;
+
+        window.addEventListener('resize', () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+
+            timeout = setTimeout(() => {
+                resizeSidebar();
+            }, 250);
+        })
+    </script>
+{% endblock %}

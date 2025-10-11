@@ -1,0 +1,21 @@
+knp_gaufrette:
+    stream_wrapper:
+        protocol: gaufrette
+
+    adapters:
+        app_images_public_storage_adapter:
+            local:
+                directory: '%kernel.project_dir%/public/uploads/vich/images'
+                create: true
+
+        app_images_private_storage_adapter:
+            local:
+                directory: '%kernel.project_dir%/private_assets/uploads/vich/images'
+                create: true
+
+    filesystems:
+        app_images_public_storage_filesystem:
+            adapter: app_images_public_storage_adapter
+
+        app_images_private_storage_filesystem:
+            adapter: app_images_private_storage_adapter

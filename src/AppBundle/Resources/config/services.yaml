@@ -3,3 +3,24 @@ services:
         resource: "%kernel.project_dir%/src/AppBundle/Controller/*"
         autowire: true
         autoconfigure: true
+
+#    AppBundle\EventSubscriber\:
+#        resource: "%kernel.project_dir%/src/AppBundle/EventSubscriber/*"
+#        autowire: true
+#        autoconfigure: true
+
+    AppBundle\Services\:
+        resource: "%kernel.project_dir%/src/AppBundle/Services/*"
+        autowire: true
+        autoconfigure: true
+
+    AppBundle\Serializer\Normalizer\:
+        resource: "%kernel.project_dir%/src/AppBundle/Serializer/Normalizer/*"
+        autowire: true
+        autoconfigure: true
+
+    AppBundle\Vich\Uploader\Namer\:
+        resource: '%kernel.project_dir%/src/AppBundle/Vich/Uploader/Namer/*'
+        public: true
+        autowire: true
+        autoconfigure: true

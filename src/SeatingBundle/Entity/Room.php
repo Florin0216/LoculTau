@@ -6,26 +6,28 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\RoomRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
+#[ORM\Table(name: 'seating__room')]
 class Room
 {
+    const ENTITY_ALIAS = 'rm';
+
+    const NORMALIZER_GROUPS = ['room.details'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id;
+    #[Groups('room.details')]
+    protected ?int $id;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private ?string $name;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $rows;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $cols;
+    #[ORM\Column(type: Types::STRING, length: 128)]
+    #[Groups('room.details')]
+    protected ?string $name;
 
     #[ORM\OneToMany(targetEntity: Seat::class, mappedBy: 'room')]
-    private Collection $seats;
+    protected Collection $seats;
 
     public function getId(): ?int
     {
@@ -40,26 +42,6 @@ class Room
     public function setName(?string $name): void
     {
         $this->name = $name;
-    }
-
-    public function getRows(): ?int
-    {
-        return $this->rows;
-    }
-
-    public function setRows(?int $rows): void
-    {
-        $this->rows = $rows;
-    }
-
-    public function getCols(): ?int
-    {
-        return $this->cols;
-    }
-
-    public function setCols(?int $cols): void
-    {
-        $this->cols = $cols;
     }
 
     public function getSeats(): Collection

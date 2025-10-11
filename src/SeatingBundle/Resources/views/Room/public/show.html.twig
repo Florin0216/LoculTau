@@ -1,0 +1,8 @@
+{% extends 'main/1cols.html.twig' %}
+
+{% block content %}
+    <seats-list
+        :event="{{ jsData['event']|json_encode }}"
+        :room="{{ jsData['room']|json_encode }}"
+    ></seats-list>
+{% endblock %}

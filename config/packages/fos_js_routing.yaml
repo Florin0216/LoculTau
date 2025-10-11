@@ -1,0 +1,33 @@
+fos_js_routing:
+    routes_to_expose:
+        # Homepage
+        - public_app_homepage
+
+        # Event
+        - seating_event_list
+        - seating_event_fetch
+        - admin_seating_event_list
+        - admin_seating_event_new
+        - admin_seating_event_edit
+
+        # Reservation
+        - admin_seating_reservation_list
+        - seating_reservation_new
+        - seating_reservation_show_reservation_success
+        - admin_seating_
+
+        # Room
+        - seating_room_show
+        - admin_seating_room_list
+        - admin_seating_room_new
+        - admin_seating_room_edit
+
+        # Seat
+        - seating_seat_list
+
+        # User
+        - user_security_login
+        - public_user_user_show
+
+        # Homepage
+        - admin_app_homepage

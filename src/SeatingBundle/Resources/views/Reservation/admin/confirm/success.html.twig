@@ -1,0 +1,66 @@
+{% extends 'main/1cols.html.twig' %}
+
+{% block content %}
+    <div class="flex flex-col justify-center items-center px-4 py-10">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10 max-w-lg w-full relative overflow-hidden">
+            <!-- Decorative background elements -->
+            <div class="absolute top-0 right-0 w-40 h-40 bg-green-100 rounded-full -mr-20 -mt-20 opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-blue-100 rounded-full -ml-16 -mb-16 opacity-50"></div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <!-- Success icon with animation -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full p-5 shadow-lg transform hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="h-12 w-12"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor"
+                             stroke-width="2.5">
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M9 12l2 2l4-4m5 2a9 9 0 11-18 0a9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Success message -->
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 text-center">
+                    {{ message }}
+                </h1>
+
+                <!-- Reservation details card -->
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 border-2 border-gray-200 rounded-2xl p-6 mb-8 space-y-4">
+                    <div class="flex items-center justify-between pb-4 border-b border-gray-300">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-white rounded-lg p-2 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Nume</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ reservation.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-white rounded-lg p-2 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                                </svg>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Scaun</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ seat.number }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

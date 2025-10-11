@@ -1,4 +1,4 @@
-public_seating_room_display:
-    path: /room/{id}
-    controller: SeatingBundle\Controller\RoomController::display
+seating_room_show:
+    path: /event/{eventId}/room/{roomId}
+    controller: SeatingBundle\Controller\RoomController::showAction
     methods: GET

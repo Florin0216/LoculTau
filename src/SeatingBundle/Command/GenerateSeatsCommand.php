@@ -23,23 +23,27 @@ class GenerateSeatsCommand extends Command
         $rooms = $this->entityManager->getRepository(Room::class)->findAll();
 
         foreach ($rooms as $room) {
-            $rows = $room->getRows();
-            $cols = $room->getCols();
 
-            for ($r = 1; $r <= $rows; $r++) {
+            $mainRows = [
+                'A','B','C','D','E','F','G','H','I','J',
+                'K','L','M','N','O','P','R','S'
+            ];
 
-                $maxCols = ($r == 1 || $r == $rows) ? 20 : $cols;
+            foreach ($mainRows as $index => $rowLetter) {
+                $rowNumber = $index + 1;
+                $maxCols = $this->getSeatCountForRow($rowNumber);
 
                 for ($c = 1; $c <= $maxCols; $c++) {
                     $seat = new Seat();
                     $seat->setRoom($room);
-                    $seat->setRowNo($r);
-                    $seat->setSeatNo($c);
-                    $seat->setStatus('available');
-
+                    $seat->setRowNo($rowNumber);
+                    $seat->setNumber($c);
+                    $seat->setSection('main');
                     $this->entityManager->persist($seat);
                 }
             }
+
+            $this->generateLodgeSeats($room, $output);
         }
 
         $this->entityManager->flush();
@@ -47,4 +51,90 @@ class GenerateSeatsCommand extends Command
         return Command::SUCCESS;
     }
 
+    private function getSeatCountForRow(int $row): int
+    {
+        return match ($row) {
+            1 => 22, // A
+            2 => 25, // B
+            3 => 28, // C
+            4 => 31, // D
+            default => $this->calculateDynamicSeats($row),
+        };
+    }
+
+    private function calculateDynamicSeats(int $row): int
+    {
+        $middleRow = 10; // J
+        $seatsAtRow4 = 31;
+        $seatsAtMiddle = $seatsAtRow4 + ($middleRow - 4);
+
+        if ($row <= $middleRow) {
+            return 31 + ($row - 4);
+        }
+
+        return $seatsAtMiddle - ($row - $middleRow);
+    }
+
+    private function generateLodgeSeats(Room $room, OutputInterface $output): void
+    {
+        // Lodge Left
+        for ($r = 1; $r <= 2; $r++) {
+            for ($c = 1; $c <= 4; $c++) {
+                $seat = new Seat();
+                $seat->setRoom($room);
+                $seat->setRowNo($r);
+                $seatNo = $c + ($r - 1) * 4; // row 1: 1-4, row 2: 5-8
+                $seat->setNumber($seatNo);
+                $seat->setSection('lodge_left');
+                $this->entityManager->persist($seat);
+            }
+        }
+
+        // Lodge Right (mirrored)
+        for ($r = 1; $r <= 2; $r++) {
+            for ($c = 1; $c <= 4; $c++) {
+                $seat = new Seat();
+                $seat->setRoom($room);
+                $seat->setRowNo($r);
+
+                if ($r === 1) {
+                    $seatNo = 5 - $c;
+                } else {
+                    $seatNo = 9 - $c;
+                }
+
+                $seat->setNumber($seatNo);
+                $seat->setSection('lodge_right');
+                $this->entityManager->persist($seat);
+            }
+        }
+
+
+        // Lodge Middle (combined)
+        for ($r = 1; $r <= 2; $r++) {
+            for ($c = 1; $c <= 4; $c++) {
+                $seat = new Seat();
+                $seat->setRoom($room);
+                $seat->setRowNo($r);
+                $seat->setNumber($c + ($r - 1) * 4);
+                $seat->setSection('lodge_middle_left');
+                $this->entityManager->persist($seat);
+            }
+
+            for ($c = 1; $c <= 4; $c++) {
+                $seat = new Seat();
+                $seat->setRoom($room);
+                $seat->setRowNo($r);
+                if ($r === 1) {
+                    $seatNo = 5 - $c;
+                } else {
+                    $seatNo = 9 - $c;
+                }
+                $seat->setNumber($seatNo);
+                $seat->setSection('lodge_middle_right');
+                $this->entityManager->persist($seat);
+            }
+        }
+
+    }
 }

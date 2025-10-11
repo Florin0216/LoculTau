@@ -1,0 +1,10 @@
+
+admin_seating_reservation_list:
+    path: /reservations.{_format}
+    controller: SeatingBundle\Controller\ReservationController::listAdminAction
+    methods: GET
+
+admin_seating_reservation_confirm:
+    path: /reservations/{uuid}/confirm
+    controller: SeatingBundle\Controller\ReservationController::confirmAdminAction
+    methods: GET

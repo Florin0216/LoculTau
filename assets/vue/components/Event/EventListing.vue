@@ -1,16 +1,17 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
-import axios from "axios";
 import EventItem from "./EventItem.vue";
+import EventService from "../../services/EventService";
 
 const events = ref([]);
 
 onMounted(() => {
-    axios.get('/fetchEvents')
-        .then(response => {
-            events.value = JSON.parse(response.data);
-        });
+    EventService
+        .getEvents()
+        .then((response) => {
+            events.value = response
+        })
 });
 
 </script>

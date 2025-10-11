@@ -2,35 +2,46 @@
 
 namespace SeatingBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\SeatRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SeatRepository::class)]
+#[ORM\Table(name: 'seating__seat')]
 class Seat
 {
+    const ENTITY_ALIAS = 'st';
+
+    const NORMALIZER_GROUPS = ['seat.details'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
-    #[Groups('seat')]
-    private ?int $id;
+    #[Groups('seat.details')]
+    protected ?int $id;
 
     #[ORM\Column(type: Types::INTEGER)]
-    #[Groups('seat')]
-    private ?int $rowNo;
+    #[Groups('seat.details')]
+    protected ?int $rowNo;
 
     #[ORM\Column(type: Types::INTEGER)]
-    #[Groups('seat')]
-    private ?int $seatNo;
+    #[Groups('seat.details')]
+    protected ?int $number;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
-    #[Groups('seat')]
-    private ?string $status;
+    #[ORM\Column(type: Types::STRING, length: 32)]
+    #[Groups('seat.details')]
+    protected ?string $section;
 
     #[ORM\ManyToOne(targetEntity: Room::class, inversedBy: 'seats')]
-    #[Groups('seat')]
-    private Room $room;
+    protected Room $room;
+
+    public function __construct()
+    {
+
+    }
 
     public function getId(): ?int
     {
@@ -47,24 +58,14 @@ class Seat
         $this->rowNo = $rowNo;
     }
 
-    public function getSeatNo(): ?int
+    public function getNumber(): ?int
     {
-        return $this->seatNo;
+        return $this->number;
     }
 
-    public function setSeatNo(?int $seatNo): void
+    public function setNumber(?int $number): void
     {
-        $this->seatNo = $seatNo;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?string $status): void
-    {
-        $this->status = $status;
+        $this->number = $number;
     }
 
     public function getRoom(): Room
@@ -77,5 +78,14 @@ class Seat
         $this->room = $room;
     }
 
+    public function getSection(): ?string
+    {
+        return $this->section;
+    }
+
+    public function setSection(?string $section): void
+    {
+        $this->section = $section;
+    }
 
 }

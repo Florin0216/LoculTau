@@ -1,0 +1,87 @@
+<table style="width:100%; height:100%; border-collapse:collapse; background-color:#f4f4f4; padding:20px 0; margin:0;">
+    <tr>
+        <td style="padding:0; margin:0;">
+            <table
+                style="width:100%; border-collapse:collapse; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+
+                <tr>
+                    <td style="background-color:#2c3e50; padding:30px 20px; text-align:center;">
+                        <h1 style="margin:0; color:#ffffff; font-size:24px; font-weight:normal;">Biletele
+                            Dumneavoastră</h1>
+                        <p style="margin:10px 0 0 0; color:#ecf0f1; font-size:14px;">Rezervarea dvs. a fost
+                            confirmată</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:30px 20px;">
+                        <p style="margin:0 0 15px 0; color:#333333; font-size:15px; line-height:1.6;">Bună ziua,</p>
+
+                        <p style="margin:0 0 25px 0; color:#666666; font-size:14px; line-height:1.6;">
+                            Vă mulțumim pentru rezervare! Mai jos veți găsi codurile QR pentru fiecare loc rezervat.
+                            Vă rugăm să salvați acest email și să prezentați codurile QR la intrare pentru scanare.
+                        </p>
+                        {% for ticket in ticketData %}
+                            <table
+                                style="width:100%; border-collapse:collapse; margin-bottom:20px; background-color:#f8f9fa; border-radius:6px; border-left:3px solid #2c3e50;">
+                                <tr>
+                                    <td style="padding:20px;">
+                                        <table style="width:100%; border-collapse:collapse;">
+                                            <tr>
+                                                <td style="padding-bottom:15px;">
+                                                    <span
+                                                        style="color:#2c3e50; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">Bilet #{{ loop.index }}</span>
+                                                    <span
+                                                        style="float:right; background-color:#2c3e50; color:#ffffff; padding:4px 12px; border-radius:12px; font-size:12px;">Locul {{ ticket.seat.number }}</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table style="width:100%; border-collapse:collapse;">
+                                            <tr>
+                                                <td style="text-align:center; background-color:#ffffff; padding:15px; border-radius:4px;">
+                                                    <img src="{{ ticket.qrCodeCid }}"
+                                                         alt="QR Code Bilet {{ loop.index }}"
+                                                         style="display:block; max-width:180px; height:auto; margin:0 auto;">
+                                                    <p style="margin:10px 0 0 0; color:#666666; font-size:12px;">Scanați
+                                                        acest cod la intrare</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                        <table
+                            style="width:100%; border-collapse:collapse; margin-top:25px; background-color:#f8f9fa; border-radius:4px;">
+                            <tr>
+                                <td style="padding:20px;">
+                                    <p style="margin:0 0 12px 0; color:#333333; font-size:14px; font-weight:bold;">
+                                        Instrucțiuni importante:</p>
+                                    <p style="margin:0 0 8px 0; color:#666666; font-size:13px; line-height:1.6;">•
+                                        Prezentați codurile QR la intrare pentru validare</p>
+                                    <p style="margin:0 0 8px 0; color:#666666; font-size:13px; line-height:1.6;">•
+                                        Asigurați-vă că ecranul telefonului este curat și luminozitatea este la
+                                        maxim</p>
+                                    <p style="margin:0 0 8px 0; color:#666666; font-size:13px; line-height:1.6;">•
+                                        Puteți salva acest email sau face screenshot la codurile QR</p>
+                                    <p style="margin:0; color:#666666; font-size:13px; line-height:1.6;">• Vă recomandăm
+                                        să ajungeți cu 15 minute înainte de eveniment</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#f8f9fa; padding:25px 20px; text-align:center; border-top:1px solid #e0e0e0;">
+                        <p style="margin:0 0 5px 0; color:#333333; font-size:13px; font-weight:bold;">Aveți nevoie de
+                            ajutor?</p>
+                        <p style="margin:0 0 15px 0; color:#666666; font-size:12px;">Contactați-ne la
+                            support@example.com sau +40 123 456 789</p>
+                        <p style="margin:0; color:#999999; font-size:11px;">© 2025 Company Name. Toate drepturile
+                            rezervate.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
