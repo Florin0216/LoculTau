@@ -6,6 +6,7 @@ use AppBundle\Exception\FormInvalidDataException;
 use AppBundle\Helper\JsonRequestPayload;
 use AppBundle\Services\EntityService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use SeatingBundle\Entity\Event;
 use SeatingBundle\Form\Factory\EventFormFactory;
@@ -78,7 +79,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[IsGranted('ROLE_ADMIN')]
     public function newAdminAction($date, Request $request): Response
@@ -104,7 +105,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[IsGranted('ROLE_ADMIN')]
     public function editAdminAction($id, Request $request): Response

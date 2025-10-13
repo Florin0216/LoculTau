@@ -2,12 +2,9 @@
 
 namespace UserBundle\Entity;
 
-//use AppBundle\Entity\Trait\TimestampableTrait;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use AppBundle\Entity\Trait\TimestampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,7 +16,9 @@ use UserBundle\Repository\UserRepository;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-//    use TimestampableTrait;
+    use TimestampableTrait;
+
+    const ENTITY_ALIAS = 'user';
 
     const NORMALIZER_GROUPS = ['user.details', 'timestampable'];
 
@@ -54,6 +53,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::BOOLEAN)]
     protected bool $isVerified = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Groups(['user.details'])]
+    protected bool $isDisabled = false;
 
     #[ORM\Column(type: Types::STRING, length: 8, nullable: true)]
     protected ?string $locale = null;
@@ -147,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     public function eraseCredentials(): void
@@ -167,6 +170,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isDisabled(): bool
+    {
+        return $this->isDisabled;
+    }
+
+    public function setIsDisabled(bool $isDisabled): User
+    {
+        $this->isDisabled = $isDisabled;
+
+        return $this;
+    }
+
     public function getLocale(): ?string
     {
         return $this->locale;
@@ -177,5 +192,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->locale = $locale;
 
         return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return !$this->isDisabled;
     }
 }

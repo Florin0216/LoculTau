@@ -12,6 +12,15 @@
                 </li>
                 <li class="nav-item">
                     <a
+                        href="{{ path('admin_user_user_list') }}"
+                        class="nav-link cursor-pointer {% if app.current_route == 'admin_user_user_list' %}active{% endif %}"
+                    >
+                        <i class="bi bi-people"></i>
+                        Staff
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a
                         href="{{ path('admin_seating_event_list') }}"
                         class="nav-link cursor-pointer {% if app.current_route == 'admin_seating_event_list' %}active{% endif %}"
                     >
@@ -61,7 +70,7 @@
             if (!sidebar) return;
 
             if (window.innerWidth >= 1024) {
-                sidebar.style.height = window.innerHeight + 'px';
+                sidebar.style.height = Math.max(document.documentElement.scrollHeight, window.innerHeight) + 'px';
             } else {
                 sidebar.style.height = 'auto'; // reset for smaller screens
             }

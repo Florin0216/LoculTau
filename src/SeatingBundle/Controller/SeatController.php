@@ -35,12 +35,18 @@ class SeatController extends AbstractController
 
         $seats = $this->em->getRepository(Seat::class)->findBy(['room' => $room]);
 
-        $seatGrid = [];
-        foreach ($seats as $seat) {
-            $seatGrid[$seat->getSection()][$seat->getRowNo()][$seat->getNumber()] = $seat;
+        $defaultListing = $request->get('normalListing', false);
+
+        if (!$defaultListing) {
+            $responseData = [];
+            foreach ($seats as $seat) {
+                $responseData[$seat->getSection()][$seat->getRowNo()][$seat->getNumber()] = $seat;
+            }
+        } else {
+            $responseData = $seats;
         }
 
-        $response = $this->serializer->normalize($seatGrid, null, [
+        $response = $this->serializer->normalize($responseData, null, [
             AbstractNormalizer::GROUPS => Seat::NORMALIZER_GROUPS,
             'event' => $event,
         ]);

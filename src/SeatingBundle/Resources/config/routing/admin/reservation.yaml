@@ -8,3 +8,8 @@ admin_seating_reservation_confirm:
     path: /reservations/{uuid}/confirm
     controller: SeatingBundle\Controller\ReservationController::confirmAdminAction
     methods: GET
+
+admin_seating_reservation_show:
+    path: /seats/{seatId}/events/{eventId}/reservations/{id}/show
+    controller: SeatingBundle\Controller\ReservationController::showAdminAction
+    methods: GET

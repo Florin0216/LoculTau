@@ -14,6 +14,11 @@ const props = defineProps({
         validator(value) {
             return value >= 1 && value <= 6
         }
+    },
+    allowConfirmation: {
+        type: Boolean,
+        required: false,
+        default: true,
     }
 });
 
@@ -41,9 +46,11 @@ const cancelEdit = () => {
             <i class="bi bi-pencil"></i>
         </span>
         <div v-else class="d-flex align-items-center gap-3" :class="fs">
-            <span @click="emit('confirm')" class="text-success">
-                <i class="bi bi-check-lg"></i>
-            </span>
+            <template v-if="allowConfirmation">
+                <span @click="emit('confirm')" class="text-success">
+                    <i class="bi bi-check-lg"></i>
+                </span>
+            </template>
             <span @click="cancelEdit" class="text-danger">
                 <i class="bi bi-x-lg"></i>
             </span>

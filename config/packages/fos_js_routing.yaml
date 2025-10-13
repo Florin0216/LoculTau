@@ -14,7 +14,8 @@ fos_js_routing:
         - admin_seating_reservation_list
         - seating_reservation_new
         - seating_reservation_show_reservation_success
-        - admin_seating_
+        - admin_seating_reservation_confirm
+        - admin_seating_reservation_show
 
         # Room
         - seating_room_show
@@ -28,6 +29,9 @@ fos_js_routing:
         # User
         - user_security_login
         - public_user_user_show
+        - admin_user_user_list
+        - super_admin_user_user_new
+        - super_admin_user_user_edit
 
         # Homepage
         - admin_app_homepage

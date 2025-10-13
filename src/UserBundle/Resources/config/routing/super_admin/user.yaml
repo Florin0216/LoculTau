@@ -1,0 +1,10 @@
+
+super_admin_user_user_new:
+    path: /users/new
+    controller: UserBundle\Controller\UserController::newSuperAdminAction
+    methods: POST
+
+super_admin_user_user_edit:
+    path: /users/{id}/edit
+    controller: UserBundle\Controller\UserController::editSuperAdminAction
+    methods: PUT|PATCH

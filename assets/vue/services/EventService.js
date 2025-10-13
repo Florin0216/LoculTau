@@ -46,6 +46,10 @@ class EventService {
             })
     }
 
+    listSeatsAdmin(eventId, data, args = {}) {
+        const requestUrl = FosJsRouting.generate('')
+    }
+
     #normalize(event, action) {
         const actionFieldsMap = {
             'create': ['title', 'date', 'room'],

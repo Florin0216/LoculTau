@@ -1,0 +1,4 @@
+
+super_admin_user_user_import:
+    resource: "@UserBundle/Resources/config/routing/super_admin/user.yaml"
+    prefix: /
