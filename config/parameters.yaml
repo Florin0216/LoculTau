@@ -3,3 +3,4 @@ parameters:
     root_user_password: '%env(resolve:ROOT_USER_PASSWORD)%'
 
     private_files_dir: '%kernel.project_dir%/private_assets/uploads/vich/images'
+    public_files_dir: '/uploads/vich/images'

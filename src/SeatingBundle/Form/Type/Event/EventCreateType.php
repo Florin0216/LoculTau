@@ -9,12 +9,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EventCreateType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title')
             ->add('date')
-            ->add('room');
+            ->add('room')
+            ->add('imageFile', Base64Type::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

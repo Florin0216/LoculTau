@@ -31,18 +31,39 @@ let eventInitData = getClone(event.value);
 
 const isEditing = ref(props.isEditing);
 
+const selectedFile = ref(null);
+
 const isNewEvent = computed(() => {
     return !isValue(event.value.id);
 });
+
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        selectedFile.value = {
+            base64: event.target.result,
+            originalName: file.name
+        };
+    };
+    reader.readAsDataURL(file);
+}
 
 const onEditCancel = () => {
     event.value = getClone(eventInitData);
 }
 
+
 const onEditConfirm = () => {
+    const eventData = {
+        ...event.value,
+        imageFile: selectedFile.value
+    };
+
     const promise = isNewEvent.value
-        ? EventService.newAdmin(new EventCreateDto(event.value))
-        : EventService.editAdmin(event.value.id, new EventEditDto(event.value));
+        ? EventService.newAdmin(new EventCreateDto(eventData))
+        : EventService.editAdmin(event.value.id, new EventEditDto(eventData));
 
     promise
         .then((response) => {
@@ -83,22 +104,30 @@ onMounted(() => {
                         :font-size="5"
                         @confirm="onEditConfirm"
                         @cancel="onEditCancel"
-                    > </editing-button-group>
+                    ></editing-button-group>
                     <button @click="dismissModal" type="button" class="btn-close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="position-relative mb-4">
-                        <input v-model="event.title" :disabled="!isEditing" type="text" class="form-control " id="loginEmailInput" placeholder="Nume" :style="`padding-left: ${formPs}rem`">
+                        <input v-model="event.title" :disabled="!isEditing" type="text" class="form-control "
+                               id="loginEmailInput" placeholder="Nume" :style="`padding-left: ${formPs}rem`">
 
                         <i class="bi bi-card-text" :class="iconClass"></i>
                     </div>
                     <div class="position-relative mb-4">
-                        <input v-model="event.date" :disabled="!isEditing" type="datetime-local" class="form-control " id="loginEmailInput" placeholder="Data" :style="`padding-left: ${formPs}rem`">
+                        <input v-model="event.date" :disabled="!isEditing" type="datetime-local" class="form-control "
+                               id="loginEmailInput" placeholder="Data" :style="`padding-left: ${formPs}rem`">
 
                         <i class="bi bi-calendar-event" :class="iconClass"></i>
                     </div>
+                    <div class="position-relative mb-4">
+                        <input @change="handleFileChange" :disabled="!isEditing" type="file" class="form-control"
+                               id="eventFileInput" :style="`padding-left: ${formPs}rem`"/>
 
-                    <room-select v-model:selected-room="event.room" :is-disabled="!isEditing"> </room-select>
+                        <i class="bi bi-paperclip" :class="iconClass"></i>
+                    </div>
+
+                    <room-select v-model:selected-room="event.room" :is-disabled="!isEditing"></room-select>
                 </div>
             </div>
         </div>

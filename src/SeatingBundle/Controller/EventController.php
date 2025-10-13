@@ -23,10 +23,10 @@ class EventController extends AbstractController
 {
     public function __construct(
         protected EntityManagerInterface $em,
-        protected SerializerInterface $serializer,
-        protected EventFormFactory $formFactory,
-        protected EventManager $eventManager,
-        protected EntityService $es,
+        protected SerializerInterface    $serializer,
+        protected EventFormFactory       $formFactory,
+        protected EventManager           $eventManager,
+        protected EntityService          $es,
     )
     {
     }
@@ -38,11 +38,11 @@ class EventController extends AbstractController
     {
         $events = $this->em->getRepository(Event::class)->findAll();
 
-        $response = $serializer->serialize($events,'json',[
-            'groups' => Event::NORMALIZER_GROUPS,
+        $eventData = $this->serializer->normalize($events, null, [
+            AbstractNormalizer::GROUPS => Event::NORMALIZER_GROUPS,
         ]);
 
-        return new JsonResponse($response, json: true);
+        return new JsonResponse($eventData);
     }
 
     public function listAction(): Response
@@ -115,6 +115,7 @@ class EventController extends AbstractController
 
         $form = $this->formFactory->getEditForm($event);
         $form->submit($payload->getData());
+
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             throw new FormInvalidDataException($form);

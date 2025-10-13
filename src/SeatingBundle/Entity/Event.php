@@ -2,15 +2,19 @@
 
 namespace SeatingBundle\Entity;
 
+use AppBundle\Entity\Embeddable\FileEmbeddable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\EventRepository;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 #[ORM\Table(name: 'seating__event')]
+#[Vich\Uploadable]
 class Event
 {
     const ENTITY_ALIAS = 'evt';
@@ -32,9 +36,24 @@ class Event
     #[Groups(['event.details'])]
     protected ?\DateTimeImmutable $date = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Embedded(class: FileEmbeddable::class, columnPrefix: 'image_')]
+    protected ?FileEmbeddable $image = null;
+
     #[ORM\ManyToOne(targetEntity: Room::class)]
     #[Groups(['room.details'])]
     protected ?Room $room = null;
+
+    #[Vich\UploadableField(
+        mapping: 'app_images_public_storage',
+        fileNameProperty: 'image.name',
+        size: 'image.size',
+        mimeType: 'image.mimeType',
+        originalName: 'image.originalName'
+    )]
+    protected ?File $imageFile = null;
 
     public function getId(): ?int
     {
@@ -59,6 +78,50 @@ class Event
     public function setDate(?\DateTimeImmutable $date): Event
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): Event
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getImage(): ?FileEmbeddable
+    {
+        if (!$this->image) {
+            $this->image = new FileEmbeddable();
+        }
+
+        return $this->image;
+    }
+
+    public function setImage(?FileEmbeddable $image): Event
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): Event
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
 
         return $this;
     }
