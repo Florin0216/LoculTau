@@ -18,8 +18,6 @@ const getEvents = () => {
         .listAdmin()
         .then((response) => {
             events.value = response.data.data;
-
-            selectedEvent.value = events.value[0];
         })
 }
 
