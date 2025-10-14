@@ -30,8 +30,19 @@
                                                 <td style="padding-bottom:15px;">
                                                     <span
                                                         style="color:#2c3e50; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">Bilet #{{ loop.index }}</span>
+                                                    {% set letters = 'ABCDEFGHIJKLMNOPRS' %}
+                                                    {% set rowLetter = letters|slice(ticket.seat.rowNo - 1, 1) %}
                                                     <span
-                                                        style="float:right; background-color:#2c3e50; color:#ffffff; padding:4px 12px; border-radius:12px; font-size:12px;">Locul {{ ticket.seat.number }}</span>
+                                                        style="float:right; background-color:#2c3e50; color:#ffffff; padding:4px 12px; border-radius:12px; font-size:12px;">
+                                                        <span
+                                                            style="float:right; background-color:#2c3e50; color:#ffffff; padding:4px 12px; border-radius:12px; font-size:12px;">
+                                                                   Sectiunea {{ ticket.seat.section }}
+                                                                   {% if ticket.seat.section == 'main' %}
+                                                                       Randul {{ rowLetter }}
+                                                                   {% endif %}
+                                                                    Locul {{ ticket.seat.number }}
+                                                        </span>
+                                                    </span>
                                                 </td>
                                             </tr>
                                         </table>

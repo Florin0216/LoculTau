@@ -2,7 +2,6 @@
 
 namespace SeatingBundle\Service;
 
-use SeatingBundle\Entity\Reservation;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;

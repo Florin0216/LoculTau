@@ -216,8 +216,8 @@ onMounted(() => {
                                     <div class="flex justify-center gap-1 flex-row-reverse">
                                         <template v-for="seatNo in 4">
                                             <SeatItem
-                                                v-if="seats['lodge_middle_left']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                                :seat="seats['lodge_middle_left']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                                v-if="seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                                :seat="seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo]"
                                                 :is-selected="isSelected(seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo])"
                                                 @click="onSeatSelect(seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo])"
                                             />

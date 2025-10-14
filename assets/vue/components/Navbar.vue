@@ -20,7 +20,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <nav class="bg-black text-white sticky top-0 z-50 shadow-lg w-full">
+    <nav class="bg-gray-950 text-white sticky top-0 z-50 shadow-lg w-full">
         <div class="flex justify-between items-center px-4 lg:px-18 py-4">
             <a :href="Routing.generate('public_app_homepage')" class="flex items-center gap-1 lg:w-64 z-50">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-yellow-300" fill="currentColor" viewBox="0 0 24 24">
@@ -29,7 +29,7 @@ onMounted(() => {
                 <div class="font-bold text-2xl tracking-wide">DeBine</div>
             </a>
             <div
-                class="lg:flex justify-between flex-col lg:flex-row md:items-center font-medium text-lg absolute lg:static top-0 left-0 w-screen h-screen lg:h-auto bg-black lg:bg-transparent pt-24 lg:pt-0 z-40 lg:transition-all lg:duration-300"
+                class="lg:flex justify-between flex-col lg:flex-row md:items-center font-medium text-lg absolute lg:static top-0 left-0 w-screen h-screen lg:h-auto bg-gray-950 lg:bg-transparent pt-24 lg:pt-0 z-40 lg:transition-all lg:duration-300"
                 :class="isOpen ? 'flex' : 'hidden'"
             >
                 <ul class="flex flex-col lg:flex-row gap-6 lg:gap-6 items-center">
