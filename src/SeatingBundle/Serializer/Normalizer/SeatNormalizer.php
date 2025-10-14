@@ -32,6 +32,8 @@ class SeatNormalizer implements NormalizerInterface
 
             $normalizedData['isAvailable'] = !$reservation;
 
+            $normalizedData['isSelected'] = false;
+
             if ($this->security->isGranted('ROLE_ADMIN')) {
                 $normalizedData['claimedAt'] = $reservation?->getClaimedAt();
             }

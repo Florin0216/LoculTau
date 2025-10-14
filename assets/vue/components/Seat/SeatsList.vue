@@ -25,6 +25,18 @@ const showReservationForm = ref(false);
 
 const isLoading = ref(false);
 
+const onConfirmSelection = () => {
+
+    for (let seat of selectedSeats.value) {
+        if (leavesIsolatedSeats(seat)) {
+            alert('Selectia aceasta ar lasa locuri izolate');
+            return;
+        }
+    }
+
+    showReservationForm.value = true;
+}
+
 watch(singleForm, (newValue, oldValue) => {
     if (newValue === oldValue) {
         return;
@@ -42,10 +54,14 @@ const onSeatSelect = (seat) => {
         selectedSeats.value = selectedSeats.value.filter(s => s.id !== seat.id);
 
         removeReservationSeatData(seat);
+
+        seat.isSelected = false;
     } else {
         selectedSeats.value.push(seat);
 
         addReservationSeatData(seat);
+
+        seat.isSelected = true;
     }
 }
 
@@ -67,8 +83,8 @@ const removeReservationSeatData = (seat) => {
 
     const index = seatsArray.findIndex(obj => obj.seats.includes(seat.id))
 
-    if(index !== -1){
-        seatsArray.splice(index,1);
+    if (index !== -1) {
+        seatsArray.splice(index, 1);
     }
 }
 
@@ -111,7 +127,7 @@ const initReservationData = () => {
             seats: seatIds,
         }
     } else {
-        if(!singleForm.value){
+        if (!singleForm.value) {
             reservationData.value.seatReservations = [];
         }
 
@@ -139,6 +155,37 @@ const getSeats = () => {
         })
 }
 
+const leavesIsolatedSeats = (seat) => {
+    const seatCount = getSeatCountForRow(seat.rowNo);
+    const rowSeats = seats.value[seat.section]?.[seat.rowNo];
+
+    const simulatedRow = {};
+    for (let i = 1; i <= seatCount; i++) {
+        simulatedRow[i] = {...rowSeats[i]};
+        if (i === seat.number) {
+            simulatedRow[i].isAvailable = false;
+        }
+    }
+
+    for (let i = 1; i <= seatCount; i++) {
+        const current = simulatedRow[i];
+        if (current.isAvailable && !current.isSelected) {
+            const left = simulatedRow[i - 1];
+            const right = simulatedRow[i + 1];
+
+            const leftTaken = !left || !left.isAvailable || left.isSelected;
+            const rightTaken = !right || !right.isAvailable || right.isSelected;
+
+            if (leftTaken && rightTaken) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+};
+
+
 onMounted(() => {
     getSeats();
 
@@ -161,7 +208,8 @@ onMounted(() => {
                 class="bg-white w-full md:w-1/2 text-center rounded-2xl py-2 md:py-4 mb-5 md:mb-8 font-semibold text-lg md:text-2xl">
                 Scena
             </div>
-            <div class="mb-10 p-4 w-11/12 lg:w-2/3 overflow-x-scroll border border-white rounded-2xl" :style="{height: isLoading ? '68.4vh' : ''}">
+            <div class="mb-10 p-4 w-11/12 lg:w-2/3 overflow-x-scroll border border-white rounded-2xl"
+                 :style="{height: isLoading ? '68.4vh' : ''}">
                 <template v-if="!isLoading">
                     <div class="md:space-y-1 min-w-max">
                         <div
@@ -271,7 +319,7 @@ onMounted(() => {
                 </div>
                 <div class="text-center">
                     <button
-                        v-if="selectedSeats.length" @click="showReservationForm = true  "
+                        v-if="selectedSeats.length" @click="onConfirmSelection"
                         class="text-white hover:bg-blue-500 py-1.5 px-3 rounded bg-blue-600 text-sm md:text-lg"
                     >
                         Confirma selectia
