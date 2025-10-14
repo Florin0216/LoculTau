@@ -16,6 +16,7 @@ fos_js_routing:
         - seating_reservation_show_reservation_success
         - admin_seating_reservation_confirm
         - admin_seating_reservation_show
+        - admin_seating_reservation_delete
 
         # Room
         - seating_room_show

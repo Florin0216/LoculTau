@@ -21,7 +21,7 @@ class Reservation
 
     const ENTITY_ALIAS = 'rsv';
 
-    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'event.details'];
+    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'event.details', 'user.details', 'timestampable'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -60,6 +60,7 @@ class Reservation
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'claimed_by_id', referencedColumnName: 'id', nullable: true)]
+    #[Groups(['reservation.details'])]
     protected ?User $claimedBy = null;
 
     #[Vich\UploadableField(

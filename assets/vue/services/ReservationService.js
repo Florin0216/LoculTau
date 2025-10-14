@@ -32,6 +32,15 @@ class ReservationService {
             .get(requestUrl)
             .catch(err => console.error(err));
     }
+
+    deleteAdmin(reservation, args = {}) {
+        args.id = reservation.id;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_reservation_delete', args);
+
+        return axios
+            .delete(requestUrl);
+    }
 }
 
 export default new ReservationService();

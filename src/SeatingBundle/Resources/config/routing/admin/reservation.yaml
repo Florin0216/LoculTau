@@ -13,3 +13,8 @@ admin_seating_reservation_show:
     path: /seats/{seatId}/events/{eventId}/reservations/{id}/show
     controller: SeatingBundle\Controller\ReservationController::showAdminAction
     methods: GET
+
+admin_seating_reservation_delete:
+    path: /reservations/{id}/delete
+    controller: SeatingBundle\Controller\ReservationController::deleteAdminAction
+    methods: DELETE

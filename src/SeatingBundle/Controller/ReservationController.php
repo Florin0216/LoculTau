@@ -117,6 +117,17 @@ class ReservationController extends AbstractController
             $repo->addWhereKeyword($qb, $keyword);
         }
 
+        $sort = $request->query->get('sort');
+        if ($sort) {
+            $allowedSorts = ['id', 'updatedAt'];
+
+            if (in_array($sort, $allowedSorts)) {
+                $request->query->set('sort', Reservation::ENTITY_ALIAS.'.'.$sort);
+            } else {
+                $request->query->remove('sort');
+            }
+        }
+
         $page = max($request->query->get('page', 1), 1);
         $limit = $request->query->get('limit', 8);
 
@@ -177,7 +188,7 @@ class ReservationController extends AbstractController
                 'event' => $event
             ];
 
-            $normalizerGroups = ['reservation.details'];
+            $normalizerGroups = ['reservation.details', 'user.details', 'timestampable'];
         } else {
             $searchParams = ['id' => $id];
 
@@ -190,6 +201,18 @@ class ReservationController extends AbstractController
             'data' => $this->serializer->normalize($reservation, null, [
                 AbstractNormalizer::GROUPS => $normalizerGroups,
             ])
+        ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id, Request $request): Response
+    {
+        $reservation = $this->es->findOrReject(Reservation::class, $id);
+
+        $this->es->delete($reservation);
+
+        return new JsonResponse([
+            'data' => []
         ]);
     }
 }

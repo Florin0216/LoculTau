@@ -91,7 +91,7 @@ const seatBg = (seat) => {
     }
 
     if (seat.claimedAt) {
-        return 'bg-primary-subtle'
+        return 'bg-primary bg-opacity-50'
     }
 
     return 'bg-danger bg-opacity-75';

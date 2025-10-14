@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
         <div
             v-if="showDropdown && !seat.isAvailable && !disableDropdown"
             ref="dropdownRef"
-            class="position-absolute start-50 border border-secondary-subtle shadow translate-middle-x bg-white rounded-3 p-3"
+            class="position-absolute start-50 border border-secondary-subtle shadow-lg translate-middle-x bg-white rounded-3 p-3"
             :class="dropdownPosition"
             style="z-index: 3;"
         >
@@ -119,7 +119,15 @@ onBeforeUnmount(() => {
                     <span>@</span>
                     <span>Email</span>
                 </div>
-                <div class="fw-medium">{{reservation?.email}}</div>
+                <div class="fw-medium mb-3">{{reservation?.email}}</div>
+
+                <template v-if="reservation.claimedBy">
+                    <div class="d-flex align-items-center gap-1 text-primary">
+                        <i class="bi bi-check-lg"></i>
+                        <span>Validat de</span>
+                    </div>
+                    <div class="fw-medium text-primary">{{reservation.claimedBy.username}}</div>
+                </template>
             </template>
         </div>
     </div>
