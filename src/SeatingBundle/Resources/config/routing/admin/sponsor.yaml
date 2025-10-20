@@ -1,0 +1,15 @@
+
+admin_seating_sponsor_list:
+    path: /sponsors.{_format}
+    controller: SeatingBundle\Controller\SponsorController::listAdminAction
+    methods: GET
+
+admin_seating_sponsor_new:
+    path: /sponsors/new
+    controller: SeatingBundle\Controller\SponsorController::newAdminAction
+    methods: POST
+
+admin_seating_sponsor_edit:
+    path: /sponsors/{id}/edit
+    controller: SeatingBundle\Controller\SponsorController::editAdminAction
+    methods: PUT

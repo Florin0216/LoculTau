@@ -6,6 +6,7 @@ import ModalManager from "../../../services/ModalManager";
 import EventModal from "./EventModal.vue";
 import EventModel from "../../../models/EventModel";
 import EventSeatsListAdmin from "./EventSeatsListAdmin.vue";
+import EventReminderModal from "./EventReminderModal.vue";
 
 const selectedEvent = ref(null);
 
@@ -28,6 +29,19 @@ const openEventModal = (event = null, isEditing = false) => {
             props: {
                 event: event ?? new EventModel(),
                 isEditing: isEditing,
+            }
+        })
+        .then(() => {
+            getEvents();
+        })
+}
+
+const openEventReminderModal = (event = null) => {
+    ModalManager
+        .open({
+            component: EventReminderModal,
+            props: {
+                event: event ?? new EventModel(),
             }
         })
         .then(() => {
@@ -86,6 +100,7 @@ onMounted(() => {
                                 <div class="d-flex-center gap-2">
                                     <i @click="openEventModal(event)" class="bi bi-eye cursor-pointer"></i>
                                     <i @click="openEventModal(event, true)" class="bi bi-pencil text-primary cursor-pointer"></i>
+                                    <i @click="openEventReminderModal(event)" class="bi text-warning bi-bell cursor-pointer"></i>
                                     <i class="bi bi-trash text-danger"></i>
                                 </div>
                             </td>

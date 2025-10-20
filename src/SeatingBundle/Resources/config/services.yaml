@@ -28,3 +28,13 @@ services:
         resource: "%kernel.project_dir%/src/SeatingBundle/Service/*"
         autowire: true
         autoconfigure: true
+
+    SeatingBundle\Message\:
+        resource: "%kernel.project_dir%/src/SeatingBundle/Message/*"
+        autowire: true
+        autoconfigure: true
+
+    SeatingBundle\MessageHandler\:
+        resource: "%kernel.project_dir%/src/SeatingBundle/MessageHandler/*"
+        autowire: true
+        autoconfigure: true

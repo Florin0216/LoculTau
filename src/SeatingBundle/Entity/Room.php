@@ -26,6 +26,10 @@ class Room
     #[Groups('room.details')]
     protected ?string $name;
 
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Groups('room.details')]
+    protected ?int $capacity;
+
     #[ORM\OneToMany(targetEntity: Seat::class, mappedBy: 'room')]
     protected Collection $seats;
 
@@ -54,6 +58,15 @@ class Room
         $this->seats = $seats;
     }
 
+    public function getCapacity(): ?int
+    {
+        return $this->capacity;
+    }
 
+    public function setCapacity(?int $capacity): Room
+    {
+        $this->capacity = $capacity;
+        return $this;
+    }
 
 }

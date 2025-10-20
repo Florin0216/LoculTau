@@ -3,6 +3,8 @@
 namespace SeatingBundle\Entity;
 
 use AppBundle\Entity\Embeddable\FileEmbeddable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\EventRepository;
@@ -19,7 +21,7 @@ class Event
 {
     const ENTITY_ALIAS = 'evt';
 
-    const NORMALIZER_GROUPS = ['event.details', 'room.details'];
+    const NORMALIZER_GROUPS = ['event.details', 'room.details', 'sponsor.details'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -46,6 +48,11 @@ class Event
     #[Groups(['room.details'])]
     protected ?Room $room = null;
 
+    #[ORM\ManyToMany(targetEntity: Sponsor::class, inversedBy: 'events')]
+    #[ORM\JoinTable(name: 'seating__event_sponsor')]
+    #[Groups(['sponsor.details'])]
+    protected Collection $sponsors;
+
     #[Vich\UploadableField(
         mapping: 'app_images_public_storage',
         fileNameProperty: 'image.name',
@@ -54,6 +61,11 @@ class Event
         originalName: 'image.originalName'
     )]
     protected ?File $imageFile = null;
+
+    public function __construct()
+    {
+        $this->sponsors = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,4 +147,16 @@ class Event
     {
         $this->room = $room;
     }
+
+    public function getSponsors(): Collection
+    {
+        return $this->sponsors;
+    }
+
+    public function setSponsors(Collection $sponsors): Event
+    {
+        $this->sponsors = $sponsors;
+        return $this;
+    }
+
 }

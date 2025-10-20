@@ -21,7 +21,7 @@ class Reservation
 
     const ENTITY_ALIAS = 'rsv';
 
-    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'event.details', 'user.details', 'timestampable'];
+    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'sponsor.details','event.details', 'user.details', 'timestampable'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -52,6 +52,11 @@ class Reservation
     #[ORM\JoinColumn(name: 'seat_id', referencedColumnName: 'id', nullable: false)]
     #[Groups(['seat.details'])]
     protected ?Seat $seat = null;
+
+    #[ORM\ManyToOne(targetEntity: Sponsor::class)]
+    #[ORM\JoinColumn(name: 'sponsor_id', referencedColumnName: 'id', nullable: true)]
+    #[Groups(['sponsor.details'])]
+    protected ?Sponsor $sponsor = null;
 
     #[ORM\ManyToOne(targetEntity: Event::class)]
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
@@ -196,4 +201,17 @@ class Reservation
 
         return $this;
     }
+
+    public function getSponsor(): ?Sponsor
+    {
+        return $this->sponsor;
+    }
+
+    public function setSponsor(?Sponsor $sponsor): Reservation
+    {
+        $this->sponsor = $sponsor;
+        return $this;
+    }
+
+
 }

@@ -33,12 +33,10 @@ onMounted(() => {
                 :class="isOpen ? 'flex' : 'hidden'"
             >
                 <ul class="flex flex-col lg:flex-row gap-6 lg:gap-6 items-center">
-                    <li><a href="#" class="hover:text-yellow-300 lg:duration-300">Despre</a></li>
+                    <li><a :href="Routing.generate('public_app_content_about')" class="hover:text-yellow-300 lg:duration-300">Despre</a></li>
                     <li><a :href="Routing.generate('seating_event_list')" class="hover:text-yellow-300 lg:duration-300">Evenimente</a></li>
                     <li><a href="#" class="hover:text-yellow-300 lg:duration-300">Galerie</a></li>
-                    <li><a href="#" class="hover:text-yellow-300 lg:duration-300">Feedback</a></li>
-                    <li><a href="#" class="hover:text-yellow-300 lg:duration-300">Donatie</a></li>
-                    <li><a href="#" class="hover:text-yellow-300 lg:duration-300">Contact</a></li>
+                    <li><a :href="Routing.generate('public_app_content_contact')" class="hover:text-yellow-300 lg:duration-300">Contact</a></li>
                 </ul>
                 <ul class="flex flex-col md:flex-row justify-end gap-4 items-center p-4 lg:p-1 lg:mt-0 w-full lg:w-auto">
                     <li v-if="!user" class="w-full text-center">

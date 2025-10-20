@@ -1,7 +1,5 @@
 <script setup>
 
-import {onMounted, ref} from "vue";
-import RoomService from "../../../services/RoomService";
 import {useRooms} from "../../../composables/useRooms";
 import ModalManager from "../../../services/ModalManager";
 import RoomModal from "./RoomModal.vue";

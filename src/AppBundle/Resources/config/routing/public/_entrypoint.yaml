@@ -1,3 +1,7 @@
 public_app_homepage_import:
     resource: "@AppBundle/Resources/config/routing/public/homepage.yaml"
     prefix: /
+
+public_app_content_import:
+    resource: "@AppBundle/Resources/config/routing/public/content.yaml"
+    prefix: /

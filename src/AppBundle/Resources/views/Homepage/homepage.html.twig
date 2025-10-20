@@ -2,20 +2,17 @@
 
 {% block content %}
     <section class="relative text-white py-24 overflow-hidden -mt-5 min-h-screen bg-cover bg-center"
-             style="background-image: url('/images/homepage_image.jpeg')">
+             style="background-image: url('{{ asset('images/homepage_image.jpeg') }}')">
         <div class="absolute inset-0 bg-black/60"></div>
 
         <div class="container mx-auto text-center px-6 relative z-10 flex justify-center items-center min-h-screen">
             <div class="max-w-3xl mx-auto">
                 <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
                     DeBine
-                </h1><!--
-                <p class="text-xl md:text-2xl mb-10 text-white/90 leading-relaxed animate-fade-in-up animation-delay-200">
-                    {{ hero_subtitle|default('Join us in our mission to improve lives.') }}
-                </p>-->
+                </h1>
                 <div
                     class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
-                    <a href="#donate"
+                    <a href="https://revolut.me/deatcu45x9"
                        class="bg-white text-green-700 font-bold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
                         Donate Now
                     </a>
@@ -24,7 +21,7 @@
         </div>
     </section>
 
-    <section id="about" class="py-24 bg-white min-h-screen">
+    <section id="about" class="py-24 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="text-green-600 font-semibold text-lg mb-2 block">ABOUT US</span>
@@ -32,49 +29,6 @@
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                     {{ about_text|default('We are an NGO committed to creating sustainable change in our community through education, health, and social programs.') }}
                 </p>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="space-y-8">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div
-                            class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-all duration-300 border border-gray-100">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-xl mb-2">Education</h3>
-                            <p class="text-gray-600">Empowering through knowledge and skills development programs.</p>
-                        </div>
-
-                        <div
-                            class="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-all duration-300 border border-gray-100">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor"
-                                     viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-xl mb-2">Healthcare</h3>
-                            <p class="text-gray-600">Providing essential medical services to underserved
-                                communities.</p>
-                        </div>
-                    </div>
-
-                    <a href="#projects"
-                       class="inline-flex items-center text-green-600 font-bold hover:text-green-700 group transition-all duration-300">
-                        Learn More About Our Work
-                        <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none"
-                             stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
-                    </a>
-                </div>
             </div>
         </div>
     </section>

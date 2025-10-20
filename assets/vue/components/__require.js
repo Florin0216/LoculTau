@@ -7,6 +7,8 @@ import EventsListAdmin from "./Event/admin/EventsListAdmin.vue";
 import RoomsListAdmin from "./Room/admin/RoomsListAdmin.vue";
 import UsersListAdmin from "./User/admin/UsersListAdmin.vue";
 import ReservationsListAdmin from "./Reservation/admin/ReservationsListAdmin.vue";
+import SponsorListAdmin from "./Sponsor/admin/SponsorListAdmin.vue";
+import ReservationsStatisticsListAdmin from "./Reservation/admin/ReservationsStatisticsListAdmin.vue";
 
 app.component("seats-list",SeatsList);
 app.component("navbar",Navbar);
@@ -18,3 +20,5 @@ app.component('events-list-admin', EventsListAdmin);
 app.component('rooms-list-admin', RoomsListAdmin);
 app.component('users-list-admin', UsersListAdmin);
 app.component('reservations-list-admin', ReservationsListAdmin);
+app.component('sponsor-list-admin',SponsorListAdmin);
+app.component('reservations-statistics-list-admin',ReservationsStatisticsListAdmin)

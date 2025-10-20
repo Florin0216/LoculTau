@@ -3,7 +3,7 @@
 namespace SeatingBundle\Form\Factory;
 
 use SeatingBundle\Entity\Reservation;
-use SeatingBundle\Form\Type\ReservationCreateType;
+use SeatingBundle\Form\Type\Reservation\ReservationCreateType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 

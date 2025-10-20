@@ -25,7 +25,7 @@ const seatColor = computed(() => {
     <div
         v-if="seat"
         :id="seat.id"
-        :class="['w-3.5 h-3.5 md:w-6 md:h-6 rounded-t-sm md:rounded-t-lg bg-gray-300 text-center text-[10px] md:text-xs',seatColor]"
+        :class="['w-6 h-6 md:w-8 md:h-8 rounded-t-sm md:rounded-t-lg bg-gray-300 text-center text-[12px] md:text-xs',seatColor]"
     >
         <span v-if="seat.isAvailable">{{ seat.number }}</span>
     </div>

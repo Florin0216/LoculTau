@@ -20,6 +20,17 @@ class ReservationService {
             .catch(err => console.error(err));
     }
 
+    listReservationsForEventAdmin(eventId = null, args = {}) {
+        args._format = 'json';
+        args.eventId = eventId;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_reservation_list_statistics', args);
+
+        return axios
+            .get(requestUrl)
+            .catch(err => console.error(err));
+    }
+
     showAdmin(reservationId = '-', seatId = '-', eventId = '-', args = {}) {
         args._format = 'json';
         args.id = reservationId;

@@ -26,10 +26,16 @@ class Base64ToFileTransformer implements DataTransformerInterface
     /**
      * @inheritDoc
      */
-    public function reverseTransform(mixed $value): UploadedFile
+    public function reverseTransform(mixed $value): ?UploadedFile
     {
+        if (!$value || !isset($value['base64'], $value['originalName'])) {
+            return null;
+        }
+
         $base64 = $value['base64'];
         $originalName = $value['originalName'];
+
+        $extension = 'tmp';
 
         if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
             $base64 = substr($base64, strpos($base64, ',') + 1);

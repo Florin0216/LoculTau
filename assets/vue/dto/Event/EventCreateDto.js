@@ -4,6 +4,7 @@ class EventCreateDto {
     date = null;
     room = null;
     imageFile = null;
+    sponsors = null;
 
 
     constructor(event) {
@@ -11,6 +12,7 @@ class EventCreateDto {
         this.room = event.room.id;
         this.date = event.date;
         this.imageFile = event.imageFile;
+        this.sponsors = event.sponsors;
     }
 }
 

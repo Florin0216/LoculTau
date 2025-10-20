@@ -126,14 +126,14 @@ onMounted(() => {
 <template>
     <template v-if="!isLoading">
         <div v-if="sections.length" class="d-flex flex-column align-items-center flex-nowrap">
-            <div v-for="row in sectionMaxRowMap['main']" class="d-flex-center flex-nowrap" style="gap: 4px">
+            <div v-for="row in sectionMaxRowMap['Sala Principala']" class="d-flex-center flex-nowrap" style="gap: 4px">
                 <span class="me-4 fw-medium">{{rowLetterMap[row - 1].toUpperCase()}}</span>
 
-                <template v-for="number in sectionRowMaxNumberMap['main'][row]">
+                <template v-for="number in sectionRowMaxNumberMap['Sala Principala'][row]">
                     <seat-item-admin
-                        @click="onSeatClick(seats['main'][row][number])"
-                        :seat="seats['main'][row][number]"
-                        :seat-class="seatBg(seats['main'][row][number])"
+                        @click="onSeatClick(seats['Sala Principala'][row][number])"
+                        :seat="seats['Sala Principala'][row][number]"
+                        :seat-class="seatBg(seats['Sala Principala'][row][number])"
                         :event-id="event.id"
                         :disable-dropdown="seatSelectionEnabled"
                     ></seat-item-admin>
@@ -153,7 +153,7 @@ onMounted(() => {
             <div class="row w-100 justify-content-center">
                 <div class="col-5">
                     <div class="row">
-                        <div v-for="section in ['lodge_left', 'lodge_middle_left']" class="col-auto" :class="{'ms-auto': section === 'lodge_middle_left'}">
+                        <div v-for="section in ['Loja Stanga', 'Loja Oficiala Stanga']" class="col-auto" :class="{'ms-auto': section === 'Loja Oficiala Stanga'}">
                             <div v-for="row in sectionMaxRowMap[section]" class="d-flex-center flex-nowrap mb-1" style="gap: 4px">
                                 <template v-for="number in Array.from({ length: sectionRowMaxNumberMap[section][row] - sectionRowMinNumberMap[section][row] + 1 }, (_, i) => i + sectionRowMinNumberMap[section][row])">
                                     <seat-item-admin
@@ -170,7 +170,7 @@ onMounted(() => {
                 </div>
                 <div class="col-5">
                     <div class="row">
-                        <div v-for="section in ['lodge_middle_right', 'lodge_right']" class="col-auto" :class="{'ms-auto': section === 'lodge_right'}">
+                        <div v-for="section in ['Loja Oficiala Dreapta', 'Loja Dreapta']" class="col-auto" :class="{'ms-auto': section === 'Loja Dreapta'}">
                             <div v-for="row in sectionMaxRowMap[section]" class="d-flex-center flex-nowrap flex-row-reverse mb-1" style="gap: 4px">
                                 <template v-for="number in Array.from({ length: sectionRowMaxNumberMap[section][row] - sectionRowMinNumberMap[section][row] + 1 }, (_, i) => i + sectionRowMinNumberMap[section][row])">
                                     <seat-item-admin

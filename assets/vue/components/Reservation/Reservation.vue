@@ -1,8 +1,8 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
 import ReservationService from "../../services/ReservationService";
 import ReservationForm from "./ReservationForm.vue";
 import FosJsRouting from "../../../js/fosJsRouting";
+import SeatService from "../../services/SeatService";
 
 const reservationData = defineModel('reservationData', {
     type: Object,
@@ -21,6 +21,14 @@ const props = defineProps({
     reservationData: {
         type: Object,
         required: true
+    },
+    room: {
+        type: Object,
+        required: true
+    },
+    event: {
+        type: Object,
+        required: true
     }
 });
 
@@ -30,7 +38,11 @@ const submitReservation = () => {
     if (props.uniqueReservationData) {
         ReservationService
             .new(reservationData.value)
+            .then(() => {
+                return SeatService.getSeats(props.room, props.event);
+            })
             .then((response) => {
+                props.seats.value = response;
                 window.location.href = FosJsRouting.generate('seating_reservation_show_reservation_success');
             })
     } else {
@@ -42,6 +54,10 @@ const submitReservation = () => {
 
         Promise.all(promises)
             .then(() => {
+                return SeatService.getSeats(props.room, props.event);
+            })
+            .then((response) => {
+                props.seats.value = response;
                 window.location.href = FosJsRouting.generate('seating_reservation_show_reservation_success');
             })
     }

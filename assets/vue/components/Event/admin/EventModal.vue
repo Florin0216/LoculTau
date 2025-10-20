@@ -8,6 +8,7 @@ import RoomSelect from "../../Room/admin/RoomSelect.vue";
 import EventService from "../../../services/EventService";
 import EventCreateDto from "../../../dto/Event/EventCreateDto";
 import EventEditDto from "../../../dto/Event/EventEditDto";
+import SponsorSelect from "../../Sponsor/admin/SponsorSelect.vue";
 
 const props = defineProps({
     instance: {
@@ -58,7 +59,8 @@ const onEditCancel = () => {
 const onEditConfirm = () => {
     const eventData = {
         ...event.value,
-        imageFile: selectedFile.value
+        imageFile: selectedFile.value,
+        sponsors: event.value.sponsors.map(s => s.id)
     };
 
     const promise = isNewEvent.value
@@ -122,12 +124,14 @@ onMounted(() => {
                     </div>
                     <div class="position-relative mb-4">
                         <input @change="handleFileChange" :disabled="!isEditing" type="file" class="form-control"
-                               id="eventFileInput" :style="`padding-left: ${formPs}rem`"/>
+                               id="loginEmailInput" :style="`padding-left: ${formPs}rem`"/>
 
                         <i class="bi bi-paperclip" :class="iconClass"></i>
                     </div>
 
                     <room-select v-model:selected-room="event.room" :is-disabled="!isEditing"></room-select>
+                    <sponsor-select :event="event" v-model:selected-sponsors="event.sponsors"
+                                    :is-disabled="!isEditing"></sponsor-select>
                 </div>
             </div>
         </div>

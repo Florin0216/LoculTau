@@ -35,8 +35,8 @@ class ReservationController extends AbstractController
         protected ReservationManager     $reservationManager,
         protected QRCodeService          $QRCodeService,
         protected SerializerInterface    $serializer,
-        protected ParameterBagInterface $params,
-        protected EntityService $es,
+        protected ParameterBagInterface  $params,
+        protected EntityService          $es,
     )
     {
     }
@@ -56,14 +56,14 @@ class ReservationController extends AbstractController
             $email = $form->get('email')->getData();
             $name = $form->get('name')->getData();
             $event = $form->get('event')->getData();
-
+            $sponsor = $form->get('sponsor')->getData();
             $seats = $form->get('seats')->getData();
 
             $reservationData = [];
 
             if ($seats) {
                 foreach ($seats as $seat) {
-                    $reservation = $this->reservationManager->newInstance($email, $seat, $event, $name);
+                    $reservation = $this->reservationManager->newInstance($email, $seat, $event, $sponsor, $name);
 
                     $reservationData[] = $this->reservationManager->handleCreation($reservation);
                 }
@@ -122,7 +122,7 @@ class ReservationController extends AbstractController
             $allowedSorts = ['id', 'updatedAt'];
 
             if (in_array($sort, $allowedSorts)) {
-                $request->query->set('sort', Reservation::ENTITY_ALIAS.'.'.$sort);
+                $request->query->set('sort', Reservation::ENTITY_ALIAS . '.' . $sort);
             } else {
                 $request->query->remove('sort');
             }
@@ -200,6 +200,39 @@ class ReservationController extends AbstractController
         return new JsonResponse([
             'data' => $this->serializer->normalize($reservation, null, [
                 AbstractNormalizer::GROUPS => $normalizerGroups,
+            ]),
+        ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function listStatisticsAdminAction(Request $request): Response
+    {
+        $isHtmlRequest = $request->getRequestFormat() === 'html';
+
+        if ($isHtmlRequest) {
+            $events = $this->em->getRepository(Event::class)->findAll();
+
+            return $this->render('@Seating/Reservation/admin/listStatistics.html.twig', [
+                'events' => $this->serializer->normalize($events, null, [
+                    AbstractNormalizer::GROUPS => Event::NORMALIZER_GROUPS,
+                ])
+            ]);
+        }
+
+        $repo = $this->em->getRepository(Reservation::class);
+
+        $eventId = $request->query->get('eventId');
+
+        if ($eventId) {
+            $event = $this->em->getRepository(Event::class)->find($eventId);
+            $reservations = $repo->findBy(['event' => $event]);
+        } else {
+            $reservations = $repo->findAll();
+        }
+
+        return new JsonResponse([
+            'data' => $this->serializer->normalize($reservations, null, [
+                AbstractNormalizer::GROUPS => Reservation::NORMALIZER_GROUPS,
             ])
         ]);
     }

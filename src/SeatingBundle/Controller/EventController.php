@@ -82,9 +82,9 @@ class EventController extends AbstractController
      * @throws Exception
      */
     #[IsGranted('ROLE_ADMIN')]
-    public function newAdminAction($date, Request $request): Response
+    public function newAdminAction(Request $request): Response
     {
-        $event = $this->eventManager->newInstance($date);
+        $event = new Event();
 
         $payload = JsonRequestPayload::newInstanceFromRequest($request);
 
@@ -116,7 +116,6 @@ class EventController extends AbstractController
 
         $form = $this->formFactory->getEditForm($event);
         $form->submit($payload->getData());
-
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             throw new FormInvalidDataException($form);

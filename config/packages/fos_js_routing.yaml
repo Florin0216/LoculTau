@@ -3,6 +3,10 @@ fos_js_routing:
         # Homepage
         - public_app_homepage
 
+        # Content
+        - public_app_content_about
+        - public_app_content_contact
+
         # Event
         - seating_event_list
         - seating_event_fetch
@@ -17,6 +21,7 @@ fos_js_routing:
         - admin_seating_reservation_confirm
         - admin_seating_reservation_show
         - admin_seating_reservation_delete
+        - admin_seating_reservation_list_statistics
 
         # Room
         - seating_room_show
@@ -36,3 +41,11 @@ fos_js_routing:
 
         # Homepage
         - admin_app_homepage
+
+        # Sponsor
+        - admin_seating_sponsor_list
+        - admin_seating_sponsor_new
+        - admin_seating_sponsor_edit
+
+        # Reminder
+        - admin_seating_reminder_new

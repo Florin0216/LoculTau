@@ -1,6 +1,6 @@
 <script setup>
 import SeatItem from "./SeatItem.vue";
-import {onMounted, ref, watch} from "vue";
+import {onActivated, onDeactivated, onMounted, ref, watch} from "vue";
 import Reservation from "../Reservation/Reservation.vue";
 import SeatService from "../../services/SeatService";
 
@@ -12,6 +12,10 @@ const props = defineProps({
     room: {
         type: Object,
         required: true
+    },
+    sponsor: {
+        type: Object,
+        required: false
     }
 });
 
@@ -29,7 +33,7 @@ const onConfirmSelection = () => {
 
     for (let seat of selectedSeats.value) {
         if (leavesIsolatedSeats(seat)) {
-            alert('Selectia aceasta ar lasa locuri izolate');
+            alert('Va rugam nu lasati loc liber cand selectati locurile!');
             return;
         }
     }
@@ -71,6 +75,7 @@ const addReservationSeatData = (seat) => {
             name: null,
             email: null,
             event: props.event.id,
+            sponsor: props.sponsor?.id || null,
             seats: [seat.id],
         });
     } else {
@@ -79,13 +84,18 @@ const addReservationSeatData = (seat) => {
 }
 
 const removeReservationSeatData = (seat) => {
-    let seatsArray = !singleForm.value ? reservationData.value.seatReservations : reservationData.value.seats;
-
-    const index = seatsArray.findIndex(obj => obj.seats.includes(seat.id))
-
-    if (index !== -1) {
-        seatsArray.splice(index, 1);
+    if (!singleForm.value) {
+        const index = reservationData.value.seatReservations.findIndex(obj => obj.seats.includes(seat.id));
+        if (index !== -1) {
+            reservationData.value.seatReservations.splice(index, 1);
+        }
+    } else {
+        const index = reservationData.value.seats.indexOf(seat.id);
+        if (index !== -1) {
+            reservationData.value.seats.splice(index, 1);
+        }
     }
+
 }
 
 
@@ -124,6 +134,7 @@ const initReservationData = () => {
             name: null,
             email: null,
             event: props.event.id,
+            sponsor: props.sponsor?.id || null,
             seats: seatIds,
         }
     } else {
@@ -136,6 +147,7 @@ const initReservationData = () => {
                 name: null,
                 email: null,
                 event: props.event.id,
+                sponsor: props.sponsor?.id || null,
                 seats: [seat.id],
             });
         }
@@ -185,7 +197,6 @@ const leavesIsolatedSeats = (seat) => {
     return false;
 };
 
-
 onMounted(() => {
     getSeats();
 
@@ -199,6 +210,8 @@ onMounted(() => {
         v-if="showReservationForm"
         :reservation-data="reservationData"
         :seats="selectedSeats"
+        :event="event"
+        :room="room"
         :unique-reservation-data="singleForm"
         @back="showReservationForm = false"
     ></reservation>
@@ -211,20 +224,20 @@ onMounted(() => {
             <div class="mb-10 p-4 w-11/12 lg:w-2/3 overflow-x-scroll border border-white rounded-2xl"
                  :style="{height: isLoading ? '68.4vh' : ''}">
                 <template v-if="!isLoading">
-                    <div class="md:space-y-1 min-w-max">
+                    <div class="space-y-1 min-w-max">
                         <div
                             v-for="row in 18"
-                            class="flex gap-0.5 md:gap-1 justify-center items-center"
+                            class="flex gap-1 justify-center items-center"
                         >
                             <div class="text-right mr-2 text-white text-sm font-semibold">
                                 {{ String.fromCharCode(65 + (row - 1) + (row >= 17 ? 1 : 0)) }}
                             </div>
                             <template v-for="seat in getSeatCountForRow(row)">
                                 <SeatItem
-                                    v-if="seats['main']?.[row]?.[seat]"
-                                    :seat="seats['main']?.[row]?.[seat]"
-                                    :is-selected="isSelected(seats['main']?.[row]?.[seat])"
-                                    @click="onSeatSelect(seats['main']?.[row]?.[seat])"
+                                    v-if="seats['Sala Principala']?.[row]?.[seat]"
+                                    :seat="seats['Sala Principala']?.[row]?.[seat]"
+                                    :is-selected="isSelected(seats['Sala Principala']?.[row]?.[seat])"
+                                    @click="onSeatSelect(seats['Sala Principala']?.[row]?.[seat])"
                                 />
                             </template>
 
@@ -239,10 +252,10 @@ onMounted(() => {
                                 <div v-for="row in 2" class="flex justify-center gap-1 mt-2">
                                     <template v-for="seatNumber in 4">
                                         <SeatItem
-                                            v-if="seats['lodge_left']?.[row]?.[(row - 1) * 4 + seatNumber]"
-                                            :seat="seats['lodge_left']?.[row]?.[(row - 1) * 4 + seatNumber]"
-                                            :is-selected="isSelected(seats['lodge_left']?.[row]?.[(row - 1) * 4 + seatNumber])"
-                                            @click="onSeatSelect(seats['lodge_left']?.[row]?.[(row - 1) * 4 + seatNumber])"
+                                            v-if="seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber]"
+                                            :seat="seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber]"
+                                            :is-selected="isSelected(seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber])"
+                                            @click="onSeatSelect(seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber])"
                                         />
                                     </template>
                                 </div>
@@ -254,20 +267,20 @@ onMounted(() => {
                                     <div class="flex justify-center gap-1">
                                         <template v-for="seatNo in 4">
                                             <SeatItem
-                                                v-if="seats['lodge_middle_left']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                                :seat="seats['lodge_middle_left']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                                :is-selected="isSelected(seats['lodge_middle_left']?.[row]?.[(row - 1) * 4 + seatNo])"
-                                                @click="onSeatSelect(seats['lodge_middle_left']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                                v-if="seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                                :seat="seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                                :is-selected="isSelected(seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                                @click="onSeatSelect(seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo])"
                                             />
                                         </template>
                                     </div>
                                     <div class="flex justify-center gap-1 flex-row-reverse">
                                         <template v-for="seatNo in 4">
                                             <SeatItem
-                                                v-if="seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                                :seat="seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                                :is-selected="isSelected(seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo])"
-                                                @click="onSeatSelect(seats['lodge_middle_right']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                                v-if="seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                                :seat="seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                                :is-selected="isSelected(seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                                @click="onSeatSelect(seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
                                             />
                                         </template>
                                     </div>
@@ -279,10 +292,10 @@ onMounted(() => {
                                 <div v-for="row in 2" class="flex flex-row-reverse justify-center gap-1 mt-2">
                                     <template v-for="seatNo in 4">
                                         <SeatItem
-                                            v-if="seats['lodge_right']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                            :seat="seats['lodge_right']?.[row]?.[(row - 1) * 4 + seatNo]"
-                                            :is-selected="isSelected(seats['lodge_right']?.[row]?.[(row - 1) * 4 + seatNo])"
-                                            @click="onSeatSelect(seats['lodge_right']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                            v-if="seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                            :seat="seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
+                                            :is-selected="isSelected(seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                            @click="onSeatSelect(seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
                                         />
                                     </template>
                                 </div>

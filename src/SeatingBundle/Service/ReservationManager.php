@@ -7,6 +7,7 @@ use Endroid\QrCode\Exception\ValidationException;
 use SeatingBundle\Entity\Event;
 use SeatingBundle\Entity\Reservation;
 use SeatingBundle\Entity\Seat;
+use SeatingBundle\Entity\Sponsor;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Uid\Uuid;
@@ -15,15 +16,15 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 class ReservationManager
 {
     public function __construct(
-        protected QRCodeService $QRCodeService,
-        protected UploaderHelper $uploaderHelper,
+        protected QRCodeService          $QRCodeService,
+        protected UploaderHelper         $uploaderHelper,
         protected EntityManagerInterface $em,
-        protected ParameterBagInterface $params,
+        protected ParameterBagInterface  $params,
     )
     {
     }
 
-    public function newInstance(string $email, Seat $seat, Event $event, string $name = null): Reservation
+    public function newInstance(string $email, Seat $seat, Event $event, ?Sponsor $sponsor = null, string $name = null): Reservation
     {
         $reservation = new Reservation();
 
@@ -34,6 +35,7 @@ class ReservationManager
             ->setEvent($event)
             ->setEmail($email)
             ->setName($name)
+            ->setSponsor($sponsor)
             ->setUuid($uuid);
 
         return $reservation;
@@ -54,7 +56,7 @@ class ReservationManager
 
         $fullPath = $privateDir . $qrCodePath;
 
-        return  [
+        return [
             'seat' => $reservation->getSeat(),
             'qrCode' => $fullPath,
         ];

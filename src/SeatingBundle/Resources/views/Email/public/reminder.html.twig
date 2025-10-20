@@ -1,0 +1,96 @@
+<table style="width:100%; height:100%; border-collapse:collapse; background-color:#f4f4f4; padding:20px 0; margin:0;">
+    <tr>
+        <td style="padding:0; margin:0;">
+            <table style="width:100%; border-collapse:collapse; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 4px rgba(0,0,0,0.1); max-width:600px; margin:0 auto;">
+
+                <!-- Header -->
+                <tr>
+                    <td style="background-color:#2c3e50; padding:30px 20px; text-align:center;">
+                        <h1 style="margin:0; color:#ffffff; font-size:24px; font-weight:normal;">Vă Așteptăm!</h1>
+                        <p style="margin:10px 0 0 0; color:#ecf0f1; font-size:14px;">Reminder pentru evenimentul dvs.</p>
+                    </td>
+                </tr>
+
+                <!-- Content -->
+                <tr>
+                    <td style="padding:30px 20px;">
+                        <p style="margin:0 0 15px 0; color:#333333; font-size:15px; line-height:1.6;">Bună ziua,</p>
+
+                        <p style="margin:0 0 25px 0; color:#666666; font-size:14px; line-height:1.6;">
+                            Acesta este un reminder amabil pentru evenimentul vostru care are loc foarte curând. Consultați detaliile importante de mai jos pentru a vă pregăti.
+                        </p>
+
+                        <!-- Image Section - Optimized for both mobile and desktop -->
+                        <table style="width:100%; margin-bottom:20px;">
+                            <tr>
+                                <td style="padding:0; text-align:center;">
+                                    <img src="{{ imageCid }}" alt="Poza eveniment"
+                                         style="width:100%; max-width:600px; height:auto; display:block; margin:0 auto; border-radius:6px; object-fit:contain;">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Event Details Box 1 -->
+                        <table style="width:100%; border-collapse:collapse; margin-bottom:20px; background-color:#f8f9fa; border-radius:6px; border-left:3px solid #2c3e50;">
+                            <tr>
+                                <td style="padding:20px;">
+                                    <div style="color:#2c3e50; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">📅 Data și Ora Evenimentului</div>
+                                    <table style="width:100%; border-collapse:collapse;">
+                                        <tr>
+                                            <td style="padding-bottom:10px;">
+                                                <div style="color:#2c3e50; font-size:14px; margin-bottom:4px;"><strong>Data:</strong> {{ event.date|date('d-m-Y') }} </div>
+                                                <div style="color:#2c3e50; font-size:14px; margin-bottom:4px;"><strong>Ora:</strong> {{ event.date|date('H:i') }}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Event Details Box 2 -->
+                        <table style="width:100%; border-collapse:collapse; margin-bottom:20px; background-color:#f8f9fa; border-radius:6px; border-left:3px solid #2c3e50;">
+                            <tr>
+                                <td style="padding:20px;">
+                                    <div style="color:#2c3e50; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:15px;">📍 Locația</div>
+                                    <table style="width:100%; border-collapse:collapse;">
+                                        <tr>
+                                            <td style="padding-bottom:10px;">
+                                                <div style="color:#2c3e50; font-size:14px; margin-bottom:4px;"><strong>Venue:</strong> {{ event.room.name }}</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Instructions -->
+                        <table style="width:100%; border-collapse:collapse; margin-top:25px; background-color:#f8f9fa; border-radius:4px;">
+                            <tr>
+                                <td style="padding:20px;">
+                                    <p style="margin:0 0 12px 0; color:#333333; font-size:14px; font-weight:bold;">
+                                        Instrucțiuni importante:</p>
+                                    <p style="margin:0 0 8px 0; color:#666666; font-size:13px; line-height:1.6;">•
+                                        Ajungeți cu cel puțin 15 minute înainte de deschiderea locației</p>
+                                    <p style="margin:0 0 8px 0; color:#666666; font-size:13px; line-height:1.6;">•
+                                        Purtați biletul electronic (pe telefon) sau o copie tipărită</p>
+                                    <p style="margin:0 0 8px 0; color:#666666; font-size:13px; line-height:1.6;">•
+                                        Verificați condițiile meteo și purtați haine confortabile</p>
+                                    <p style="margin:0; color:#666666; font-size:13px; line-height:1.6;">• În caz de modificări, voi fi contactat prin email</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color:#f8f9fa; padding:25px 20px; text-align:center; border-top:1px solid #e0e0e0;">
+                        <p style="margin:0 0 5px 0; color:#333333; font-size:13px; font-weight:bold;">Aveți nevoie de ajutor?</p>
+                        <p style="margin:0 0 15px 0; color:#666666; font-size:12px;">Contactați-ne la support@example.com sau +40 123 456 789</p>
+                        <p style="margin:0; color:#999999; font-size:11px;">© 2025 Company Name. Toate drepturile rezervate.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

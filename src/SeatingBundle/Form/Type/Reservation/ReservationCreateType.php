@@ -1,10 +1,10 @@
 <?php
 
-namespace SeatingBundle\Form\Type;
+namespace SeatingBundle\Form\Type\Reservation;
 
-use SeatingBundle\Entity\Event;
 use SeatingBundle\Entity\Reservation;
 use SeatingBundle\Entity\Seat;
+use SeatingBundle\Entity\Sponsor;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -21,6 +21,10 @@ class ReservationCreateType extends AbstractType
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('event')
+            ->add('sponsor', EntityType::class,[
+                'class' => Sponsor::class,
+                'required' => false,
+            ])
             ->add('seat')
             ->add('seats', CollectionType::class, [
                 'mapped' => false,
@@ -31,7 +35,7 @@ class ReservationCreateType extends AbstractType
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
