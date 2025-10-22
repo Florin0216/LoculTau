@@ -1,3 +1,12 @@
 admin_app_homepage_import:
     resource: "@AppBundle/Resources/config/routing/admin/homepage.yaml"
     prefix: /
+
+admin_app_gallery_import:
+    resource: "@AppBundle/Resources/config/routing/admin/gallery.yaml"
+    prefix: /
+
+admin_app_galleryItem_import:
+    resource: "@AppBundle/Resources/config/routing/admin/galleryItem.yaml"
+    prefix: /
+

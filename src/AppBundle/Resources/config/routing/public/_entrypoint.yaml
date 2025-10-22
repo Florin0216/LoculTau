@@ -5,3 +5,11 @@ public_app_homepage_import:
 public_app_content_import:
     resource: "@AppBundle/Resources/config/routing/public/content.yaml"
     prefix: /
+
+public_app_gallery_import:
+    resource: "@AppBundle/Resources/config/routing/public/gallery.yaml"
+    prefix: /
+
+public_app_gallery_item_import:
+    resource: "@AppBundle/Resources/config/routing/public/galleryItem.yaml"
+    prefix: /

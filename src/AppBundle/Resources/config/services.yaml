@@ -24,3 +24,13 @@ services:
         public: true
         autowire: true
         autoconfigure: true
+
+    AppBundle\Repository\:
+        resource: "%kernel.project_dir%/src/AppBundle/Repository/*"
+        autowire: true
+        autoconfigure: true
+
+    AppBundle\Form\:
+        resource: "%kernel.project_dir%/src/AppBundle/Form/*"
+        autowire: true
+        autoconfigure: true

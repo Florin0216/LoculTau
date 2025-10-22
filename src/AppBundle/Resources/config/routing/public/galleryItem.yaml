@@ -1,0 +1,5 @@
+
+public_app_gallery_item_list:
+    path: /gallery/{id}/galleryItems
+    controller: AppBundle\Controller\GalleryItemController::listAction
+    methods: GET

@@ -1,7 +1,11 @@
 public_app_import:
     resource: "@AppBundle/Resources/config/routing/public/_entrypoint.yaml"
     prefix: /
+    defaults:
+        _format: 'html'
 
 admin_app_import:
     resource: "@AppBundle/Resources/config/routing/admin/_entrypoint.yaml"
     prefix: /
+    defaults:
+        _format: 'html'

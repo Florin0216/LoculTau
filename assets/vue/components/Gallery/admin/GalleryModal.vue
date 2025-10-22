@@ -1,19 +1,19 @@
 <script setup>
-
-import EditingButtonGroup from "../../Common/EditingButtonGroup.vue";
 import {computed, onMounted, ref} from "vue";
 import {getClone} from "../../../helpers/getClone";
 import {isValue} from "../../../helpers/isValue";
-import RoomService from "../../../services/RoomService";
-import RoomCreateDto from "../../../dto/Room/RoomCreateDto";
-import RoomEditDto from "../../../dto/Room/RoomEditDto";
+import GalleryService from "../../../services/GalleryService";
+import EditingButtonGroup from "../../Common/EditingButtonGroup.vue";
+import GalleryCreateDto from "../../../dto/Gallery/GalleryCreateDto";
+import GalleryEditDto from "../../../dto/Gallery/GalleryEditDto";
+import EventSelect from "../../Event/admin/EventSelect.vue";
 
 const props = defineProps({
     instance: {
         type: Object,
         required: true,
     },
-    room: {
+    gallery: {
         type: Object,
         required: true,
     },
@@ -24,32 +24,37 @@ const props = defineProps({
     }
 });
 
-const room = ref(getClone(props.room));
+const gallery = ref(getClone(props.gallery));
 
-let eventInitData = getClone(room.value);
+let galleryInitData = getClone(gallery.value);
 
 const isEditing = ref(props.isEditing);
 
-const isNewEvent = computed(() => {
-    return !isValue(room.value.id);
+const isNewGallery = computed(() => {
+    return !isValue(gallery.value.id);
 });
 
 const onEditCancel = () => {
-    room.value = getClone(eventInitData);
+    gallery.value = getClone(galleryInitData);
 }
 
 const onEditConfirm = () => {
-    const promise = isNewEvent.value
-        ? RoomService.newAdmin(new RoomCreateDto(room.value))
-        : RoomService.editAdmin(room.value.id, new RoomEditDto(room.value));
+    const galleryData = {
+        ...gallery.value,
+        event: gallery.value.event?.id
+    };
+
+    const promise = isNewGallery.value
+        ? GalleryService.newAdmin(new GalleryCreateDto(galleryData))
+        : GalleryService.editAdmin(gallery.value.id, new GalleryEditDto(galleryData));
 
     promise
         .then((response) => {
-            room.value = response.data.data;
+            gallery.value = response.data.data;
 
             isEditing.value = false;
 
-            eventInitData = getClone(room.value);
+            galleryInitData = getClone(gallery.value);
         })
         .catch(err => console.error(err));
 }
@@ -74,28 +79,26 @@ onMounted(() => {
             <div class="modal-content pb-1">
                 <div class="modal-header">
                     <h4 class="modal-title me-3">
-                        <template v-if="isNewEvent">Adaugă sală</template>
-                        <template v-else>Detalii sală</template>
+                        <template v-if="isNewGallery">Adaugă galerie</template>
+                        <template v-else>Detalii galerie</template>
                     </h4>
                     <editing-button-group
                         v-model:is-editing="isEditing"
                         :font-size="5"
                         @confirm="onEditConfirm"
                         @cancel="onEditCancel"
-                    > </editing-button-group>
+                    ></editing-button-group>
                     <button @click="dismissModal" type="button" class="btn-close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="position-relative mb-4">
-                        <input v-model="room.name" :disabled="!isEditing" type="text" class="form-control " id="loginEmailInput" placeholder="Nume" :style="`padding-left: ${formPs}rem`">
+                        <input v-model="gallery.title" :disabled="!isEditing" type="text" class="form-control "
+                               id="loginEmailInput" placeholder="Titlu" :style="`padding-left: ${formPs}rem`">
 
                         <i class="bi bi-card-text" :class="iconClass"></i>
                     </div>
-                    <div class="position-relative mb-4">
-                        <input v-model="room.capacity" :disabled="!isEditing" type="number" class="form-control " id="loginEmailInput" placeholder="Capacitate" :style="`padding-left: ${formPs}rem`">
-
-                        <i class="bi bi-people-fill" :class="iconClass"></i>
-                    </div>
+                    <event-select v-model:selected-event="gallery.event" :is-disabled="!isEditing">
+                    </event-select>
                 </div>
             </div>
         </div>

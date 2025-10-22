@@ -49,3 +49,14 @@ fos_js_routing:
 
         # Reminder
         - admin_seating_reminder_new
+
+        #Gallery
+        - public_app_gallery_list
+        - admin_app_gallery_list
+        - admin_app_gallery_new
+        - admin_app_gallery_edit
+
+        #GalleryItem
+        - public_app_gallery_item_list
+        - admin_app_gallery_item_new
+        - admin_app_gallery_item_delete

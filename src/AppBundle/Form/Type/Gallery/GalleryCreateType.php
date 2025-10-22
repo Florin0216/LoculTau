@@ -1,26 +1,31 @@
 <?php
 
-namespace SeatingBundle\Form\Type\Room;
+namespace AppBundle\Form\Type\Gallery;
 
-use SeatingBundle\Entity\Room;
+use AppBundle\Entity\Gallery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RoomCreateType extends AbstractType
+class GalleryCreateType extends AbstractType
 {
+    public function __construct()
+    {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('capacity');
+            ->add('title')
+            ->add('event');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Room::class,
+            'data_class' => Gallery::class,
             'csrf_protection' => false,
         ]);
     }
+
 }
