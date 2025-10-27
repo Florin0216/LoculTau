@@ -6,6 +6,7 @@ use AppBundle\Exception\FormInvalidDataException;
 use AppBundle\Helper\JsonRequestPayload;
 use AppBundle\Services\EntityService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use SeatingBundle\Entity\Event;
 use SeatingBundle\Form\Factory\EventFormFactory;
@@ -23,10 +24,10 @@ class EventController extends AbstractController
 {
     public function __construct(
         protected EntityManagerInterface $em,
-        protected SerializerInterface $serializer,
-        protected EventFormFactory $formFactory,
-        protected EventManager $eventManager,
-        protected EntityService $es,
+        protected SerializerInterface    $serializer,
+        protected EventFormFactory       $formFactory,
+        protected EventManager           $eventManager,
+        protected EntityService          $es,
     )
     {
     }
@@ -38,11 +39,11 @@ class EventController extends AbstractController
     {
         $events = $this->em->getRepository(Event::class)->findAll();
 
-        $response = $serializer->serialize($events,'json',[
-            'groups' => Event::NORMALIZER_GROUPS,
+        $eventData = $this->serializer->normalize($events, null, [
+            AbstractNormalizer::GROUPS => Event::NORMALIZER_GROUPS,
         ]);
 
-        return new JsonResponse($response, json: true);
+        return new JsonResponse($eventData);
     }
 
     public function listAction(): Response
@@ -78,12 +79,12 @@ class EventController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[IsGranted('ROLE_ADMIN')]
-    public function newAdminAction($date, Request $request): Response
+    public function newAdminAction(Request $request): Response
     {
-        $event = $this->eventManager->newInstance($date);
+        $event = new Event();
 
         $payload = JsonRequestPayload::newInstanceFromRequest($request);
 
@@ -104,7 +105,7 @@ class EventController extends AbstractController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[IsGranted('ROLE_ADMIN')]
     public function editAdminAction($id, Request $request): Response
@@ -127,5 +128,18 @@ class EventController extends AbstractController
                 AbstractNormalizer::GROUPS => Event::NORMALIZER_GROUPS,
             ])
         ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id): Response
+    {
+        $event = $this->es->findOrReject(Event::class, $id);
+
+        $this->es->delete($event);
+
+        return new JsonResponse([
+            'data' => []
+        ]);
+
     }
 }

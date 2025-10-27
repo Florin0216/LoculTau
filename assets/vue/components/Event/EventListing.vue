@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center w-10/12 mx-auto">
+    <div class="grid grid-cols-1 gap-4 text-center w-10/12 mx-auto">
         <EventItem
             v-for="(event, index) in events"
             class="justify-self-center"

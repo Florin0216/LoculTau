@@ -1,0 +1,9 @@
+public_app_feedback_show:
+    path: /contact
+    controller: AppBundle\Controller\FeedbackController::showAction
+    methods: GET
+
+public_app_feedback_new:
+    path: /contact/new
+    controller: AppBundle\Controller\FeedbackController::newAction
+    methods: POST

@@ -1,11 +1,11 @@
 <script setup>
 
-import {onMounted, ref} from "vue";
-import RoomService from "../../../services/RoomService";
 import {useRooms} from "../../../composables/useRooms";
 import ModalManager from "../../../services/ModalManager";
 import RoomModal from "./RoomModal.vue";
 import RoomModel from "../../../models/RoomModel";
+import EventService from "../../../services/EventService";
+import RoomService from "../../../services/RoomService";
 
 const {rooms, getRooms} = useRooms();
 
@@ -20,6 +20,17 @@ const openRoomModal = (room = null, isEditing = false) => {
         })
         .then(() => {
             getRooms();
+        })
+}
+
+const onDelete = (room) => {
+    RoomService
+        .deleteAdmin(room)
+        .then(() => {
+            const index = rooms.value.findIndex(r => r.id === room.id);
+            if (index !== -1) {
+                rooms.value.splice(index, 1);
+            }
         })
 }
 
@@ -53,7 +64,7 @@ const openRoomModal = (room = null, isEditing = false) => {
                             <div class="d-flex-center gap-2">
                                 <i @click="openRoomModal(room)" class="bi bi-eye"></i>
                                 <i @click="openRoomModal(room, true)" class="bi bi-pencil text-primary"></i>
-                                <i class="bi bi-trash text-danger"></i>
+                                <i @click="onDelete(room)" class="bi bi-trash text-danger"></i>
                             </div>
                         </td>
                     </tr>

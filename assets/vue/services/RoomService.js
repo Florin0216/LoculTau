@@ -31,6 +31,15 @@ class RoomService {
                 data: data,
             });
     }
+
+    deleteAdmin(room, args = {}) {
+        args.id = room.id;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_room_delete', args);
+
+        return axios
+            .delete(requestUrl);
+    }
 }
 
 export default new RoomService();

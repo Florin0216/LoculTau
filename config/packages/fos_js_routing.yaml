@@ -3,24 +3,32 @@ fos_js_routing:
         # Homepage
         - public_app_homepage
 
+        # Content
+        - public_app_content_about
+
         # Event
         - seating_event_list
         - seating_event_fetch
         - admin_seating_event_list
         - admin_seating_event_new
         - admin_seating_event_edit
+        - admin_seating_event_delete
 
         # Reservation
         - admin_seating_reservation_list
         - seating_reservation_new
         - seating_reservation_show_reservation_success
-        - admin_seating_
+        - admin_seating_reservation_confirm
+        - admin_seating_reservation_show
+        - admin_seating_reservation_delete
+        - admin_seating_reservation_list_statistics
 
         # Room
         - seating_room_show
         - admin_seating_room_list
         - admin_seating_room_new
         - admin_seating_room_edit
+        - admin_seating_room_delete
 
         # Seat
         - seating_seat_list
@@ -28,6 +36,42 @@ fos_js_routing:
         # User
         - user_security_login
         - public_user_user_show
+        - admin_user_user_list
+        - super_admin_user_user_new
+        - super_admin_user_user_edit
 
         # Homepage
         - admin_app_homepage
+
+        # Sponsor
+        - admin_seating_sponsor_list
+        - admin_seating_sponsor_new
+        - admin_seating_sponsor_edit
+        - admin_seating_sponsor_delete
+
+        # Reminder
+        - admin_seating_reminder_list_reminders
+        - admin_seating_reminder_new
+        - admin_seating_reminder_delete
+
+        #Gallery
+        - public_app_gallery_list
+        - admin_app_gallery_list
+        - admin_app_gallery_new
+        - admin_app_gallery_edit
+        - admin_app_gallery_delete
+
+        #GalleryItem
+        - public_app_gallery_item_list
+        - admin_app_gallery_item_new
+        - admin_app_gallery_item_delete
+
+        #Feedback
+        - public_app_feedback_show
+        - public_app_feedback_new
+        - admin_app_feedback_list
+
+        #Page
+        - admin_app_page_list
+        - admin_app_page_new
+        - admin_app_page_edit

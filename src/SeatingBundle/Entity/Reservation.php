@@ -9,16 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Attribute\Groups;
+use UserBundle\Entity\User;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 #[ORM\Table(name: 'seating__reservation')]
+#[ORM\UniqueConstraint(name: 'seating__unique_event_seat', columns: ['event_id', 'sponsor_id'])]
 #[Vich\Uploadable]
 class Reservation
 {
+    use TimestampableTrait;
+
     const ENTITY_ALIAS = 'rsv';
 
-    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'event.details'];
+    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'sponsor.details', 'event.details', 'user.details', 'timestampable'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -38,12 +42,9 @@ class Reservation
     #[Groups(['reservation.details'])]
     protected ?string $uuid = null;
 
-    #[ORM\Column(type:  Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups(['reservation.details'])]
     protected ?\DateTimeImmutable $claimedAt;
-
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Embedded(class: FileEmbeddable::class, columnPrefix: 'qr_code_')]
     protected ?FileEmbeddable $qrCode = null;
@@ -53,10 +54,20 @@ class Reservation
     #[Groups(['seat.details'])]
     protected ?Seat $seat = null;
 
+    #[ORM\ManyToOne(targetEntity: Sponsor::class)]
+    #[ORM\JoinColumn(name: 'sponsor_id', referencedColumnName: 'id', nullable: true)]
+    #[Groups(['sponsor.details'])]
+    protected ?Sponsor $sponsor = null;
+
     #[ORM\ManyToOne(targetEntity: Event::class)]
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id', nullable: false)]
     #[Groups(['event.details'])]
     protected ?Event $event = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'claimed_by_id', referencedColumnName: 'id', nullable: true)]
+    #[Groups(['reservation.details'])]
+    protected ?User $claimedBy = null;
 
     #[Vich\UploadableField(
         mapping: 'app_images_private_storage',
@@ -124,18 +135,6 @@ class Reservation
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): Reservation
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
     public function getSeat(): ?Seat
     {
         return $this->seat;
@@ -186,9 +185,34 @@ class Reservation
         $this->qrCodeFile = $qrCodeFile;
 
         if (!$qrCodeFile) {
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedAt = new \DateTime();
         }
 
         return $this;
     }
+
+    public function getClaimedBy(): ?User
+    {
+        return $this->claimedBy;
+    }
+
+    public function setClaimedBy(?User $claimedBy): Reservation
+    {
+        $this->claimedBy = $claimedBy;
+
+        return $this;
+    }
+
+    public function getSponsor(): ?Sponsor
+    {
+        return $this->sponsor;
+    }
+
+    public function setSponsor(?Sponsor $sponsor): Reservation
+    {
+        $this->sponsor = $sponsor;
+        return $this;
+    }
+
+
 }

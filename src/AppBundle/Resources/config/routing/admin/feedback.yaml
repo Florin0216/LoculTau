@@ -1,0 +1,4 @@
+admin_app_feedback_list:
+    path: /feedbacks.{_format}
+    controller: AppBundle\Controller\FeedbackController::listAdminAction
+    methods: GET

@@ -1,0 +1,4 @@
+public_app_gallery_list:
+    path: /gallery.{_format}
+    controller: AppBundle\Controller\GalleryController::listAction
+    methods: GET

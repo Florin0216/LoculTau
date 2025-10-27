@@ -2,9 +2,10 @@
 
 {% block body %}
     {% include 'main/_navbar.html.twig' %}
-    <div class="pt-5 bg-gray-900 min-w-screen min-h-screen">
+    <div class="pt-5 bg-gray-900 min-w-screen">
         {% block content %}
 
         {% endblock %}
     </div>
+    {% include 'main/_footer.html.twig'%}
 {% endblock %}

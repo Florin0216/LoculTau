@@ -11,7 +11,9 @@ class RoomCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('name');
+        $builder
+            ->add('name')
+            ->add('capacity');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -33,4 +33,23 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();           // or getResult() for multiple
     }
+
+    public function addWhereKeyword(QueryBuilder $qb, string $keyword): QueryBuilder
+    {
+        $keyword = $keyword . '%';
+
+        $qb
+            ->innerJoin($this->a.'.event', Event::ENTITY_ALIAS)
+            ->innerJoin($this->a.'.seat', Seat::ENTITY_ALIAS)
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->like($this->a.'.email', ':keyword'),
+                $qb->expr()->like($this->a.'.name', ':keyword'),
+                $qb->expr()->like($this->a.'.uuid', ':keyword'),
+                $qb->expr()->like(Event::ENTITY_ALIAS.'.title', ':keyword'),
+                $qb->expr()->like(Seat::ENTITY_ALIAS.'.section', ':keyword'),
+            ))
+            ->setParameter('keyword', $keyword);
+
+        return $qb;
+    }
 }

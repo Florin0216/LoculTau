@@ -1,0 +1,10 @@
+
+admin_app_gallery_item_new:
+    path: /gallery/{id}/galleryItems/new
+    controller: AppBundle\Controller\GalleryItemController::newAdminAction
+    methods: POST
+
+admin_app_gallery_item_delete:
+    path: /gallery/{id}/galleryItems/{itemId}/delete
+    controller: AppBundle\Controller\GalleryItemController::deleteAdminAction
+    methods: DELETE

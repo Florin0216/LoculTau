@@ -38,7 +38,7 @@ class GenerateSeatsCommand extends Command
                     $seat->setRoom($room);
                     $seat->setRowNo($rowNumber);
                     $seat->setNumber($c);
-                    $seat->setSection('main');
+                    $seat->setSection('Sala Principala');
                     $this->entityManager->persist($seat);
                 }
             }
@@ -85,7 +85,7 @@ class GenerateSeatsCommand extends Command
                 $seat->setRowNo($r);
                 $seatNo = $c + ($r - 1) * 4; // row 1: 1-4, row 2: 5-8
                 $seat->setNumber($seatNo);
-                $seat->setSection('lodge_left');
+                $seat->setSection('Loja Stanga');
                 $this->entityManager->persist($seat);
             }
         }
@@ -104,7 +104,7 @@ class GenerateSeatsCommand extends Command
                 }
 
                 $seat->setNumber($seatNo);
-                $seat->setSection('lodge_right');
+                $seat->setSection('Loja Dreapta');
                 $this->entityManager->persist($seat);
             }
         }
@@ -117,7 +117,7 @@ class GenerateSeatsCommand extends Command
                 $seat->setRoom($room);
                 $seat->setRowNo($r);
                 $seat->setNumber($c + ($r - 1) * 4);
-                $seat->setSection('lodge_middle_left');
+                $seat->setSection('Loja Oficiala Stanga');
                 $this->entityManager->persist($seat);
             }
 
@@ -131,7 +131,7 @@ class GenerateSeatsCommand extends Command
                     $seatNo = 9 - $c;
                 }
                 $seat->setNumber($seatNo);
-                $seat->setSection('lodge_middle_right');
+                $seat->setSection('Loja Oficiala Dreapta');
                 $this->entityManager->persist($seat);
             }
         }

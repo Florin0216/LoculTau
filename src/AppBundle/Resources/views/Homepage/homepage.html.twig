@@ -1,5 +1,31 @@
 {% extends 'main/1cols.html.twig' %}
 
 {% block content %}
+    <section class="relative text-white py-24 overflow-hidden -mt-5 min-h-screen bg-cover bg-center"
+             style="background-image: url('{{ asset('images/homepage_image.jpeg') }}')">
+        <div class="absolute inset-0 bg-black/60"></div>
 
+        <div class="container mx-auto text-center px-6 relative z-10 flex justify-center items-center min-h-screen">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
+                    DeBine
+                </h1>
+                <div
+                    class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
+                    <a href="https://revolut.me/deatcu45x9"
+                       class="bg-white text-green-700 font-bold px-8 py-4 rounded-xl hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
+                        Donate Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="mb-16">
+                {{ page.content|raw }}
+            </div>
+        </div>
+    </section>
 {% endblock %}

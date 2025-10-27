@@ -10,6 +10,11 @@ services:
         autowire: true
         autoconfigure: true
 
+    UserBundle\EventSubscriber\:
+        resource: "%kernel.project_dir%/src/UserBundle/EventSubscriber/*"
+        autowire: true
+        autoconfigure: true
+
     UserBundle\Form\Factory\:
         resource: "%kernel.project_dir%/src/UserBundle/Form/Factory/*"
         autowire: true

@@ -13,3 +13,8 @@ admin_seating_room_edit:
     path: /rooms/{id}/edit
     controller: SeatingBundle\Controller\RoomController::editAdminAction
     methods: PUT
+
+admin_seating_room_delete:
+    path: /rooms/{id}/delete
+    controller: SeatingBundle\Controller\RoomController::deleteAdminAction
+    methods: DELETE

@@ -10,12 +10,14 @@ use Exception;
 use SeatingBundle\Entity\Event;
 use SeatingBundle\Entity\Room;
 use SeatingBundle\Entity\Seat;
+use SeatingBundle\Entity\Sponsor;
 use SeatingBundle\Form\Factory\RoomFormFactory;
 use SeatingBundle\Service\RoomManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -26,8 +28,8 @@ class RoomController extends AbstractController
         protected EntityManagerInterface $em,
         protected EntityService          $es,
         protected SerializerInterface    $serializer,
-        protected RoomManager $roomManager,
-        protected RoomFormFactory $formFactory,
+        protected RoomManager            $roomManager,
+        protected RoomFormFactory        $formFactory,
     )
     {
     }
@@ -38,13 +40,20 @@ class RoomController extends AbstractController
 
         $event = $this->es->findOrReject(Event::class, $eventId);
 
-        return $this->render('@Seating/Room/public/show.html.twig',[
+        $uuid = $request->query->get('uuid');
+
+        $sponsor = $this->em->getRepository(Sponsor::class)->findOneBy(['uuid' => $uuid]);
+
+        return $this->render('@Seating/Room/public/show.html.twig', [
             'jsData' => [
                 'event' => $this->serializer->normalize($event, null, [
                     AbstractNormalizer::GROUPS => Event::NORMALIZER_GROUPS,
                 ]),
                 'room' => $this->serializer->normalize($room, null, [
                     AbstractNormalizer::GROUPS => Room::NORMALIZER_GROUPS,
+                ]),
+                'sponsor' => $this->serializer->normalize($sponsor, null, [
+                    AbstractNormalizer::GROUPS => Sponsor::NORMALIZER_GROUPS,
                 ])
             ]
         ]);
@@ -121,5 +130,18 @@ class RoomController extends AbstractController
                 AbstractNormalizer::GROUPS => Room::NORMALIZER_GROUPS,
             ])
         ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id): Response
+    {
+        $room = $this->es->findOrReject(Room::class, $id);
+
+        $this->es->delete($room);
+
+        return new JsonResponse([
+            'data' => []
+        ]);
+
     }
 }

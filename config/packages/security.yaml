@@ -8,7 +8,12 @@ security:
         user_provider:
             entity:
                 class: UserBundle\Entity\User
-                property: email
+                property: username
+
+    role_hierarchy:
+        ROLE_RESERVATION_VALIDATOR: ['ROLE_USER']
+        ROLE_ADMIN: ['ROLE_RESERVATION_VALIDATOR']
+        ROLE_SUPER_ADMIN: ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']
 
     firewalls:
         dev:
@@ -25,10 +30,11 @@ security:
             form_login:
                 login_path: user_security_login
                 check_path: user_security_login
-                enable_csrf: true
+                enable_csrf: false
             logout:
                 path: user_security_logout
                 invalidate_session: true
+            user_checker: UserBundle\Security\UserChecker
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

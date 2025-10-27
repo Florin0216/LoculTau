@@ -28,10 +28,21 @@
                                         <table style="width:100%; border-collapse:collapse;">
                                             <tr>
                                                 <td style="padding-bottom:15px;">
-                                                    <span
-                                                        style="color:#2c3e50; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">Bilet #{{ loop.index }}</span>
-                                                    <span
-                                                        style="float:right; background-color:#2c3e50; color:#ffffff; padding:4px 12px; border-radius:12px; font-size:12px;">Locul {{ ticket.seat.number }}</span>
+                                                    <div
+                                                        style="color:#2c3e50; font-size:13px; font-weight:bold; text-transform:uppercase; letter-spacing:0.5px;">
+                                                        Bilet #{{ loop.index }}</div>
+                                                    {% set letters = 'ABCDEFGHIJKLMNOPRS' %}
+                                                    {% set rowLetter = letters|slice(ticket.seat.rowNo - 1, 1) %}
+                                                    <div
+                                                        style="color:#2c3e50;border-radius:12px;font-size:12px;width: 100%;max-width:200px;box-sizing:border-box;margin-top:5px;">
+                                                        <div style="margin-bottom:4px;">
+                                                            Sectiunea {{ ticket.seat.section }}</div>
+                                                        {% if ticket.seat.section == 'Sala Principala' %}
+                                                            <div style="margin-bottom:4px;">Randul {{ rowLetter }}</div>
+                                                        {% endif %}
+                                                        <div>Locul {{ ticket.seat.number }}</div>
+                                                    </div>
+
                                                 </td>
                                             </tr>
                                         </table>

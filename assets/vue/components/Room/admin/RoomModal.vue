@@ -1,13 +1,9 @@
 <script setup>
 
 import EditingButtonGroup from "../../Common/EditingButtonGroup.vue";
-import RoomSelect from "./RoomSelect.vue";
 import {computed, onMounted, ref} from "vue";
 import {getClone} from "../../../helpers/getClone";
 import {isValue} from "../../../helpers/isValue";
-import EventService from "../../../services/EventService";
-import EventCreateDto from "../../../dto/Event/EventCreateDto";
-import EventEditDto from "../../../dto/Event/EventEditDto";
 import RoomService from "../../../services/RoomService";
 import RoomCreateDto from "../../../dto/Room/RoomCreateDto";
 import RoomEditDto from "../../../dto/Room/RoomEditDto";
@@ -94,6 +90,11 @@ onMounted(() => {
                         <input v-model="room.name" :disabled="!isEditing" type="text" class="form-control " id="loginEmailInput" placeholder="Nume" :style="`padding-left: ${formPs}rem`">
 
                         <i class="bi bi-card-text" :class="iconClass"></i>
+                    </div>
+                    <div class="position-relative mb-4">
+                        <input v-model="room.capacity" :disabled="!isEditing" type="number" class="form-control " id="loginEmailInput" placeholder="Capacitate" :style="`padding-left: ${formPs}rem`">
+
+                        <i class="bi bi-people-fill" :class="iconClass"></i>
                     </div>
                 </div>
             </div>

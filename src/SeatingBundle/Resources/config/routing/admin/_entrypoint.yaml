@@ -10,3 +10,11 @@ admin_seating_reservation_import:
 admin_seating_room_import:
     resource: "@SeatingBundle/Resources/config/routing/admin/room.yaml"
     prefix: /
+
+admin_seating_sponsor_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/sponsor.yaml"
+    prefix: /
+
+admin_seating_reminder_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/reminder.yaml"
+    prefix: /

@@ -1,0 +1,16 @@
+{% extends 'main/1cols.html.twig' %}
+
+{% block content %}
+    <section class="text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold mb-6">Galerie</h1>
+            </div>
+        </div>
+    </section>
+    <gallery-listing
+        :events="{{ jsData['events']|json_encode }}"
+        class="min-h-screen"
+    >
+    </gallery-listing>
+{% endblock %}

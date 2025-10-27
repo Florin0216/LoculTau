@@ -5,6 +5,7 @@ namespace SeatingBundle\Serializer\Normalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use SeatingBundle\Entity\Reservation;
 use SeatingBundle\Entity\Seat;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -14,6 +15,7 @@ class SeatNormalizer implements NormalizerInterface
         #[Autowire(service: 'serializer.normalizer.object')]
         protected NormalizerInterface $normalizer,
         protected EntityManagerInterface $em,
+        protected Security $security,
     )
     {
     }
@@ -26,9 +28,15 @@ class SeatNormalizer implements NormalizerInterface
             $event = $context['event'];
 
             $reservationRepo = $this->em->getRepository(Reservation::class);
-            $reservations = $reservationRepo->findByEventAndSeat($event, $data);
+            $reservation = $reservationRepo->findByEventAndSeat($event, $data);
 
-            $normalizedData['isAvailable'] = !$reservations;
+            $normalizedData['isAvailable'] = !$reservation;
+
+            $normalizedData['isSelected'] = false;
+
+            if ($this->security->isGranted('ROLE_ADMIN')) {
+                $normalizedData['claimedAt'] = $reservation?->getClaimedAt();
+            }
         }
 
         return $normalizedData;

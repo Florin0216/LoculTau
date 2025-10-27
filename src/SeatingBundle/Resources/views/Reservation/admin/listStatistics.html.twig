@@ -1,0 +1,9 @@
+{% extends 'admin/2cols.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 pt-3">
+            <reservations-statistics-list-admin :events="{{ events|json_encode }}"></reservations-statistics-list-admin>
+        </div>
+    </div>
+{% endblock %}

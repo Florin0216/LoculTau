@@ -8,3 +8,18 @@ admin_seating_reservation_confirm:
     path: /reservations/{uuid}/confirm
     controller: SeatingBundle\Controller\ReservationController::confirmAdminAction
     methods: GET
+
+admin_seating_reservation_show:
+    path: /seats/{seatId}/events/{eventId}/reservations/{id}/show
+    controller: SeatingBundle\Controller\ReservationController::showAdminAction
+    methods: GET
+
+admin_seating_reservation_delete:
+    path: /reservations/{id}/delete
+    controller: SeatingBundle\Controller\ReservationController::deleteAdminAction
+    methods: DELETE
+
+admin_seating_reservation_list_statistics:
+    path: /reservations/statistics.{_format}
+    controller: SeatingBundle\Controller\ReservationController::listStatisticsAdminAction
+    methods: GET

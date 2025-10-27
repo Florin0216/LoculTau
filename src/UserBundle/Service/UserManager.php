@@ -13,7 +13,13 @@ class UserManager
     {
     }
 
-    public function newInstance(string $email, string $password, string $username = null, string $firstName = null, string $lastName = null): User
+    public function newInstance(
+        string $email = null,
+        string $password = null,
+        string $username = null,
+        string $firstName = null,
+        string $lastName = null
+    ): User
     {
         $user = new User();
 
@@ -23,9 +29,11 @@ class UserManager
             ->setFirstName($firstName)
             ->setLastName($lastName);
 
-        $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
+        if ($password) {
+            $hashedPassword = $this->passwordHasher->hashPassword($user, $password);
 
-        $user->setPassword($hashedPassword);
+            $user->setPassword($hashedPassword);
+        }
 
         return $user;
     }

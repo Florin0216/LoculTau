@@ -1,0 +1,4 @@
+public_app_content_about:
+    path: /about
+    controller: AppBundle\Controller\ContentController::showAboutAction
+    methods: GET

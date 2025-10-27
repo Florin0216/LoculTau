@@ -16,7 +16,7 @@ class SeatService{
             .catch(err => {
                 console.error("Error fetching seats:", err);
             });
-    }
+    };
 }
 
 export default new SeatService();

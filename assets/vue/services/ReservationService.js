@@ -11,7 +11,46 @@ class ReservationService {
     }
 
     listAdmin(args = {}) {
-        let requestUrl = FosJsRouting.generate('')
+        args._format = 'json';
+
+        let requestUrl = FosJsRouting.generate('admin_seating_reservation_list', args);
+
+        return axios
+            .get(requestUrl)
+            .catch(err => console.error(err));
+    }
+
+    listReservationsForEventAdmin(eventId = null, args = {}) {
+        args._format = 'json';
+        args.eventId = eventId;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_reservation_list_statistics', args);
+
+        return axios
+            .get(requestUrl)
+            .catch(err => console.error(err));
+    }
+
+    showAdmin(reservationId = '-', seatId = '-', eventId = '-', args = {}) {
+        args._format = 'json';
+        args.id = reservationId;
+        args.seatId = seatId;
+        args.eventId = eventId;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_reservation_show', args);
+
+        return axios
+            .get(requestUrl)
+            .catch(err => console.error(err));
+    }
+
+    deleteAdmin(reservation, args = {}) {
+        args.id = reservation.id;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_reservation_delete', args);
+
+        return axios
+            .delete(requestUrl);
     }
 }
 

@@ -1,0 +1,5 @@
+
+admin_user_user_list:
+    path: /users.{_format}
+    controller: UserBundle\Controller\UserController::listAdminAction
+    methods: GET
