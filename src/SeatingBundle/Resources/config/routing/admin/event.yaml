@@ -13,3 +13,8 @@ admin_seating_event_edit:
     path: /events/{id}/edit.{_format}
     controller: SeatingBundle\Controller\EventController::editAdminAction
     methods: PUT|PATCH
+
+admin_seating_event_delete:
+    path: /events/{id}/delete
+    controller: SeatingBundle\Controller\EventController::deleteAdminAction
+    methods: DELETE

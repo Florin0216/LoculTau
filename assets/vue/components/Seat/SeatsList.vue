@@ -221,7 +221,7 @@ onMounted(() => {
                 class="bg-white w-full md:w-1/2 text-center rounded-2xl py-2 md:py-4 mb-5 md:mb-8 font-semibold text-lg md:text-2xl">
                 Scena
             </div>
-            <div class="mb-10 p-4 w-11/12 lg:w-2/3 overflow-x-scroll border border-white rounded-2xl"
+            <div class="mb-10 p-4 w-11/12 lg:w-full overflow-x-scroll border border-white lg:border-none rounded-2xl"
                  :style="{height: isLoading ? '68.4vh' : ''}">
                 <template v-if="!isLoading">
                     <div class="space-y-1 min-w-max">
@@ -304,7 +304,7 @@ onMounted(() => {
                     </div>
                 </template>
             </div>
-            <div class="flex flex-col w-3/4 md:w-1/2 mx-auto p-5 rounded bg-gray-700">
+            <div class="flex flex-col w-3/4 md:w-1/2 mx-auto p-5 rounded bg-gray-700 mb-5">
                 <div class="flex justify-around items-center mb-3">
                     <div class="flex items-center gap-1">
                         <div class="rounded-t-sm md:rounded-t-lg h-3 w-3 md:w-6 md:h-6 bg-gray-300"></div>

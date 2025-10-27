@@ -23,12 +23,8 @@
 
     <section id="about" class="py-24 bg-white">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-green-600 font-semibold text-lg mb-2 block">ABOUT US</span>
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Cine suntem</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                    {{ about_text|default('We are an NGO committed to creating sustainable change in our community through education, health, and social programs.') }}
-                </p>
+            <div class="mb-16">
+                {{ page.content|raw }}
             </div>
         </div>
     </section>

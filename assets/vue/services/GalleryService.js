@@ -42,5 +42,14 @@ class GalleryService{
                 data: gallery,
             })
     }
+
+    deleteAdmin(gallery, args = {}) {
+        args.id = gallery.id;
+
+        let requestUrl = FosJsRouting.generate('admin_app_gallery_delete', args);
+
+        return axios
+            .delete(requestUrl);
+    }
 }
 export  default new GalleryService();

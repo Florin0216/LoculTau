@@ -131,4 +131,17 @@ class RoomController extends AbstractController
             ])
         ]);
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id): Response
+    {
+        $room = $this->es->findOrReject(Room::class, $id);
+
+        $this->es->delete($room);
+
+        return new JsonResponse([
+            'data' => []
+        ]);
+
+    }
 }

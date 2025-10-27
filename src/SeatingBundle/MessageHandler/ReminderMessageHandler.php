@@ -28,8 +28,6 @@ class ReminderMessageHandler
     {
         $reminder = $this->em->getRepository(Reminder::class)->find($message->getReminderId());
 
-        $event = $reminder->getEvent();
-
         $this->mailerService->sendReminderEmail($reminder->getEmail(), $reminder->getEvent());
 
         $reminder->setStatus('sent');

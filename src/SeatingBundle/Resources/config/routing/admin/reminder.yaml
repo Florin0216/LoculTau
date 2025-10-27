@@ -1,5 +1,15 @@
 
+admin_seating_reminder_list_reminders:
+    path: /event/{id}/reminders
+    controller: SeatingBundle\Controller\ReminderController::remindersListAction
+    methods: GET
+
 admin_seating_reminder_new:
-    path: /reminder/new
+    path: /reminders/new
     controller: SeatingBundle\Controller\ReminderController::newAdminAction
     methods: POST
+
+admin_seating_reminder_delete:
+    path: /reminders/{id}/delete
+    controller: SeatingBundle\Controller\ReminderController::deleteAdminAction
+    methods: DELETE

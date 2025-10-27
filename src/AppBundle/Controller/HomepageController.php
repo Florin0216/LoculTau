@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Page;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,10 @@ class HomepageController extends AbstractController
 
     public function homepageAction(Request $request): Response
     {
-        return $this->render('@App/Homepage/homepage.html.twig');
+        $page = $this->em->getRepository(Page::class)->findOneBy(['slug' => 'homepage']);
+        return $this->render('@App/Homepage/homepage.html.twig',[
+            'page' => $page
+        ]);
     }
 
     #[IsGranted('ROLE_ADMIN')]

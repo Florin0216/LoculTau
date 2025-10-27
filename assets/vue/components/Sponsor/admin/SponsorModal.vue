@@ -30,18 +30,38 @@ let eventInitData = getClone(sponsor.value);
 
 const isEditing = ref(props.isEditing);
 
+const selectedFile = ref(null);
+
 const isNewEvent = computed(() => {
     return !isValue(sponsor.value.id);
 });
+
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        selectedFile.value = {
+            base64: event.target.result,
+            originalName: file.name
+        };
+    };
+    reader.readAsDataURL(file);
+}
 
 const onEditCancel = () => {
     sponsor.value = getClone(eventInitData);
 }
 
 const onEditConfirm = () => {
+    const sponsorData = {
+        ...sponsor.value,
+        imageFile: selectedFile.value,
+    };
+
     const promise = isNewEvent.value
-        ? SponsorService.newAdmin(new SponsorCreateDto(sponsor.value))
-        : SponsorService.editAdmin(sponsor.value.id, new SponsorEditDto(sponsor.value));
+        ? SponsorService.newAdmin(new SponsorCreateDto(sponsorData))
+        : SponsorService.editAdmin(sponsor.value.id, new SponsorEditDto(sponsorData));
 
     promise
         .then((response) => {
@@ -91,6 +111,20 @@ onMounted(() => {
                                id="loginEmailInput" placeholder="Nume" :style="`padding-left: ${formPs}rem`">
 
                         <i class="bi bi-card-text" :class="iconClass"></i>
+                    </div>
+                    <div class="position-relative mb-4">
+                        <input @change="handleFileChange" v-if="isEditing" type="file" class="form-control"
+                               id="loginEmailInput" :style="`padding-left: ${formPs}rem`"/>
+
+                        <div v-else class="relative">
+                            <img
+                                :src="sponsor.image?.url"
+                                alt="Preview"
+                                class="rounded shadow h-50 w-50"
+                            />
+                        </div>
+
+                        <i class="bi bi-paperclip" v-if="isEditing" :class="iconClass"></i>
                     </div>
                 </div>
             </div>

@@ -2,15 +2,19 @@
 
 namespace SeatingBundle\Entity;
 
+use AppBundle\Entity\Embeddable\FileEmbeddable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\SponsorRepository;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: SponsorRepository::class)]
 #[ORM\Table(name: 'seating__sponsor')]
+#[Vich\Uploadable]
 class Sponsor
 {
 
@@ -32,8 +36,23 @@ class Sponsor
     #[Groups(['sponsor.details'])]
     protected ?string $uuid = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Embedded(class: FileEmbeddable::class, columnPrefix: 'image_')]
+    protected ?FileEmbeddable $image = null;
+
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'sponsors')]
     protected Collection $events;
+
+    #[Vich\UploadableField(
+        mapping: 'app_images_public_storage',
+        fileNameProperty: 'image.name',
+        size: 'image.size',
+        mimeType: 'image.mimeType',
+        originalName: 'image.originalName'
+    )]
+    protected ?File $imageFile = null;
 
     public function __construct()
     {
@@ -75,6 +94,49 @@ class Sponsor
     public function setEvents(Collection $events): Sponsor
     {
         $this->events = $events;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): Sponsor
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getImage(): ?FileEmbeddable
+    {
+        if (!$this->image) {
+            $this->image = new FileEmbeddable();
+        }
+
+        return $this->image;
+    }
+
+    public function setImage(?FileEmbeddable $image): Sponsor
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): Sponsor
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
         return $this;
     }
 

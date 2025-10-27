@@ -5,7 +5,6 @@ fos_js_routing:
 
         # Content
         - public_app_content_about
-        - public_app_content_contact
 
         # Event
         - seating_event_list
@@ -13,6 +12,7 @@ fos_js_routing:
         - admin_seating_event_list
         - admin_seating_event_new
         - admin_seating_event_edit
+        - admin_seating_event_delete
 
         # Reservation
         - admin_seating_reservation_list
@@ -28,6 +28,7 @@ fos_js_routing:
         - admin_seating_room_list
         - admin_seating_room_new
         - admin_seating_room_edit
+        - admin_seating_room_delete
 
         # Seat
         - seating_seat_list
@@ -46,17 +47,31 @@ fos_js_routing:
         - admin_seating_sponsor_list
         - admin_seating_sponsor_new
         - admin_seating_sponsor_edit
+        - admin_seating_sponsor_delete
 
         # Reminder
+        - admin_seating_reminder_list_reminders
         - admin_seating_reminder_new
+        - admin_seating_reminder_delete
 
         #Gallery
         - public_app_gallery_list
         - admin_app_gallery_list
         - admin_app_gallery_new
         - admin_app_gallery_edit
+        - admin_app_gallery_delete
 
         #GalleryItem
         - public_app_gallery_item_list
         - admin_app_gallery_item_new
         - admin_app_gallery_item_delete
+
+        #Feedback
+        - public_app_feedback_show
+        - public_app_feedback_new
+        - admin_app_feedback_list
+
+        #Page
+        - admin_app_page_list
+        - admin_app_page_new
+        - admin_app_page_edit

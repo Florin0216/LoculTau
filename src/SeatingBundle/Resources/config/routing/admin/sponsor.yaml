@@ -13,3 +13,8 @@ admin_seating_sponsor_edit:
     path: /sponsors/{id}/edit
     controller: SeatingBundle\Controller\SponsorController::editAdminAction
     methods: PUT
+
+admin_seating_sponsor_delete:
+    path: /sponsors/{id}/delete
+    controller: SeatingBundle\Controller\SponsorController::deleteAdminAction
+    methods: DELETE

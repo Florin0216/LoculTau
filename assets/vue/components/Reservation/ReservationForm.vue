@@ -30,7 +30,7 @@ const props = defineProps({
         </div>
 
         <div class="mb-3">
-            <label class="block text-sm font-medium mb-1 text-white">Nume complet</label>
+            <label class="block text-sm font-medium mb-1 text-white">Nume complet: <span class="text-red-500">*</span></label>
             <input
                 type="text"
                 v-model="value.name"
@@ -42,7 +42,7 @@ const props = defineProps({
         </div>
 
         <div>
-            <label class="block text-sm font-medium mb-1 text-white">Email</label>
+            <label class="block text-sm font-medium mb-1 text-white">Email: <span class="text-red-500">*</span></label>
             <input
                 type="email"
                 v-model="value.email"

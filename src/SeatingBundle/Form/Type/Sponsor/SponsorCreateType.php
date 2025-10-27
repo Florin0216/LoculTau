@@ -3,6 +3,7 @@
 namespace SeatingBundle\Form\Type\Sponsor;
 
 use SeatingBundle\Entity\Sponsor;
+use SeatingBundle\Form\Type\Event\Base64Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,8 +12,11 @@ class SponsorCreateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name');
-        $builder->add('uuid');
+        $builder
+            ->add('name')
+            ->add('imageFile', Base64Type::class, [
+                'required' => false
+            ]);
 
     }
 

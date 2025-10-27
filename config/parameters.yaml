@@ -4,3 +4,5 @@ parameters:
 
     private_files_dir: '%kernel.project_dir%/private_assets/uploads/vich/images'
     public_files_dir: '/uploads/vich/images'
+
+    recaptcha_secret_key: '%env(resolve:RECAPTCHA_SECRET_KEY)%'

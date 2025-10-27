@@ -14,6 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 #[ORM\Table(name: 'seating__reservation')]
+#[ORM\UniqueConstraint(name: 'seating__unique_event_seat', columns: ['event_id', 'sponsor_id'])]
 #[Vich\Uploadable]
 class Reservation
 {
@@ -21,7 +22,7 @@ class Reservation
 
     const ENTITY_ALIAS = 'rsv';
 
-    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'sponsor.details','event.details', 'user.details', 'timestampable'];
+    const NORMALIZER_GROUPS = ['reservation.details', 'seat.details', 'sponsor.details', 'event.details', 'user.details', 'timestampable'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -41,7 +42,7 @@ class Reservation
     #[Groups(['reservation.details'])]
     protected ?string $uuid = null;
 
-    #[ORM\Column(type:  Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups(['reservation.details'])]
     protected ?\DateTimeImmutable $claimedAt;
 

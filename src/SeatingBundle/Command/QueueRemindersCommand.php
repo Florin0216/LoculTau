@@ -16,28 +16,35 @@ use Symfony\Component\Messenger\Stamp\DelayStamp;
 class QueueRemindersCommand extends Command
 {
     public function __construct(
-        protected ReminderRepository $reminderRepository,
+        protected ReminderRepository  $reminderRepository,
         protected MessageBusInterface $bus
-    ) {
+    )
+    {
         parent::__construct();
     }
 
     /**
      * @throws ExceptionInterface
+     * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $now = new \DateTimeImmutable();
-        $nextHour = $now->modify('+1 hour');
+        $now = new \DateTimeImmutable('now');
+        $nextMinute = $now->modify('+1 minute');
 
-        $reminders = $this->reminderRepository->findPendingBetween($now, $nextHour);
+        $reminders = $this->reminderRepository->findPendingBetween($now, $nextMinute);
 
         foreach ($reminders as $reminder) {
-            $delay = max(0, $reminder->getScheduledAt()->getTimestamp() - time());
+            $scheduledAt = $reminder->getScheduledAt();
+            $delayInSeconds = $scheduledAt->getTimestamp() - $now->getTimestamp();
+            $delayMs = max(0, $delayInSeconds * 1000);
+
             $this->bus->dispatch(
                 new ReminderMessage($reminder->getId()),
-                [new DelayStamp($delay)]
+                [new DelayStamp($delayMs)]
             );
+
+            $reminder->setStatus('queued');
         }
 
         $this->reminderRepository->saveAll($reminders);

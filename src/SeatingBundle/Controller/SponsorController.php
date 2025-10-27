@@ -5,6 +5,7 @@ namespace SeatingBundle\Controller;
 use AppBundle\Exception\FormInvalidDataException;
 use AppBundle\Helper\JsonRequestPayload;
 use AppBundle\Services\EntityService;
+use AppBundle\Services\ThumbnailService;
 use Doctrine\ORM\EntityManagerInterface;
 use SeatingBundle\Entity\Sponsor;
 use SeatingBundle\Form\Factory\SponsorFormFactory;
@@ -24,7 +25,8 @@ class SponsorController extends AbstractController
         protected EntityService          $es,
         protected SerializerInterface $serializer,
         protected SponsorManager $sponsorManager,
-        protected SponsorFormFactory $formFactory
+        protected SponsorFormFactory $formFactory,
+        protected ThumbnailService $thumbnailService,
     )
     {
     }
@@ -56,7 +58,7 @@ class SponsorController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function newAdminAction(Request $request): Response
     {
-        $sponsor = new Sponsor();
+        $sponsor = $this->sponsorManager->newInstance();
 
         $payload = JsonRequestPayload::newInstanceFromRequest($request);
 
@@ -66,9 +68,11 @@ class SponsorController extends AbstractController
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             throw new FormInvalidDataException($form);
-        } else {
-            $name = $form->get('name')->getData();
-            $sponsor = $this->sponsorManager->newInstance($name);
+        }
+
+        if ($sponsor->getImageFile()) {
+            $thumbnailFile = $this->thumbnailService->generateThumbnail($sponsor->getImageFile(), 800, 800);
+            $sponsor->setImageFile($thumbnailFile);
         }
 
         $this->es->save($sponsor);
@@ -97,6 +101,11 @@ class SponsorController extends AbstractController
             throw new FormInvalidDataException($form);
         }
 
+        if ($sponsor->getImageFile()) {
+            $thumbnailFile = $this->thumbnailService->generateThumbnail($sponsor->getImageFile(), 800, 800);
+            $sponsor->setImageFile($thumbnailFile);
+        }
+
         $this->em->flush();
 
         return new JsonResponse([
@@ -104,6 +113,19 @@ class SponsorController extends AbstractController
                 AbstractNormalizer::GROUPS => Sponsor::NORMALIZER_GROUPS,
             ])
         ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id): Response
+    {
+        $sponsor = $this->es->findOrReject(Sponsor::class, $id);
+
+        $this->es->delete($sponsor);
+
+        return new JsonResponse([
+            'data' => []
+        ]);
+
     }
 
 }

@@ -7,7 +7,7 @@ use AppBundle\Exception\FormInvalidDataException;
 use AppBundle\Form\Factory\GalleryItemFormFactory;
 use AppBundle\Helper\JsonRequestPayload;
 use AppBundle\Services\EntityService;
-use AppBundle\Services\GalleryItemManager;
+use AppBundle\Services\ThumbnailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +24,7 @@ class GalleryItemController extends AbstractController
         protected EntityService          $entityService,
         protected SerializerInterface    $serializer,
         protected GalleryItemFormFactory $formFactory,
-        protected GalleryItemManager     $galleryItemManager
+        protected ThumbnailService     $thumbnailService,
     )
     {
     }
@@ -58,7 +58,8 @@ class GalleryItemController extends AbstractController
         }
 
         if ($galleryItem->getImageFile()) {
-            $this->galleryItemManager->generateThumbnail($galleryItem, 800, 800);
+            $thumbnailFile = $this->thumbnailService->generateThumbnail($galleryItem->getImageFile(), 800, 800);
+            $galleryItem->setThumbnailFile($thumbnailFile);
         }
 
         $this->entityService->save($galleryItem);

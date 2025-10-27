@@ -2,9 +2,3 @@ public_app_content_about:
     path: /about
     controller: AppBundle\Controller\ContentController::showAboutAction
     methods: GET
-
-public_app_content_contact:
-    path: /contact
-    controller: AppBundle\Controller\ContentController::showContactAction
-    methods: GET
-

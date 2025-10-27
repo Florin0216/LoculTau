@@ -13,3 +13,8 @@ admin_app_gallery_edit:
     path: /galleries/{id}/edit
     controller: AppBundle\Controller\GalleryController::editAdminAction
     methods: PUT
+
+admin_app_gallery_delete:
+    path: /galleries/{id}/delete
+    controller: AppBundle\Controller\GalleryController::deleteAdminAction
+    methods: DELETE

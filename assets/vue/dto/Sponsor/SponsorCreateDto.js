@@ -1,11 +1,11 @@
 
 class SponsorCreateDto {
     name = null;
-    uuid = null
+    imageFile = null;
 
     constructor(sponsor) {
         this.name = sponsor.name;
-        this.uuid = sponsor.uuid;
+        this.imageFile = sponsor.imageFile;
     }
 }
 

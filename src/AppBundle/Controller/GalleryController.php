@@ -52,6 +52,11 @@ class GalleryController extends AbstractController
                 'event' => $event,
                 'isGeneral' => false
             ]);
+            if (!$gallery) {
+                return new JsonResponse([
+                    'data' => []
+                ]);
+            }
         } else {
             $gallery = $this->em->getRepository(Gallery::class)->findOneBy(['isGeneral' => true]);
         }
@@ -135,6 +140,19 @@ class GalleryController extends AbstractController
             'data' => $this->serializer->normalize($gallery, null, [
                 AbstractNormalizer::GROUPS => Gallery::NORMALIZER_GROUPS,
             ])
+        ]);
+
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id): Response
+    {
+        $gallery = $this->entityService->findOrReject(Gallery::class, $id);
+
+        $this->entityService->delete($gallery);
+
+        return new JsonResponse([
+            'data' => []
         ]);
 
     }

@@ -20,6 +20,8 @@ const customHours = ref();
 
 const reservations = ref([]);
 
+const reminders = ref([]);
+
 const dismissModal = () => {
     props.instance.value.close(undefined);
 }
@@ -31,18 +33,20 @@ const uniqueEmails = computed(() => {
 })
 
 const reminderDateTime = computed(() => {
-    let date;
-
     if (reminderOption.value === 'now') {
-        date = new Date();
-    } else if (reminderOption.value === 'custom' && customHours.value) {
-        const eventDate = new Date(props.event.date);
-        const hoursInMs = customHours.value * 60 * 60 * 1000;
-        date = new Date(eventDate.getTime() - hoursInMs);
+        return new Date();
     }
 
-    return date.toISOString();
+    if (reminderOption.value === 'custom' && customHours.value) {
+        const [year, month, day, hour, minute] = props.event.date
+            .match(/\d+/g)
+            .map(Number);
+        const eventDate = new Date(year, month - 1, day, hour, minute);
+        eventDate.setHours(eventDate.getHours() - customHours.value);
+        return eventDate;
+    }
 });
+
 
 
 const getReservations = () => {
@@ -52,6 +56,24 @@ const getReservations = () => {
             reservations.value = response.data.data
         });
 };
+
+const getReminders = () => {
+    ReminderService
+        .listReminders(props.event)
+        .then((response) => {
+            reminders.value = response.data.data
+        });
+};
+
+const groupedReminders = computed(() => {
+    const groups = {};
+    reminders.value.forEach(r => {
+        const key = r.scheduledAt;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(r);
+    });
+    return groups;
+});
 
 const onConfirm = () => {
     const promises = [];
@@ -68,11 +90,25 @@ const onConfirm = () => {
     }
 
     Promise.all(promises)
+
+    getReminders();
+};
+
+const deleteBatch = (scheduledAt) => {
+    const batch = reminders.value.filter(r => r.scheduledAt === scheduledAt);
+
+    const promises = batch.map(r => ReminderService.deleteAdmin(r));
+
+    Promise.all(promises)
+        .then(() => {
+            reminders.value = reminders.value.filter(r => r.scheduledAt !== scheduledAt);
+        })
 };
 
 
 onMounted(() => {
     getReservations();
+    getReminders();
 });
 </script>
 
@@ -87,32 +123,19 @@ onMounted(() => {
 
                 <div class="modal-body">
                     <p class="text-muted mb-4">Numarul de mailuri: {{ uniqueEmails.length }}</p>
+
                     <div class="form-check mb-3 p-3 border rounded">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="reminderOption"
-                            id="sendNow"
-                            value="now"
-                            v-model="reminderOption"
-                        >
+                        <input class="form-check-input" type="radio" id="sendNow" value="now" v-model="reminderOption">
                         <label class="form-check-label ms-2" for="sendNow">
                             <strong>Trimite acum</strong>
                             <div class="text-muted small">Email-urile vor fi trimise imediat</div>
                         </label>
                     </div>
 
-                    <div class="form-check mb-3 p-3 border rounded">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="reminderOption"
-                            id="sendCustom"
-                            value="custom"
-                            v-model="reminderOption"
-                        >
+                    <div class="form-check mb-4 p-3 border rounded">
+                        <input class="form-check-input" type="radio" id="sendCustom" value="custom" v-model="reminderOption">
                         <label class="form-check-label ms-2" for="sendCustom">
-                            <strong>Trimite inainte cu</strong>
+                            <strong>Trimite înainte cu</strong>
                             <div class="d-flex align-items-center gap-2 mt-2">
                                 <input
                                     type="number"
@@ -127,8 +150,62 @@ onMounted(() => {
                             </div>
                         </label>
                     </div>
+
+                    <div
+                        class="accordion-container mt-3 border rounded"
+                        style="max-height: 250px; overflow-y: auto;"
+                    >
+                        <div class="accordion" id="remindersAccordion">
+                            <div
+                                v-for="(batch, scheduledAt) in groupedReminders"
+                                :key="scheduledAt"
+                                class="accordion-item mb-2"
+                            >
+                                <h2 class="accordion-header d-flex justify-content-between align-items-center" :id="`heading-${scheduledAt}`">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        :data-bs-target="`#collapse-${scheduledAt}`"
+                                        aria-expanded="false"
+                                    >
+                                        {{ new Date(scheduledAt + 'Z').toLocaleString('ro-RO', { timeZone: 'Europe/Bucharest' }) }}
+                                        <span class="badge bg-secondary ms-2">{{ batch.length }} emailuri</span>
+                                    </button>
+
+                                    <button
+                                        @click.stop="deleteBatch(scheduledAt)"
+                                        class="btn btn-sm btn-outline-danger me-2"
+                                        title="Șterge toate reminder-ele"
+                                    >
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </h2>
+
+                                <div
+                                    :id="`collapse-${scheduledAt}`"
+                                    class="accordion-collapse collapse"
+                                    :aria-labelledby="`heading-${scheduledAt}`"
+                                    data-bs-parent="#remindersAccordion"
+                                >
+                                    <div class="accordion-body">
+                                        <ul class="list-group">
+                                            <li
+                                                v-for="r in batch"
+                                                :key="r.id"
+                                                class="list-group-item d-flex justify-content-between align-items-center"
+                                            >
+                                                <span>{{ r.email }}</span>
+                                                <span class="badge bg-info text-dark">{{ r.status }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer text-center">
+                <div class="modal-footer justify-content-center">
                     <button @click="onConfirm" type="button" class="btn btn-primary">Trimite reminder</button>
                 </div>
             </div>

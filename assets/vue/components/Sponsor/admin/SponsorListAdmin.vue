@@ -5,6 +5,7 @@ import {onMounted, ref} from "vue";
 import ModalManager from "../../../services/ModalManager";
 import SponsorModal from "./SponsorModal.vue";
 import SponsorModel from "../../../models/SponsorModel";
+import RoomService from "../../../services/RoomService";
 
 
 const sponsors = ref([]);
@@ -27,6 +28,17 @@ const openSponsorModal = (sponsor = null, isEditing = false) => {
         })
         .then(() => {
             getSponsors();
+        })
+}
+
+const onDelete = (sponsor) => {
+    SponsorService
+        .deleteAdmin(sponsor)
+        .then(() => {
+            const index = sponsors.value.findIndex(s => s.id === sponsor.id);
+            if (index !== -1) {
+                sponsors.value.splice(index, 1);
+            }
         })
 }
 
@@ -64,7 +76,7 @@ onMounted(() => {
                         <div class="d-flex-center gap-2">
                             <i @click="openSponsorModal(sponsor)" class="bi bi-eye"></i>
                             <i @click="openSponsorModal(sponsor, true)" class="bi bi-pencil text-primary"></i>
-                            <i class="bi bi-trash text-danger"></i>
+                            <i @click="onDelete(sponsor)" class="bi bi-trash text-danger"></i>
                         </div>
                     </td>
                 </tr>

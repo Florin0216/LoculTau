@@ -9,7 +9,7 @@ use Imagine\Image\Box;
 use Imagine\Image\Point;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class GalleryItemManager
+class ThumbnailService
 {
     public function __construct(
         protected EntityManagerInterface $em,
@@ -17,10 +17,8 @@ class GalleryItemManager
     {
     }
 
-    public function generateThumbnail(GalleryItem $galleryItem, int $width, int $height): void
+    public function generateThumbnail($uploadedFile, int $width, int $height): UploadedFile
     {
-        $uploadedFile = $galleryItem->getImageFile();
-
         $imagine = new Imagine();
         $image = $imagine->open($uploadedFile->getPathname());
 
@@ -41,15 +39,13 @@ class GalleryItemManager
         $thumbTmpPath = tempnam(sys_get_temp_dir(), 'thumb_') . '.jpg';
         $thumbnail->save($thumbTmpPath);
 
-        $thumbnailFile = new UploadedFile(
+        return new UploadedFile(
             $thumbTmpPath,
             $uploadedFile->getClientOriginalName(),
             mime_content_type($thumbTmpPath),
             null,
             true
         );
-
-        $galleryItem->setThumbnailFile($thumbnailFile);
     }
 
 }

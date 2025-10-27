@@ -67,6 +67,15 @@ class EventService {
 
         return data;
     }
+
+    deleteAdmin(event, args = {}) {
+        args.id = event.id;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_event_delete', args);
+
+        return axios
+            .delete(requestUrl);
+    }
 }
 
 export default new EventService();

@@ -129,4 +129,17 @@ class EventController extends AbstractController
             ])
         ]);
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function deleteAdminAction($id): Response
+    {
+        $event = $this->es->findOrReject(Event::class, $id);
+
+        $this->es->delete($event);
+
+        return new JsonResponse([
+            'data' => []
+        ]);
+
+    }
 }

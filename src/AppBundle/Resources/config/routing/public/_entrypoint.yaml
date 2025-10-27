@@ -13,3 +13,7 @@ public_app_gallery_import:
 public_app_gallery_item_import:
     resource: "@AppBundle/Resources/config/routing/public/galleryItem.yaml"
     prefix: /
+
+public_app_feedback_import:
+    resource: "@AppBundle/Resources/config/routing/public/feedback.yaml"
+    prefix: /

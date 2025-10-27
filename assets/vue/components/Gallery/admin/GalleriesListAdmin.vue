@@ -5,6 +5,7 @@ import ModalManager from "../../../services/ModalManager";
 import GalleryModel from "../../../models/GalleryModel";
 import GalleryModal from "./GalleryModal.vue";
 import GalleryItemsListAdmin from "./GalleryItemsListAdmin.vue";
+import EventService from "../../../services/EventService";
 
 const galleries = ref([]);
 
@@ -29,6 +30,17 @@ const openGalleryModal = (gallery = null, isEditing = false) => {
         })
         .then(() => {
             getGalleries();
+        })
+}
+
+const onDelete = (gallery) => {
+    GalleryService
+        .deleteAdmin(gallery)
+        .then(() => {
+            const index = galleries.value.findIndex(g => g.id === gallery.id);
+            if (index !== -1) {
+                galleries.value.splice(index, 1);
+            }
         })
 }
 
@@ -63,11 +75,11 @@ onMounted(() => {
                     <tr v-for="gallery in galleries" :key="gallery.id" @click="selectedGallery = gallery">
                         <td>{{gallery.id}}</td>
                         <td>{{gallery.title}}</td>
-                        <td @click.stop>
+                        <td @click.stop v-if="!gallery.isGeneral">
                             <div class="d-flex-center gap-2">
                                 <i @click="openGalleryModal(gallery)" class="bi bi-eye"></i>
                                 <i @click="openGalleryModal(gallery, true)" class="bi bi-pencil text-primary"></i>
-                                <i class="bi bi-trash text-danger"></i>
+                                <i @click="onDelete(gallery)" class="bi bi-trash text-danger"></i>
                             </div>
                         </td>
                     </tr>

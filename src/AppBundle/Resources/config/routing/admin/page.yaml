@@ -1,0 +1,14 @@
+admin_app_page_list:
+    path: /pages.{_format}
+    controller: AppBundle\Controller\PageController::listAdminAction
+    methods: GET
+
+admin_app_page_new:
+    path: /pages/new
+    controller: AppBundle\Controller\PageController::newAdminAction
+    methods: POST
+
+admin_app_page_edit:
+    path: /pages/{id}/edit
+    controller: AppBundle\Controller\PageController::editAdminAction
+    methods: PUT

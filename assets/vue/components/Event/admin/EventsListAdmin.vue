@@ -62,6 +62,17 @@ const formatDate = (datetime) => {
     })
 }
 
+const onDelete = (event) => {
+    EventService
+        .deleteAdmin(event)
+        .then(() => {
+            const index = events.value.findIndex(e => e.id === event.id);
+            if (index !== -1) {
+                events.value.splice(index, 1);
+            }
+        })
+}
+
 onMounted(() => {
     getEvents();
 })
@@ -84,27 +95,29 @@ onMounted(() => {
             <div class="table-responsive">
                 <table class="table table-bordered table-hover mb-0">
                     <thead>
-                        <tr>
-                            <th class="min-width-column">Id</th>
-                            <th>Nume</th>
-                            <th>Data</th>
-                            <th class="min-width-column">Acțiuni</th>
-                        </tr>
+                    <tr>
+                        <th class="min-width-column">Id</th>
+                        <th>Nume</th>
+                        <th>Data</th>
+                        <th class="min-width-column">Acțiuni</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="event in events" :key="event.id" @click="selectedEvent = event">
-                            <td>{{event.id}}</td>
-                            <td>{{event.title}}</td>
-                            <td>{{formatDate(event.date)}}</td>
-                            <td @click.stop>
-                                <div class="d-flex-center gap-2">
-                                    <i @click="openEventModal(event)" class="bi bi-eye cursor-pointer"></i>
-                                    <i @click="openEventModal(event, true)" class="bi bi-pencil text-primary cursor-pointer"></i>
-                                    <i @click="openEventReminderModal(event)" class="bi text-warning bi-bell cursor-pointer"></i>
-                                    <i class="bi bi-trash text-danger"></i>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr v-for="event in events" :key="event.id" @click="selectedEvent = event">
+                        <td>{{ event.id }}</td>
+                        <td>{{ event.title }}</td>
+                        <td>{{ formatDate(event.date) }}</td>
+                        <td @click.stop>
+                            <div class="d-flex-center gap-2">
+                                <i @click="openEventModal(event)" class="bi bi-eye cursor-pointer"></i>
+                                <i @click="openEventModal(event, true)"
+                                   class="bi bi-pencil text-primary cursor-pointer"></i>
+                                <i @click="openEventReminderModal(event)"
+                                   class="bi text-warning bi-bell cursor-pointer"></i>
+                                <i @click="onDelete(event)" class="bi bi-trash text-danger"></i>
+                            </div>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -115,11 +128,12 @@ onMounted(() => {
                     <button @click="selectedEvent = null;" class="btn btn-light border-gray-200">
                         <i class="bi bi-chevron-left"></i>
                     </button>
-                    <h3 class="mb-0">{{selectedEvent.title}}</h3>
+                    <h3 class="mb-0">{{ selectedEvent.title }}</h3>
                 </div>
 
                 <div class="d-flex-center my-4">
-                    <button v-if="!seatSelectionEnabled" @click="seatSelectionEnabled = true" class="btn btn-sm btn-outline-success">
+                    <button v-if="!seatSelectionEnabled" @click="seatSelectionEnabled = true"
+                            class="btn btn-sm btn-outline-success">
                         Selecteaza locuri
                     </button>
                     <button v-else @click="seatSelectionEnabled = false" class="btn btn-sm btn-outline-danger">
@@ -131,7 +145,7 @@ onMounted(() => {
                     <event-seats-list-admin
                         v-model:seat-selection-enabled="seatSelectionEnabled"
                         :event="selectedEvent"
-                    > </event-seats-list-admin>
+                    ></event-seats-list-admin>
                 </div>
             </div>
         </template>

@@ -33,6 +33,15 @@ class SponsorService {
             });
     }
 
+    deleteAdmin(sponsor, args = {}) {
+        args.id = sponsor.id;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_sponsor_delete', args);
+
+        return axios
+            .delete(requestUrl);
+    }
+
 }
 
 export default new SponsorService()

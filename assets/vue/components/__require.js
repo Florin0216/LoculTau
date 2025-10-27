@@ -11,6 +11,9 @@ import SponsorListAdmin from "./Sponsor/admin/SponsorListAdmin.vue";
 import ReservationsStatisticsListAdmin from "./Reservation/admin/ReservationsStatisticsListAdmin.vue";
 import GalleriesListAdmin from "./Gallery/admin/GalleriesListAdmin.vue";
 import GalleryListing from "./Gallery/GalleryListing.vue";
+import FeedbackForm from "./Feedback/FeedbackForm.vue";
+import FeedbackListAdmin from "./Feedback/admin/FeedbackListAdmin.vue";
+import PageListAdmin from "./Page/admin/PageListAdmin.vue";
 
 app.component("seats-list",SeatsList);
 app.component("navbar",Navbar);
@@ -26,3 +29,6 @@ app.component('sponsor-list-admin',SponsorListAdmin);
 app.component('reservations-statistics-list-admin',ReservationsStatisticsListAdmin);
 app.component('galleries-list-admin',GalleriesListAdmin);
 app.component('gallery-listing',GalleryListing);
+app.component('feedback-form',FeedbackForm);
+app.component('admin-feedback-list',FeedbackListAdmin);
+app.component('admin-page-list',PageListAdmin);

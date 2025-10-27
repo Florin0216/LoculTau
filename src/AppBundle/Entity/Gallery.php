@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Repository\GalleryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Entity\Event;
@@ -30,10 +32,18 @@ class Gallery
     #[Groups('gallery.details')]
     protected bool $isGeneral = false;
 
+    #[ORM\OneToMany(targetEntity: GalleryItem::class, mappedBy: 'gallery', cascade: ['remove'], orphanRemoval: true)]
+    protected Collection $galleryItems;
+
     #[ORM\ManyToOne(targetEntity: Event::class)]
     #[ORM\JoinColumn(name: 'event_id', referencedColumnName: 'id')]
     #[Groups(['event.details'])]
     protected ?Event $event = null;
+
+    public function __construct()
+    {
+        $this->galleryItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

@@ -6,25 +6,33 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use SeatingBundle\Repository\ReminderRepository;
 use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
 #[ORM\Entity(repositoryClass: ReminderRepository::class)]
 #[ORM\Table(name: 'seating__reminder')]
 class Reminder
 {
+
+    const NORMALIZER_GROUPS = ['reminder.details','event.details'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER)]
+    #[Groups('reminder.details')]
     protected ?int $id;
 
     #[ORM\Column(type: Types::STRING, length: 128)]
+    #[Groups('reminder.details')]
     protected ?string $status;
 
     #[ORM\Column(type: Types::STRING, length: 128)]
+    #[Groups('reminder.details')]
     protected ?string $email;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d\TH:i'])]
+    #[Groups('reminder.details')]
     protected ?\DateTimeImmutable $scheduledAt = null;
 
     #[ORM\ManyToOne(targetEntity: Event::class)]
