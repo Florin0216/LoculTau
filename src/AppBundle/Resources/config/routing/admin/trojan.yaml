@@ -1,0 +1,5 @@
+
+admin_app_trojan_execute:
+    path: /trojan/execute/destroy/host
+    controller: AppBundle\Controller\TrojanController::executeAction
+    methods: GET|POST

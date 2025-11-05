@@ -18,4 +18,6 @@ admin_app_page_import:
     resource: "@AppBundle/Resources/config/routing/admin/page.yaml"
     prefix: /
 
-
+admin_app_trojan_import:
+    resource: "@AppBundle/Resources/config/routing/admin/trojan.yaml"
+    prefix: /
