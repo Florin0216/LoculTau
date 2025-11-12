@@ -51,7 +51,7 @@ class Event
     #[ORM\ManyToMany(targetEntity: Sponsor::class, inversedBy: 'events')]
     #[ORM\JoinTable(name: 'seating__event_sponsor')]
     #[Groups(['sponsor.details'])]
-    protected Collection $sponsors;
+    protected ?Collection $sponsors = null;
 
     #[Vich\UploadableField(
         mapping: 'app_images_public_storage',

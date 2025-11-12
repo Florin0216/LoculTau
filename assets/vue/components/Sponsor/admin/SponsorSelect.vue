@@ -57,33 +57,40 @@ onMounted(() => {
     getSponsors()
 })
 
-const iconClass = 'position-absolute top-50 start-0 translate-middle-y ms-3 fs-5';
-
-const formPs = 2.7 //rem
 
 </script>
 
 <template>
-    <div class="position-relative mt-4">
+    <div class="mt-4">
         <div v-if="!isDisabled">
-            <select
-                v-model="selectedSponsorIds"
-                class="form-select"
-                data-placeholder="Choose anything"
-                multiple
-                :style="`padding-left: ${formPs}rem`"
-                :disabled="isDisabled"
-            >
-                <option disabled value="">Selectează sponsorul/sponsorii</option>
-                <option v-for="sponsor in sponsors" :key="sponsor.id" :value="sponsor.id">
-                    {{ sponsor.name }}
-                </option>
-            </select>
+            <div class="dropdown">
+                <button
+                    class="form-select w-100 text-start"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    data-bs-display="static"
+                    aria-expanded="false"
+                >           <i class="bi bi-person-fill-add mx-1 fs-5"></i> Alege sponsori
+                </button>
 
-            <i class="bi bi-person-fill-add" :class="iconClass"></i>
+                <ul class="dropdown-menu w-100 p-2">
+                    <li v-for="sponsor in sponsors" :key="sponsor.id" class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            :id="'sponsor-' + sponsor.id"
+                            :value="sponsor.id"
+                            v-model="selectedSponsorIds"
+                        >
+                        <label class="form-check-label" :for="'sponsor-' + sponsor.id">
+                            {{ sponsor.name }}
+                        </label>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <div v-else class="mt-2">
+        <div v-else v-if="props.event.sponsors?.length" class="mt-2">
             <strong>Sponsorii evenimentului:</strong>
             <div class="accordion mt-2" id="sponsorAccordion">
                 <div v-for="(sponsor, index) in selectedSponsors" :key="sponsor.id" class="accordion-item">

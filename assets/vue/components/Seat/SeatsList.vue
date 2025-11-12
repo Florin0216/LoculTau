@@ -1,6 +1,6 @@
 <script setup>
 import SeatItem from "./SeatItem.vue";
-import {onActivated, onDeactivated, onMounted, ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import Reservation from "../Reservation/Reservation.vue";
 import SeatService from "../../services/SeatService";
 

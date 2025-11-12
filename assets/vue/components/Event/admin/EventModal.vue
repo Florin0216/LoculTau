@@ -60,7 +60,7 @@ const onEditConfirm = () => {
     const eventData = {
         ...event.value,
         imageFile: selectedFile.value,
-        sponsors: event.value.sponsors.map(s => s.id)
+        sponsors: event.value.sponsors?.map(s => s.id)
     };
 
     const promise = isNewEvent.value
