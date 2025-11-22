@@ -55,7 +55,7 @@ class EventController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function listAdminAction(Request $request, PaginatorInterface $paginator): Response
     {
-        $isHtmlRequest = $request->getRequestFormat() === 'html';
+        $isHtmlRequest = $request->getPreferredFormat() === 'html';
 
         if ($isHtmlRequest) {
             return $this->render('@Seating/Event/admin/list.html.twig');

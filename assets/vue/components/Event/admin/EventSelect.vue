@@ -38,8 +38,6 @@ watch(selectedEventId, () => {
     if (index !== -1) {
         selectedEvent.value = events.value[index];
     }
-
-    console.log(selectedEventId)
 })
 
 const iconClass = 'position-absolute top-50 start-0 translate-middle-y ms-3 fs-5';
