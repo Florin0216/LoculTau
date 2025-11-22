@@ -90,18 +90,15 @@ class GalleryController extends AbstractController
 
     }
 
-    /**
-     * @throws \Exception
-     */
     #[IsGranted('ROLE_ADMIN')]
     public function newAdminAction(Request $request): Response
     {
         $gallery = new Gallery();
 
-        $payload = JsonRequestPayload::newInstanceFromRequest($request);
+        $payload = json_decode($request->getContent(), true);
 
         $form = $this->formFactory->getCreateForm($gallery);
-        $form->submit($payload->getData());
+        $form->submit($payload['data'] ?? []);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             throw new FormInvalidDataException($form);

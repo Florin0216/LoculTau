@@ -48,18 +48,16 @@ class PageController extends AbstractController
         ]);
     }
 
-    /**
-     * @throws \Exception
-     */
+
     #[IsGranted('ROLE_ADMIN')]
     public function newAdminAction(Request $request): Response
     {
         $page = new Page();
 
-        $payload = JsonRequestPayload::newInstanceFromRequest($request);
+        $payload = json_decode($request->getContent(), true);
 
         $form = $this->formFactory->getCreateForm($page);
-        $form->submit($payload->getData());
+        $form->submit($payload['data'] ?? []);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             throw new FormInvalidDataException($form);
@@ -75,18 +73,15 @@ class PageController extends AbstractController
 
     }
 
-    /**
-     * @throws \Exception
-     */
     #[IsGranted('ROLE_ADMIN')]
     public function editAdminAction($id, Request $request): Response
     {
         $page = $this->entityService->findOrReject(Page::class, $id);
 
-        $payload = JsonRequestPayload::newInstanceFromRequest($request);
+        $payload = json_decode($request->getContent(), true);
 
         $form = $this->formFactory->getEditForm($page);
-        $form->submit($payload->getData());
+        $form->submit($payload['data'] ?? []);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             throw new FormInvalidDataException($form);

@@ -25,19 +25,19 @@ class Page
 
     #[ORM\Column(type: Types::STRING, length: 128)]
     #[Groups('page.details')]
-    protected string $title;
+    protected ?string $title = null;
 
     #[ORM\Column(type: Types::STRING, length: 128)]
     #[Groups('page.details')]
-    protected string $slug;
+    protected ?string $slug = null;
 
     #[ORM\Column(type: Types::STRING, length: 64)]
     #[Groups('page.details')]
-    protected string $section;
+    protected ?string $section = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups('page.details')]
-    protected ?string $content;
+    protected ?string $content = null;
 
     public function getId(): ?int
     {

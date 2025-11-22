@@ -26,11 +26,11 @@ class Gallery
 
     #[ORM\Column(type: Types::STRING, length: 128)]
     #[Groups('gallery.details')]
-    protected string $title;
+    protected ?string $title = null;
 
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
     #[Groups('gallery.details')]
-    protected bool $isGeneral = false;
+    protected ?bool $isGeneral = false;
 
     #[ORM\OneToMany(targetEntity: GalleryItem::class, mappedBy: 'gallery', cascade: ['remove'], orphanRemoval: true)]
     protected Collection $galleryItems;
