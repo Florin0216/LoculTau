@@ -70,7 +70,7 @@ onMounted(() => {
                     data-bs-toggle="dropdown"
                     data-bs-display="static"
                     aria-expanded="false"
-                >           <i class="bi bi-person-fill-add mx-1 fs-5"></i> Alege sponsori
+                >           <i class="bi bi-person-fill-add mx-1 fs-5"></i> Alege sponsorii
                 </button>
 
                 <ul class="dropdown-menu w-100 p-2">

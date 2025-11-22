@@ -9,6 +9,10 @@ const props = defineProps({
     isSelected: {
         type: Boolean,
         required: true,
+    },
+    sponsor: {
+        type: Object,
+        required: false
     }
 });
 

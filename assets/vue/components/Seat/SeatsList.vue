@@ -237,6 +237,7 @@ onMounted(() => {
                                     v-if="seats['Sala Principala']?.[row]?.[seat]"
                                     :seat="seats['Sala Principala']?.[row]?.[seat]"
                                     :is-selected="isSelected(seats['Sala Principala']?.[row]?.[seat])"
+                                    :sponsor="props.sponsor"
                                     @click="onSeatSelect(seats['Sala Principala']?.[row]?.[seat])"
                                 />
                             </template>
@@ -255,6 +256,7 @@ onMounted(() => {
                                             v-if="seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber]"
                                             :seat="seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber]"
                                             :is-selected="isSelected(seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber])"
+                                            :sponsor="props.sponsor"
                                             @click="onSeatSelect(seats['Loja Stanga']?.[row]?.[(row - 1) * 4 + seatNumber])"
                                         />
                                     </template>
@@ -270,6 +272,7 @@ onMounted(() => {
                                                 v-if="seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo]"
                                                 :seat="seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo]"
                                                 :is-selected="isSelected(seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                                :sponsor="props.sponsor"
                                                 @click="onSeatSelect(seats['Loja Oficiala Stanga']?.[row]?.[(row - 1) * 4 + seatNo])"
                                             />
                                         </template>
@@ -280,6 +283,7 @@ onMounted(() => {
                                                 v-if="seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
                                                 :seat="seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
                                                 :is-selected="isSelected(seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                                :sponsor="props.sponsor"
                                                 @click="onSeatSelect(seats['Loja Oficiala Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
                                             />
                                         </template>
@@ -295,6 +299,7 @@ onMounted(() => {
                                             v-if="seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
                                             :seat="seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo]"
                                             :is-selected="isSelected(seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
+                                            :sponsor="props.sponsor"
                                             @click="onSeatSelect(seats['Loja Dreapta']?.[row]?.[(row - 1) * 4 + seatNo])"
                                         />
                                     </template>

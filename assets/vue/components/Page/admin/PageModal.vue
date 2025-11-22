@@ -26,10 +26,10 @@ const editorConfig = {
     height: 400,
     menubar: true,
     plugins: [
-        'advlist autolink lists link image charmap print preview anchor',
-        'searchreplace code fullscreen',
-        'insertdatetime media table paste help wordcount',
-        'codesample importcss'
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
+        'searchreplace', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount',
+        'codesample', 'importcss'
     ],
     toolbar: 'undo redo | styleselect | bold italic underline strikethrough | forecolor backcolor | \
     alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | blockquote hr removeformat',

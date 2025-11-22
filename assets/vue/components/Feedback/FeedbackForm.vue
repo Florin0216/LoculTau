@@ -45,15 +45,15 @@ const onSubmit = async () => {
         <form @submit.prevent="onSubmit" id="contactForm" class="space-y-6">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Nume complet: <span class="text-red-500">*</span></label>
-                <input v-model="feedbackData.name" type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="John Doe">
+                <input v-model="feedbackData.name" type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="Popescu Ion">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Adresa de mail: <span class="text-red-500">*</span></label>
-                <input v-model="feedbackData.email" type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="john@example.com">
+                <input v-model="feedbackData.email" type="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="exemplu@gmail.com">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Mesaj: <span class="text-red-500">*</span></label>
-                <textarea v-model="feedbackData.message" required rows="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="Tell us how we can help..."></textarea>
+                <textarea v-model="feedbackData.message" required rows="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent transition" placeholder="Scrie aici mesajul tau..."></textarea>
             </div>
             <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 rounded-lg transition transform hover:scale-105">
                 Trimite

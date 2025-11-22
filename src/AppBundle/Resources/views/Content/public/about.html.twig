@@ -11,36 +11,31 @@
             </div>
         </section>
         <!-- Our Story -->
-        <section class="py-16 bg-white">
+        <section class="py-16 bg-white h-80">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        {{ pageSections['Text principal']|raw }}
-                    </div>
-                    <div class="bg-gradient-to-br from-green-100 to-indigo-100 rounded-2xl p-8 h-80 flex items-center justify-center">
-                        <div class="text-center">
-                            <div class="text-6xl font-bold text-green-600">15+</div>
-                            <div class="text-xl text-gray-700 mt-2">Years of Impact</div>
-                        </div>
-                    </div>
+                <div>
+                    {{ pageSections['Text principal']|raw }}
                 </div>
             </div>
         </section>
 
         <section class="py-16 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-bold text-center text-gray-900 mb-12">Principii</h2>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     {% for i in 1..3 %}
                         {% set card = pageSections['card_' ~ i] %}
                         {% if card is defined %}
-                            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300  border-l-4 border-r-4 border-green-500 hover:border-green-600 hover:-translate-y-1 relative overflow-hidden">
+                            <div
+                                class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-lg transition-all duration-300  border-l-4 border-r-4 border-green-500 hover:border-green-600 hover:-translate-y-1 relative overflow-hidden">
                                 <!-- Accent lines -->
                                 <div class="relative">
                                     <div class="flex gap-1 mb-4">
-                                        <div class="w-12 h-1 bg-gradient-to-r from-green-500 to-green-400 rounded-full"></div>
-                                        <div class="w-8 h-1 bg-gradient-to-r from-green-400 to-green-300 rounded-full"></div>
-                                        <div class="w-4 h-1 bg-gradient-to-r from-green-300 to-green-200 rounded-full"></div>
+                                        <div
+                                            class="w-12 h-1 bg-gradient-to-r from-green-500 to-green-400 rounded-full"></div>
+                                        <div
+                                            class="w-8 h-1 bg-gradient-to-r from-green-400 to-green-300 rounded-full"></div>
+                                        <div
+                                            class="w-4 h-1 bg-gradient-to-r from-green-300 to-green-200 rounded-full"></div>
                                     </div>
 
                                     <div class="prose prose-sm sm:prose max-w-none">

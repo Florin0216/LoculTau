@@ -23,7 +23,7 @@ const props = defineProps({
                 </div>
             </div>
 
-            <div v-if="event.sponsors?.length" class="mt-6">
+            <div v-if="event.sponsors?.length && event.sponsors.some(s => s.image?.url)" class="mt-6">
                 <h3 class="text-lg font-semibold mb-3 text-gray-700">Sponsori</h3>
                 <div class="flex overflow-x-auto space-x-4 pb-2">
                     <div v-for="sponsor in event.sponsors" :key="sponsor.id"
