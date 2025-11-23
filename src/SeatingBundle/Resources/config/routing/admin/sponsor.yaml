@@ -1,4 +1,9 @@
 
+admin_seating_sponsor_event_sponsors_list:
+    path: /event/{id}/sponsors
+    controller: SeatingBundle\Controller\SponsorController::eventSponsorsListAdminAction
+    methods: GET
+
 admin_seating_sponsor_list:
     path: /sponsors.{_format}
     controller: SeatingBundle\Controller\SponsorController::listAdminAction

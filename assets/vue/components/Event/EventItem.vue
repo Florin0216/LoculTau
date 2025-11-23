@@ -6,6 +6,10 @@ const props = defineProps({
     event: {
         type: Object,
         required: true
+    },
+    uuid: {
+        type: String,
+        required: false
     }
 });
 
@@ -13,7 +17,7 @@ const props = defineProps({
 
 <template>
     <div v-if="event.room?.id" class="flex flex-col w-auto  md:w-1/2 bg-white p-4 rounded-3xl">
-        <a :href="Routing.generate('seating_room_show', { eventId: event.id, roomId: event.room.id })">
+        <a :href="Routing.generate('seating_room_show', { eventId: event.id, roomId: event.room.id, uuid:props.uuid })">
             <div class="relative overflow-hidden rounded-3xl group">
                 <img v-if="event.image" :src="event.image.url" alt="logo"
                      class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">

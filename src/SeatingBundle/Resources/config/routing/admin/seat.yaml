@@ -1,0 +1,4 @@
+admin_seating_seat_edit:
+    path: /seat/{id}/edit
+    controller: SeatingBundle\Controller\SeatController::editAdminAction
+    methods: PUT

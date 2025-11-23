@@ -36,6 +36,10 @@ class Sponsor
     #[Groups(['sponsor.details'])]
     protected ?string $uuid = null;
 
+    #[ORM\Column(type: Types::STRING, length: 128, nullable: true)]
+    #[Groups('sponsor.details')]
+    protected ?string $color = null;
+
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -94,6 +98,17 @@ class Sponsor
     public function setEvents(Collection $events): Sponsor
     {
         $this->events = $events;
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(?string $color): Sponsor
+    {
+        $this->color = $color;
         return $this;
     }
 

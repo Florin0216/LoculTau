@@ -17,6 +17,17 @@ class SeatService{
                 console.error("Error fetching seats:", err);
             });
     };
+
+    editAdmin(id,seat, args={}){
+        args.id = id;
+
+        let requestUrl = FosJsRouting.generate('admin_seating_seat_edit', args);
+
+        return axios
+            .put(requestUrl, {
+                data: seat,
+            });
+    }
 }
 
 export default new SeatService();

@@ -3,6 +3,16 @@ import axios from "axios";
 
 class SponsorService {
 
+    eventSponsorsList(eventId, args={}){
+        args.id = eventId;
+
+        const requestUrl = FosJsRouting.generate('admin_seating_sponsor_event_sponsors_list', args)
+
+        return axios
+            .get(requestUrl)
+            .catch(err => console.error(err));
+    }
+
     listAdmin(args = {}) {
         args._format = 'json';
 

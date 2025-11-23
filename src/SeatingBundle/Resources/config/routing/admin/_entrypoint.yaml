@@ -18,3 +18,8 @@ admin_seating_sponsor_import:
 admin_seating_reminder_import:
     resource: "@SeatingBundle/Resources/config/routing/admin/reminder.yaml"
     prefix: /
+
+admin_seating_seat_import:
+    resource: "@SeatingBundle/Resources/config/routing/admin/seat.yaml"
+    prefix: /
+

@@ -1,5 +1,5 @@
 <script setup>
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
     seat: {
@@ -16,21 +16,41 @@ const props = defineProps({
     }
 });
 
-const seatColor = computed(() => {
-    if (!props.seat.isAvailable) return 'bg-red-600 cursor-not-allowed';
-
-    if (props.isSelected) return 'bg-green-500 cursor-pointer'
-    return 'bg-gray-300 cursor-pointer'
+const seatAppearance = computed(() => {
+    if (!props.seat.isAvailable || (props.sponsor?.id && props.sponsor?.id !== props.seat.sponsor?.id)) {
+        return {
+            class: 'cursor-not-allowed',
+            style: { backgroundColor: '#dc2626' }
+        };
+    }
+    if (props.isSelected) {
+        return {
+            class: 'cursor-pointer',
+            style: { backgroundColor: '#22c55e' }
+        };
+    }
+    if (props.seat.sponsor?.color && props.sponsor?.id === props.seat.sponsor?.id) {
+        return {
+            class: 'cursor-pointer',
+            style: { backgroundColor: props.seat.sponsor.color }
+        };
+    }
+    return {
+        class: 'cursor-pointer',
+        style: { backgroundColor: '#d1d5db' }
+    };
 });
-
 </script>
 
 <template>
     <div
         v-if="seat"
         :id="seat.id"
-        :class="['w-6 h-6 md:w-8 md:h-8 rounded-t-sm md:rounded-t-lg bg-gray-300 text-center text-[12px] md:text-xs',seatColor]"
+        :class="['w-6 h-6 md:w-8 md:h-8 rounded-t-sm md:rounded-t-lg text-center text-[12px] md:text-xs', seatAppearance.class]"
+        :style="seatAppearance.style"
     >
-        <span v-if="seat.isAvailable">{{ seat.number }}</span>
+    <span v-if="seat.isAvailable && (props.sponsor?.id === props.seat.sponsor?.id) || seat.isAvailable && !props.sponsor?.id">
+      {{ seat.number }}
+    </span>
     </div>
 </template>

@@ -95,8 +95,9 @@ onBeforeUnmount(() => {
             class="rounded-circle p-1 border-gray-200 shadow-sm position-relative text-center cursor-pointer"
             :class="seatClass"
             style="width: 2rem; aspect-ratio: 1;"
+            :style="{backgroundColor: props.seat.sponsor?.color}"
         >
-            {{seat.number}}
+            {{ seat.number }}
         </div>
 
         <div
@@ -107,26 +108,26 @@ onBeforeUnmount(() => {
             style="z-index: 3;"
         >
             <template v-if="reservation !== undefined">
-                <h5 class="text-center mb-3 text-nowrap">Rând {{seat.rowNo}}, Loc {{seat.number}}</h5>
+                <h5 class="text-center mb-3 text-nowrap">Rând {{ seat.rowNo }}, Loc {{ seat.number }}</h5>
 
                 <div class="d-flex align-items-center gap-1 text-secondary">
                     <i class="bi bi-person-vcard"></i>
                     <span>Nume</span>
                 </div>
-                <div class="mb-3 fw-medium">{{reservation?.name}}</div>
+                <div class="mb-3 fw-medium">{{ reservation?.name }}</div>
 
                 <div class="d-flex align-items-center gap-1 text-secondary">
                     <span>@</span>
                     <span>Email</span>
                 </div>
-                <div class="fw-medium mb-3">{{reservation?.email}}</div>
+                <div class="fw-medium mb-3">{{ reservation?.email }}</div>
 
                 <template v-if="reservation.claimedBy">
                     <div class="d-flex align-items-center gap-1 text-primary">
                         <i class="bi bi-check-lg"></i>
                         <span>Validat de</span>
                     </div>
-                    <div class="fw-medium text-primary">{{reservation.claimedBy.username}}</div>
+                    <div class="fw-medium text-primary">{{ reservation.claimedBy.username }}</div>
                 </template>
             </template>
         </div>

@@ -10,10 +10,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SponsorCreateType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name')
+            ->add('color')
             ->add('imageFile', Base64Type::class, [
                 'required' => false
             ]);

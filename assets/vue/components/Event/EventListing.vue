@@ -5,6 +5,7 @@ import EventItem from "./EventItem.vue";
 import EventService from "../../services/EventService";
 
 const events = ref([]);
+const uuid = ref();
 
 onMounted(() => {
     EventService
@@ -12,6 +13,8 @@ onMounted(() => {
         .then((response) => {
             events.value = response
         })
+    const params = new URLSearchParams(window.location.search);
+    uuid.value = params.get('uuid');
 });
 
 </script>
@@ -22,6 +25,7 @@ onMounted(() => {
             v-for="(event, index) in events"
             class="justify-self-center"
             :event="event"
+            :uuid="uuid"
         />
     </div>
 </template>

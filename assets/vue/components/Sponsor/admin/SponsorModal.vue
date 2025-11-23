@@ -116,7 +116,7 @@ onMounted(() => {
                         <input @change="handleFileChange" v-if="isEditing" type="file" class="form-control"
                                id="loginEmailInput" :style="`padding-left: ${formPs}rem`"/>
 
-                        <div v-else class="relative">
+                        <div v-else v-if="sponsor.image?.url" class="relative">
                             <img
                                 :src="sponsor.image?.url"
                                 alt="Preview"
@@ -125,6 +125,10 @@ onMounted(() => {
                         </div>
 
                         <i class="bi bi-paperclip" v-if="isEditing" :class="iconClass"></i>
+                    </div>
+                    <div v-if="isEditing" class="position-relative mb-4">
+                        <label for="exampleColorInput" class="form-label">Culoare Sponsor</label>
+                        <input v-model="sponsor.color" type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
                     </div>
                 </div>
             </div>

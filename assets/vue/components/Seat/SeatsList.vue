@@ -201,6 +201,8 @@ onMounted(() => {
     getSeats();
 
     initReservationData();
+    const params = new URLSearchParams(window.location.search);
+    uuid.value = params.get('uuid');
 });
 
 </script>

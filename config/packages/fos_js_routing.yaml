@@ -32,6 +32,7 @@ fos_js_routing:
 
         # Seat
         - seating_seat_list
+        - admin_seating_seat_edit
 
         # User
         - user_security_login
@@ -44,6 +45,7 @@ fos_js_routing:
         - admin_app_homepage
 
         # Sponsor
+        - admin_seating_sponsor_event_sponsors_list
         - admin_seating_sponsor_list
         - admin_seating_sponsor_new
         - admin_seating_sponsor_edit

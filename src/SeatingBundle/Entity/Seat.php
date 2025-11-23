@@ -15,7 +15,7 @@ class Seat
 {
     const ENTITY_ALIAS = 'st';
 
-    const NORMALIZER_GROUPS = ['seat.details'];
+    const NORMALIZER_GROUPS = ['seat.details', 'room.details', 'sponsor.details'];
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,12 +36,13 @@ class Seat
     protected ?string $section;
 
     #[ORM\ManyToOne(targetEntity: Room::class, inversedBy: 'seats')]
-    protected Room $room;
+    #[Groups('room.details')]
+    protected ?Room $room;
 
-    public function __construct()
-    {
-
-    }
+    #[ORM\ManyToOne(targetEntity: Sponsor::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups('sponsor.details')]
+    protected ?Sponsor $sponsor = null;
 
     public function getId(): ?int
     {
@@ -86,6 +87,17 @@ class Seat
     public function setSection(?string $section): void
     {
         $this->section = $section;
+    }
+
+    public function getSponsor(): ?Sponsor
+    {
+        return $this->sponsor;
+    }
+
+    public function setSponsor(?Sponsor $sponsor): Seat
+    {
+        $this->sponsor = $sponsor;
+        return $this;
     }
 
 }

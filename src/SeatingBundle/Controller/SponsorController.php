@@ -7,6 +7,7 @@ use AppBundle\Helper\JsonRequestPayload;
 use AppBundle\Services\EntityService;
 use AppBundle\Services\ThumbnailService;
 use Doctrine\ORM\EntityManagerInterface;
+use SeatingBundle\Entity\Event;
 use SeatingBundle\Entity\Sponsor;
 use SeatingBundle\Form\Factory\SponsorFormFactory;
 use SeatingBundle\Service\SponsorManager;
@@ -29,6 +30,19 @@ class SponsorController extends AbstractController
         protected ThumbnailService $thumbnailService,
     )
     {
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    public function eventSponsorsListAdminAction($id, Request $request): Response
+    {
+        $event = $this->es->findOrReject(Event::class,$id);
+        $sponsors = $event->getSponsors();
+
+        return new JsonResponse([
+            'data' => $this->serializer->normalize($sponsors, null, [
+                AbstractNormalizer::GROUPS => Sponsor::NORMALIZER_GROUPS,
+            ])
+        ]);
     }
 
     #[IsGranted('ROLE_ADMIN')]
