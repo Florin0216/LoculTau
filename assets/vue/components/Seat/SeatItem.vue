@@ -17,7 +17,7 @@ const props = defineProps({
 });
 
 const seatAppearance = computed(() => {
-    if (!props.seat.isAvailable || (props.sponsor?.id && props.sponsor?.id !== props.seat.sponsor?.id)) {
+    if (!props.seat.isAvailable || (props.sponsor?.id && props.sponsor?.id !== props.seat.sponsor?.id) || (props.seat.sponsor && props.sponsor?.id !== props.seat.sponsor?.id)) {
         return {
             class: 'cursor-not-allowed',
             style: { backgroundColor: '#dc2626' }
@@ -49,7 +49,7 @@ const seatAppearance = computed(() => {
         :class="['w-6 h-6 md:w-8 md:h-8 rounded-t-sm md:rounded-t-lg text-center text-[12px] md:text-xs', seatAppearance.class]"
         :style="seatAppearance.style"
     >
-    <span v-if="seat.isAvailable && (props.sponsor?.id === props.seat.sponsor?.id) || seat.isAvailable && !props.sponsor?.id">
+    <span v-if="seat.isAvailable && (props.sponsor?.id === props.seat.sponsor?.id) || seat.isAvailable && !props.sponsor?.id && !props.seat.sponsor">
       {{ seat.number }}
     </span>
     </div>

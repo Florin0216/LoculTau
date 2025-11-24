@@ -52,11 +52,6 @@ watch(singleForm, (newValue, oldValue) => {
 })
 
 const onSeatSelect = (seat) => {
-    if (!uuid.value && seat.sponsor) {
-        alert("Acest loc este deja rezervat de un sponsor.");
-        return;
-    }
-
     if (seat.isAvailable === false) {
         return;
     }

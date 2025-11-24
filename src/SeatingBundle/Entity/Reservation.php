@@ -14,7 +14,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 #[ORM\Table(name: 'seating__reservation')]
-#[ORM\UniqueConstraint(name: 'seating__unique_event_seat', columns: ['event_id', 'sponsor_id'])]
+#[ORM\UniqueConstraint(name: 'seating__unique_event_seat', columns: ['event_id', 'seat_id'])]
 #[Vich\Uploadable]
 class Reservation
 {

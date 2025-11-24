@@ -96,7 +96,7 @@ const seatBg = (seat) => {
     if (isSelected(seat)) {
         return 'bg-success bg-opacity-75'
     }
-    if (seat.sponsor?.color) {
+    if (seat.sponsor?.color && seat.isAvailable) {
         return '';
     }
 
