@@ -52,7 +52,11 @@ watch(singleForm, (newValue, oldValue) => {
 })
 
 const onSeatSelect = (seat) => {
-    if (seat.isAvailable === false) {
+    if (!uuid.value && seat.sponsor) {
+        return;
+    }
+
+    if (seat.isAvailable === false || seat.sponsor?.id !== props.sponsor?.id) {
         return;
     }
 
