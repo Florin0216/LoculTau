@@ -32,15 +32,34 @@ const showReservationForm = ref(false);
 const isLoading = ref(false);
 
 const onConfirmSelection = () => {
-
-    for (let seat of selectedSeats.value) {
-        if (leavesIsolatedSeats(seat)) {
-            alert('Va rugam nu lasati loc liber cand selectati locurile!');
-            return;
-        }
-    }
-
-    showReservationForm.value = true;
+    SeatService
+        .getSeats(props.room, props.event)
+        .then((response) => {
+            seats.value = response;
+            const unavailableSeats = [];
+            selectedSeats.value = selectedSeats.value.filter((seat) => {
+                const freshSeat = seats.value[seat.section]?.[seat.rowNo]?.[seat.number];
+                if (!freshSeat || !freshSeat.isAvailable) {
+                    unavailableSeats.push(seat);
+                    return false;
+                }
+                return true;
+            });
+            if (unavailableSeats.length) {
+                const seatLabels = unavailableSeats
+                    .map(s => `${s.number}`)
+                    .join(", ");
+                alert(`Următoarele locuri au fost deja ocupate: ${seatLabels}`);
+                return;
+            }
+            for (let seat of selectedSeats.value) {
+                if (leavesIsolatedSeats(seat)) {
+                    alert('Va rugam nu lasati loc liber cand selectati locurile!');
+                    return;
+                }
+            }
+            showReservationForm.value = true;
+        });
 }
 
 watch(singleForm, (newValue, oldValue) => {
@@ -176,17 +195,25 @@ const getSeats = () => {
 const leavesIsolatedSeats = (seat) => {
     const seatCount = getSeatCountForRow(seat.rowNo);
     const rowSeats = seats.value[seat.section]?.[seat.rowNo];
+    if (!rowSeats) return false;
 
     const simulatedRow = {};
     for (let i = 1; i <= seatCount; i++) {
-        simulatedRow[i] = {...rowSeats[i]};
-        if (i === seat.number) {
-            simulatedRow[i].isAvailable = false;
+        simulatedRow[i] = { ...rowSeats[i] };
+    }
+    for (let s of selectedSeats.value) {
+        if (s.section === seat.section && s.rowNo === seat.rowNo) {
+            simulatedRow[s.number].isAvailable = false;
+            simulatedRow[s.number].isSelected = true;
         }
     }
 
+    simulatedRow[seat.number].isAvailable = false;
+    simulatedRow[seat.number].isSelected = true;
+
     for (let i = 1; i <= seatCount; i++) {
         const current = simulatedRow[i];
+
         if (current.isAvailable && !current.isSelected) {
             const left = simulatedRow[i - 1];
             const right = simulatedRow[i + 1];
@@ -202,6 +229,7 @@ const leavesIsolatedSeats = (seat) => {
 
     return false;
 };
+
 
 onMounted(() => {
     getSeats();
