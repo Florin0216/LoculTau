@@ -55,7 +55,19 @@
                             </div>
                             <div class="text-left">
                                 <p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Scaun</p>
-                                <p class="text-lg font-semibold text-gray-900">{{ reservation.seat.number }}</p>
+                                <p class="text-lg font-semibold text-gray-900">
+                                    Rand:
+                                    {% if reservation.seat.section == 'Sala principala' %}
+                                        {% set row = reservation.seat.rowNo %}
+                                        {% set offset = row >= 17 ? 1 : 0 %}
+                                        {{ (65 + row - 1 + offset)|chr }}
+                                    {% else %}
+                                        {{ reservation.seat.rowNo }}
+                                    {% endif %}
+                                </p>
+
+                                <p class="text-lg font-semibold text-gray-900">Loc: {{ reservation.seat.number }}</p>
+                                <p class="text-lg font-semibold text-gray-900">Sectiune: {{ reservation.seat.section }}</p>
                             </div>
                         </div>
                     </div>
