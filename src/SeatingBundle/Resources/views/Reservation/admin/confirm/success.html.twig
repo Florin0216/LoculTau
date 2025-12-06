@@ -65,7 +65,7 @@
                                 {% set rowLetter = letters|slice(reservation.seat.rowNo - 1, 1) %}
                                 <p class="text-lg font-semibold text-gray-900">
                                     Rand:
-                                    {% if reservation.seat.section == 'Sala principala' %}
+                                    {% if reservation.seat.section == 'Sala Principala' %}
                                         Randul: {{ rowLetter }}
                                     {% else %}
                                         {{ reservation.seat.rowNo }}
