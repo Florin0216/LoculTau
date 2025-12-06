@@ -74,7 +74,7 @@ const getSeats = () => {
                 sectionMaxRowMap[section] = Math.max(sectionMaxRowMap[section] ?? row, row);
 
                 sectionRowMaxNumberMap[section] ??= {};
-                sectionRowMaxNumberMap[section][row] = Math.max(sectionRowMaxNumberMap[section][row] ?? 1, number);
+                sectionRowMaxNumberMap[section][row] = Math.max(sectionRowMaxNumberMap[section][row] ?? 0, number);
 
                 sectionRowMinNumberMap[section] ??= {};
                 sectionRowMinNumberMap[section][row] = Math.min(sectionRowMinNumberMap[section][row] ?? Infinity, number);
@@ -161,7 +161,7 @@ onMounted(() => {
             <div v-for="row in sectionMaxRowMap['Sala Principala']" class="d-flex-center flex-nowrap" style="gap: 4px">
                 <span class="me-4 fw-medium">{{ rowLetterMap[row - 1].toUpperCase() }}</span>
 
-                <template v-for="number in sectionRowMaxNumberMap['Sala Principala'][row]">
+                <template v-for="number in Array.from({ length: sectionRowMaxNumberMap['Sala Principala'][row] + 1 }, (_, i) => i)">
                     <seat-item-admin
                         @click="onSeatClick(seats['Sala Principala'][row][number])"
                         :seat="seats['Sala Principala'][row][number]"
